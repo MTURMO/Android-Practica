@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SocialGifts</string>
+    <string name="login_user_name">User Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_button_access">LogIn</string>
+    <string name="login_button_register"><u>SignUp</u></string>
+    <string name="register_user_email">Email</string>
+    <string name="register_user_name">Name</string>
+    <string name="register_user_last_name">Last Name</string>
+</resources>
