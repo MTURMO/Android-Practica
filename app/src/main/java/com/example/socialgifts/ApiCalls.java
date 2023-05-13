@@ -45,7 +45,7 @@ public class ApiCalls {
 
     /******************************
      * CRIDES API USER
-    ******************************/
+     ******************************/
 
     /*
         Funció per a registrar el usuari
@@ -70,11 +70,11 @@ public class ApiCalls {
                 error.printStackTrace();
                 System.out.println(error.networkResponse.statusCode);
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -96,7 +96,7 @@ public class ApiCalls {
             public void onResponse(JSONObject response) {
                 try {
                     accessToken = response.get("accessToken").toString();
-                    WishList wishList = new WishList(26, "primeraList", "Description de tal", 205, null, "2022-12-06T06:43:00.000Z",  "2022-12-06T06:43:00.000Z");
+                    WishList wishList = new WishList(26, "primeraList", "Description de tal", 205, null, "2022-12-06T06:43:00.000Z", "2022-12-06T06:43:00.000Z");
                     Gift gift = new Gift(205, "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/1", 44);
                     Message message = new Message("content of the message send", 205, 17);
                     //createFriendRequest(accessToken, 205);
@@ -112,11 +112,11 @@ public class ApiCalls {
                 error.printStackTrace();
                 System.out.println(error.networkResponse.statusCode);
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -134,14 +134,14 @@ public class ApiCalls {
      */
     public void getUserById(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -151,15 +151,14 @@ public class ApiCalls {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
                     }
                 }
-                ){
+                ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + accessToken);
                 return headers;
             }
-        }
-                ;
+        };
         queue.add(jsonObjectRequest);
     }
 
@@ -173,14 +172,14 @@ public class ApiCalls {
      */
     public void getAllUsers(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -190,15 +189,14 @@ public class ApiCalls {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
                     }
                 }
-                ){
+                ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + accessToken);
                 return headers;
             }
-        }
-                ;
+        };
         queue.add(jsonArrayRequest);
     }
 
@@ -213,14 +211,14 @@ public class ApiCalls {
      */
     public void searchUser(String accessToken, String search) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/search?s=" + search;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/search?s=" + search;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -252,14 +250,14 @@ public class ApiCalls {
      */
     public void getUserFriends(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/friends";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/friends";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -291,14 +289,14 @@ public class ApiCalls {
      */
     public void getGiftReserved(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/gifts/reserved";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/gifts/reserved";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -330,14 +328,14 @@ public class ApiCalls {
      */
     public void getAllUserWhishlist(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -366,14 +364,14 @@ public class ApiCalls {
      */
     public void deleteUser(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -403,14 +401,14 @@ public class ApiCalls {
      */
     public void editUser(String accessToken, User user) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.PUT, url, user.getUsuariTotal(), new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -438,7 +436,7 @@ public class ApiCalls {
     //TODO
     public void createGift(String accessToken, Gift gift) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, gift.getGiftTotal(), new Response.Listener<JSONObject>() {
@@ -479,7 +477,7 @@ public class ApiCalls {
      */
     public void createWishList(String accessToken, WishList wishList) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, wishList.getWishListPost(), new Response.Listener<JSONObject>() {
@@ -515,7 +513,7 @@ public class ApiCalls {
      */
     public void getAllWishList(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -552,7 +550,7 @@ public class ApiCalls {
      */
     public void getWishlistById(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -589,7 +587,7 @@ public class ApiCalls {
      */
     public void deleteWishlistById(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
@@ -626,10 +624,10 @@ public class ApiCalls {
      */
     public void editWishlist(String accessToken, int id, WishList wishList) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PUT, url, wishList.getWishListEdit(), new Response.Listener<JSONObject>() {
+                (Request.Method.PUT, url, wishList. getWishListEdit(), new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -667,7 +665,7 @@ public class ApiCalls {
      */
     public void newMessage(String accessToken, Message message) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, message.getMessagePost(), new Response.Listener<JSONObject>() {
@@ -703,7 +701,7 @@ public class ApiCalls {
      */
     public void getServerInfo(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/ServerInfo";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/ServerInfo";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -740,7 +738,7 @@ public class ApiCalls {
      */
     public void getUsersMessaged(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/users";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/users";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -778,7 +776,7 @@ public class ApiCalls {
      */
     public void getMessagesById(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -819,7 +817,7 @@ public class ApiCalls {
      */
     public void getFriends(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -856,7 +854,7 @@ public class ApiCalls {
      */
     public void getFriendsRequest(String accessToken) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/requests";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/requests";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -893,7 +891,7 @@ public class ApiCalls {
      */
     public void createFriendRequest(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -930,7 +928,7 @@ public class ApiCalls {
      */
     public void acceptFriendRequest(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
@@ -967,7 +965,7 @@ public class ApiCalls {
      */
     public void rejectFriendRequest(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
@@ -994,4 +992,333 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
+
+    /**
+     * TODO CALL PRODUCTE
+     */
+    public void getProductList(String accessToken) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
+    public void getProductByID(String accessToken, int productId) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    public void createProduct(String accessToken, Product product) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, product.getProduct(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void editProduct(String accessToken, Product product) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url,  product.editProduct(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void deleteProductById(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products"+ id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    public void searchProduct(String accessToken, String search) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/search?s=" + search;
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
+    public void getCategoryList(String accessToken) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
+    public void getCategoryById(String accessToken, int category) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories/" + category;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    public void createCategory  (String accessToken, Category category) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, category.getCategory(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void editCategory(String accessToken, Category category) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, category.getCategory(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void deleteCategoryById(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories"+ id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
 }
