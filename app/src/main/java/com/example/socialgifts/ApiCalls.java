@@ -433,10 +433,13 @@ public class ApiCalls {
      * CRIDES API GIFTS
      ******************************/
 
-    //TODO
+    /******************************
+     * CRIDES API GIFTS
+     ******************************/
+
     public void createGift(String accessToken, Gift gift) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, gift.getGiftTotal(), new Response.Listener<JSONObject>() {
@@ -451,6 +454,191 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    /*
+    Funció per obtenir tots els regals
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+     */
+    public void getAllGifts(String accessToken) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
+    /*
+    Funció per obtenir l'usuari en funcio del id d'un gift
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+        - id
+     */
+    public void getUserByGiftId(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id + "/user";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    /*
+    Funció per obtenir un Gift en funció del seu id
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+        - id
+     */
+    public void getGiftById(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    /*
+    Funció per editar Gift en funció del seu ID
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+        - id
+        - Gift
+     */
+    public void editGiftsById(String accessToken, int id, Gift gift) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, gift.getGifttoEdit(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+    /*
+    Funció per eliminar un Gift en funció del seu id
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+        - id
+     */
+    public void deleteGiftById(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
                     }
                 }
                 ) {

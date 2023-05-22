@@ -51,4 +51,18 @@ public class Gift {
         }
         return jsonObject;
     }
+
+    public JSONObject getGifttoEdit() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", id);
+            jsonObject.put("wishlist_id", wishlist_id);
+            jsonObject.put("product_url", product_url);
+            jsonObject.put("priority", priority);
+            jsonObject.put("booked", booked);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 }
