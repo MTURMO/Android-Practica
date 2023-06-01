@@ -1,4 +1,8 @@
 <resources>
+    <array name="filters">
+        <item>"Alphabetically"</item>
+        <item>"Valoration"</item>
+    </array>
     <string name="app_name">SocialGifts</string>
     <string name="login_user_name">User Name</string>
     <string name="login_password">Password</string>
@@ -6,11 +10,7 @@
     <string name="login_button_register"><u>SignUp</u></string>
     <string name="register_user_email">Email</string>
     <string name="register_user_name">Name</string>
-    <string name="register_user_last_name">Last Name</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="register_user_last_name">Last Name</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <array name="filters">
-        <item>"Alphabetically"</item>
-        <item>"Valoration"</item>
-    </array>
 </resources>

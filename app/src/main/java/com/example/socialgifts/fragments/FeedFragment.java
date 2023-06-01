@@ -1,4 +1,4 @@
-package com.example.socialgifts;
+package com.example.socialgifts.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.example.socialgifts.R;
 
 
 public class FeedFragment extends Fragment {
