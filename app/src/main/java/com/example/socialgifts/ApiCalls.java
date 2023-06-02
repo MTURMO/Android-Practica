@@ -60,23 +60,23 @@ public class ApiCalls {
             - password
             - image
         */
-    public void registerUser(User user,Context context) {
+    public void registerUser(User user) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", user.getUsuariTotal(), new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("a");
+                Log.e( "onResponse: ","hoal");
                 try {
                     accessToken = response.get("accessToken").toString();
-                    System.out.println("a "+accessToken);
-                    Intent intent = new Intent(context, Login.class);
-                    context.startActivity(intent);
                 } catch (JSONException e) {
-                    System.out.println("a "+accessToken);
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
+                System.out.println("a "+accessToken);
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -88,7 +88,6 @@ public class ApiCalls {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer " + accessToken);
 
                 return params;
             }
@@ -128,7 +127,6 @@ public class ApiCalls {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer " + "ola");
                 return params;
             }
         };

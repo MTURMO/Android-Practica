@@ -61,10 +61,10 @@ public class Register extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String userLastName = userLastNameEditText.getText().toString();
 
-        User user = new User(userName, userLastName, email, password, "");
+        User user = new User(userName, userLastName, email, password, "C:\\Users\\Ardiaca\\OneDrive - La Salle\\2n\\PrPr2\\repo\\Android-Practica\\app\\src\\main\\res\\drawable\\icon_feed.png");
 
         ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.registerUser(user,this);
+        apiCalls.registerUser(user);
 
         goToLogin();
     }
