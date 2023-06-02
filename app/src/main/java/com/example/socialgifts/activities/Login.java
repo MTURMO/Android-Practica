@@ -29,11 +29,25 @@ public class Login extends AppCompatActivity {
         logInButton = findViewById(R.id.login_button_access);
         registerTextView = findViewById(R.id.login_button_register);
 
-        logInButton.setOnClickListener(view -> makePost());
+        logInButton.setOnClickListener(view ->{
+            if(userCorrect()){
+                makePost();
+            }
+        });
         registerTextView.setOnClickListener(view -> goToRegister());
-        setupLoginButton();
     }
 
+
+    private boolean userCorrect(){
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        if(!userName.isEmpty()  && !password.isEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     private void makePost(){
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -43,36 +57,19 @@ public class Login extends AppCompatActivity {
         ApiCalls apiCalls = new ApiCalls(this);
         apiCalls.loginUser(user,this);
 
+        goToMain();
+
     }
 
     private void goToRegister(){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
+    private void goToMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
-    private void setupLoginButton(){
-        logInButton.setEnabled(false);
 
-        TextWatcher textWatcher = new TextWatcher(){
-
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    logInButton.setEnabled(false);
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    String userName = userNameEditText.getText().toString().trim();
-                    String password = passwordEditText.getText().toString().trim();
-                    logInButton.setEnabled(!userName.isEmpty() && !password.isEmpty());
-                }
-
-                @Override
-                public void afterTextChanged(android.text.Editable editable) {
-                }
-            };
-        userNameEditText.addTextChangedListener(textWatcher);
-        passwordEditText.addTextChangedListener(textWatcher);
-        }
 
 }

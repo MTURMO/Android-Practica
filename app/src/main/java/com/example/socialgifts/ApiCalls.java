@@ -64,11 +64,19 @@ public class ApiCalls {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", user.getUsuariTotal(), new Response.Listener<JSONObject>() {
+
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println(response);
-                Intent intent = new Intent(context, Login.class);
-                context.startActivity(intent);
+                System.out.println("a");
+                try {
+                    accessToken = response.get("accessToken").toString();
+                    System.out.println("a "+accessToken);
+                    Intent intent = new Intent(context, Login.class);
+                    context.startActivity(intent);
+                } catch (JSONException e) {
+                    System.out.println("a "+accessToken);
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -80,6 +88,8 @@ public class ApiCalls {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer " + accessToken);
+
                 return params;
             }
         };
@@ -101,7 +111,6 @@ public class ApiCalls {
             public void onResponse(JSONObject response) {
                 try {
                     accessToken = response.get("accessToken").toString();
-                    System.out.printf("a");
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
 
@@ -119,6 +128,7 @@ public class ApiCalls {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer " + "ola");
                 return params;
             }
         };

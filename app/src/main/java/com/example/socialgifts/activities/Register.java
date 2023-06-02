@@ -31,10 +31,30 @@ public class Register extends AppCompatActivity {
         passwordEditText = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register_button_signup);
         logInTextView = findViewById(R.id.register_button_login);
-        registerButton.setOnClickListener(view -> makePost());
+
+        registerButton.setOnClickListener(view -> {
+            if(userCorrect()){
+                makePost();
+            }
+        });
         logInTextView.setOnClickListener(view -> goToLogin());
     }
 
+
+    private boolean userCorrect(){
+        //String emailRegex = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]";
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String userLastName = userLastNameEditText.getText().toString();
+
+        if(!userName.isEmpty() /*&& email.matches(emailRegex)*/ && !password.isEmpty() && !email.isEmpty() && !userLastName.isEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     private void makePost(){
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -46,6 +66,7 @@ public class Register extends AppCompatActivity {
         ApiCalls apiCalls = new ApiCalls(this);
         apiCalls.registerUser(user,this);
 
+        goToLogin();
     }
 
     private void goToLogin(){
