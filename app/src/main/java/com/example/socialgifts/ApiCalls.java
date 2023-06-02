@@ -1,6 +1,7 @@
 package com.example.socialgifts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -11,6 +12,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.socialgifts.activities.Login;
+import com.example.socialgifts.activities.MainActivity;
+import com.example.socialgifts.fragments.FeedFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,19 +60,20 @@ public class ApiCalls {
             - password
             - image
         */
-    public void registerUser(User user) {
+    public void registerUser(User user,Context context) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", user.getUsuariTotal(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println(response);
+                Intent intent = new Intent(context, Login.class);
+                context.startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                System.out.println(error.networkResponse.statusCode);
             }
         }) {
             @Override
@@ -88,7 +93,7 @@ public class ApiCalls {
         - password
     S'obté el accessToken
      */
-    public void loginUser(User user) {
+    public void loginUser(User user,Context context){
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", user.getUsuariLogin(), new Response.Listener<JSONObject>() {
@@ -96,12 +101,10 @@ public class ApiCalls {
             public void onResponse(JSONObject response) {
                 try {
                     accessToken = response.get("accessToken").toString();
-                    WishList wishList = new WishList(26, "primeraList", "Description de tal", 205, null, "2022-12-06T06:43:00.000Z", "2022-12-06T06:43:00.000Z");
-                    Gift gift = new Gift(205, "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/1", 44);
-                    Message message = new Message("content of the message send", 205, 17);
-                    //createFriendRequest(accessToken, 205);
-                    //acceptFriendRequest(accessToken, 286);
-                    getFriends(accessToken);
+                    System.out.printf("a");
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -110,7 +113,6 @@ public class ApiCalls {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                System.out.println(error.networkResponse.statusCode);
             }
         }) {
             @Override

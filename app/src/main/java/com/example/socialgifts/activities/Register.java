@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
+import com.example.socialgifts.User;
 
 public class Register extends AppCompatActivity {
 
@@ -34,8 +36,16 @@ public class Register extends AppCompatActivity {
     }
 
     private void makePost(){
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String userLastName = userLastNameEditText.getText().toString();
+
+        User user = new User(userName, userLastName, email, password, "");
+
+        ApiCalls apiCalls = new ApiCalls(this);
+        apiCalls.registerUser(user,this);
+
     }
 
     private void goToLogin(){
