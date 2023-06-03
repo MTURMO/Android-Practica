@@ -1,5 +1,6 @@
 package com.example.socialgifts.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.socialgifts.R;
+import com.example.socialgifts.activities.CreateProductActivity;
 
 
 public class FeedFragment extends Fragment {
@@ -41,6 +44,11 @@ public class FeedFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });
+        Button createButton = view.findViewById(R.id.feed_create);
+        createButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), CreateProductActivity.class);
+            startActivity(intent);
         });
         return view;
     }
