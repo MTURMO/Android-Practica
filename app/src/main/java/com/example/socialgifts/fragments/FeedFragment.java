@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.socialgifts.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.CreateProductActivity;
 
@@ -48,6 +49,11 @@ public class FeedFragment extends Fragment {
         Button createButton = view.findViewById(R.id.feed_create);
         createButton.setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), CreateProductActivity.class);
+            startActivity(intent);
+        });
+        Button tempButton = view.findViewById(R.id.feed_temp);
+        tempButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), ProductActivity.class);
             startActivity(intent);
         });
         return view;
