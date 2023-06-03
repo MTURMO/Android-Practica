@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,24 +40,16 @@ public class Login extends AppCompatActivity {
     private boolean userCorrect(){
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        if(!userName.isEmpty()  && !password.isEmpty()){
-            return true;
-        } else {
-            return false;
-        }
+        return !userName.isEmpty() && !password.isEmpty();
     }
     private void makePost(){
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        User user = new User(null, null, userName, password, "");
+        User user = new User(userName, password);
 
         ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.loginUser(user);
-
-        if(apiCalls.getAccessToken()!=null){
-            goToMain();
-        }
+        apiCalls.loginUser(user,this);
 
     }
 
@@ -66,11 +57,6 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
-    private void goToMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
 
 
 }

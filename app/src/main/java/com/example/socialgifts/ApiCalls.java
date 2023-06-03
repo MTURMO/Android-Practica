@@ -3,7 +3,6 @@ package com.example.socialgifts;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,9 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.socialgifts.activities.Login;
 import com.example.socialgifts.activities.MainActivity;
-import com.example.socialgifts.fragments.FeedFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,18 +66,9 @@ public class ApiCalls {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    boolean success = response.getBoolean("success");
-                    Log.e("onResponse: ",accessToken);
-                    if(success){
                         accessToken = response.get("accessToken").toString();
                         Log.e("onResponse: ",accessToken);
-                    }else{
-                        JSONObject error = response.getJSONObject("error");
-                        String errorCode = error.getString("code");
-                        String errorMessage = error.getString("message");
-                        Log.e("onResponse: ",errorCode);
-                        Log.e("onResponse: ",errorMessage);
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,27 +97,19 @@ public class ApiCalls {
         - password
     S'obté el accessToken
      */
-    public void loginUser(User user){
+    public void  loginUser(User user,Context context) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", user.getUsuariLogin(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    boolean success = response.getBoolean("success");
+                    accessToken = response.get("accessToken").toString();
                     Log.e("onResponse: ",accessToken);
-                    if(success){
-                        accessToken = response.get("accessToken").toString();
-                        Log.e("onResponse: ",accessToken);
-                    }else{
-                        JSONObject error = response.getJSONObject("error");
-                        String errorCode = error.getString("code");
-                        String errorMessage = error.getString("message");
-                        Log.e("onResponse: ",errorCode);
-                        Log.e("onResponse: ",errorMessage);
-                        accessToken= null;
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("accessToken", accessToken);
+                    context.startActivity(intent);
 
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
