@@ -46,18 +46,19 @@ public class Login extends AppCompatActivity {
         } else {
             return false;
         }
-
     }
     private void makePost(){
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        User user = new User(userName, null, null, password, "");
+        User user = new User(null, null, userName, password, "");
 
         ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.loginUser(user,this);
+        apiCalls.loginUser(user);
 
-        goToMain();
+        if(apiCalls.getAccessToken()!=null){
+            goToMain();
+        }
 
     }
 

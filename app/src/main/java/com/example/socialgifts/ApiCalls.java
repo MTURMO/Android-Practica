@@ -3,6 +3,7 @@ package com.example.socialgifts;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -67,16 +68,22 @@ public class ApiCalls {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.e( "onResponse: ","hoal");
                 try {
-                    accessToken = response.get("accessToken").toString();
+                    boolean success = response.getBoolean("success");
+                    Log.e("onResponse: ",accessToken);
+                    if(success){
+                        accessToken = response.get("accessToken").toString();
+                        Log.e("onResponse: ",accessToken);
+                    }else{
+                        JSONObject error = response.getJSONObject("error");
+                        String errorCode = error.getString("code");
+                        String errorMessage = error.getString("message");
+                        Log.e("onResponse: ",errorCode);
+                        Log.e("onResponse: ",errorMessage);
+                    }
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
-                System.out.println("a "+accessToken);
-
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -102,17 +109,27 @@ public class ApiCalls {
         - password
     S'obté el accessToken
      */
-    public void loginUser(User user,Context context){
+    public void loginUser(User user){
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", user.getUsuariLogin(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    accessToken = response.get("accessToken").toString();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    context.startActivity(intent);
+                    boolean success = response.getBoolean("success");
+                    Log.e("onResponse: ",accessToken);
+                    if(success){
+                        accessToken = response.get("accessToken").toString();
+                        Log.e("onResponse: ",accessToken);
+                    }else{
+                        JSONObject error = response.getJSONObject("error");
+                        String errorCode = error.getString("code");
+                        String errorMessage = error.getString("message");
+                        Log.e("onResponse: ",errorCode);
+                        Log.e("onResponse: ",errorMessage);
+                        accessToken= null;
 
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -120,6 +137,7 @@ public class ApiCalls {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                accessToken= null;
                 error.printStackTrace();
             }
         }) {
@@ -132,6 +150,7 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
+
 
     /*
     Funció per obtenir un usuari en funcio del id
