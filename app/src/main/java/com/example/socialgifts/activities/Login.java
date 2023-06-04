@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
+import com.example.socialgifts.User;
 
 public class Login extends AppCompatActivity {
 
@@ -26,17 +28,35 @@ public class Login extends AppCompatActivity {
         logInButton = findViewById(R.id.login_button_access);
         registerTextView = findViewById(R.id.login_button_register);
 
-        logInButton.setOnClickListener(view -> makePost());
+        logInButton.setOnClickListener(view ->{
+            if(userCorrect()){
+                makePost();
+            }
+        });
         registerTextView.setOnClickListener(view -> goToRegister());
     }
 
+
+    private boolean userCorrect(){
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        return !userName.isEmpty() && !password.isEmpty();
+    }
     private void makePost(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        User user = new User(userName, password);
+
+        ApiCalls apiCalls = new ApiCalls(this);
+        apiCalls.loginUser(user,this);
+
     }
 
     private void goToRegister(){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
+
+
 }

@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
+import com.example.socialgifts.User;
 
 public class Register extends AppCompatActivity {
 
@@ -29,13 +31,42 @@ public class Register extends AppCompatActivity {
         passwordEditText = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register_button_signup);
         logInTextView = findViewById(R.id.register_button_login);
-        registerButton.setOnClickListener(view -> makePost());
+
+        registerButton.setOnClickListener(view -> {
+            if(userCorrect()){
+                makePost();
+            }
+        });
         logInTextView.setOnClickListener(view -> goToLogin());
     }
 
+
+    private boolean userCorrect(){
+        //String emailRegex = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]";
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String userLastName = userLastNameEditText.getText().toString();
+
+        if(!userName.isEmpty() /*&& email.matches(emailRegex)*/ && !password.isEmpty() && !email.isEmpty() && !userLastName.isEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     private void makePost(){
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
+        String userName = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String userLastName = userLastNameEditText.getText().toString();
+
+        User user = new User(userName, userLastName, email, password, "C:\\Users\\Ardiaca\\OneDrive - La Salle\\2n\\PrPr2\\repo\\Android-Practica\\app\\src\\main\\res\\drawable\\icon_feed.png");
+
+        ApiCalls apiCalls = new ApiCalls(this);
+        apiCalls.registerUser(user);
+
+        goToLogin();
     }
 
     private void goToLogin(){
