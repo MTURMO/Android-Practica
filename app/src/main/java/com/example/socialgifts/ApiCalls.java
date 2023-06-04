@@ -2,6 +2,7 @@ package com.example.socialgifts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -13,21 +14,34 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialgifts.activities.MainActivity;
+import com.example.socialgifts.adapters.FeedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ApiCalls {
     private Object MainActivity;
     private String accessToken;
+    private Context context;
+    private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
+
+    public ApiCalls(Context context, FeedAdapter adapter) {
+        this.context = context;
+        this.adapter = adapter;
+    }
+
 
     public ApiCalls(Object mainActivity) {
         MainActivity = mainActivity;
+
     }
+
 
     public Object getMainActivity() {
         return MainActivity;
@@ -98,16 +112,19 @@ public class ApiCalls {
     S'obté el accessToken
      */
     public void  loginUser(User user,Context context) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        RequestQueue queue = Volley.newRequestQueue((context));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/login", user.getUsuariLogin(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     accessToken = response.get("accessToken").toString();
-                    Log.e("onResponse: ",accessToken);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("accessToken", accessToken);
+                    editor.apply();
+
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra("accessToken", accessToken);
                     context.startActivity(intent);
 
                 } catch (JSONException e) {
@@ -117,7 +134,6 @@ public class ApiCalls {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                accessToken= null;
                 error.printStackTrace();
             }
         }) {
@@ -1193,36 +1209,58 @@ public class ApiCalls {
     /**
      * TODO CALL PRODUCTE
      */
-    public void getProductList(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+
+
+    public void getProductList(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
 
+                        ArrayList<Product> productList = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
+
+                                String productName = jsonProduct.getString("name");
+                                String productDescription = jsonProduct.getString("description");
+                                String photo = jsonProduct.getString("photo");
+                                String link = jsonProduct.getString("link");
+                                int categoria = jsonProduct.optInt("category", 0);
+                                float productPrice = Float.parseFloat(jsonProduct.getString("price"));
+
+                                Product product = new Product(productName, productDescription, productPrice, photo, link, categoria);
+                                productList.add(product);
+                            }
+
+                            adapter.setProducts(productList);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                        // Aquí puedes manejar el error de la solicitud
                     }
                 }
-                ) {
+        ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + accessToken);
                 return headers;
             }
         };
+
         queue.add(jsonArrayRequest);
     }
-
     public void getProductByID(String accessToken, int productId) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;
@@ -1252,7 +1290,7 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    public void createProduct(String accessToken, Product product) {
+    public void createProduct(String accessToken, Product product,Context context) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
 
@@ -1263,6 +1301,8 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
 
                     }
                 }, new Response.ErrorListener() {

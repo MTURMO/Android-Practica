@@ -1,36 +1,61 @@
 package com.example.socialgifts.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.socialgifts.Product;
+import com.example.socialgifts.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
-    private final ArrayList<Product> products;
-    private final Context context;
+    private List<Product> products;
+    private Context context;
     private final String filter;
 
-    public FeedAdapter(ArrayList<Product> products, Context context, String filter){
-        this.products = products;
+    public FeedAdapter(List<Product> products, Context context, String filter){
+        if(products==null){
+            this.products=new ArrayList<>();
+        } else{
+            this.products = products;
+
+        }
         this.context = context;
         this.filter = filter;
+
+
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setProducts(List<Product> products){
+        this.products=products;
+        notifyDataSetChanged();
     }
 
     @NonNull
-    @Override
+     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.feed_product_card, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Product product = products.get(position);
+        holder.productName.setText(product.getName());
+        holder.productDescription.setText(product.getDescription());
+        holder.productPrice.setText(String.valueOf(product.getPrice()));
+
 
     }
 
@@ -40,9 +65,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        TextView productDescription;
+        TextView productName;
+        TextView productPrice;
         public ViewHolder(@NonNull View itemView) {
+
             super(itemView);
+            productDescription = itemView.findViewById(R.id.feed_product_card_category);
+            productName = itemView.findViewById(R.id.feed_product_card_name);
+            productPrice = itemView.findViewById(R.id.feed_product_card_price);
         }
     }
 
