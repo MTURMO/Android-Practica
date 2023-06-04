@@ -51,10 +51,16 @@ public class Login extends AppCompatActivity {
         ApiCalls apiCalls = new ApiCalls(this);
         apiCalls.loginUser(user,this);
 
+
     }
 
     private void goToRegister(){
         Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+    }
+
+    public void goToMain(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
