@@ -1227,6 +1227,7 @@ public class ApiCalls {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonProduct = response.getJSONObject(i);
 
+                                int id= jsonProduct.getInt("id");
                                 String productName = jsonProduct.getString("name");
                                 String productDescription = jsonProduct.getString("description");
                                 String photo = jsonProduct.getString("photo");
@@ -1234,7 +1235,7 @@ public class ApiCalls {
                                 int categoria = jsonProduct.optInt("category", 0);
                                 float productPrice = Float.parseFloat(jsonProduct.getString("price"));
 
-                                Product product = new Product(productName, productDescription, productPrice, photo, link, categoria);
+                                Product product = new Product(id,productName, productDescription, productPrice, photo, link, categoria);
                                 productList.add(product);
                             }
 

@@ -5,6 +5,14 @@ import org.json.JSONObject;
 
 public class Product {
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private int id;
 
 
@@ -16,6 +24,15 @@ public class Product {
     private final int categoryId;
 
     public Product(String name, String description,float price, String product_url, String photo_url, int categoryId){
+        this.name=name;
+        this.description=description;
+        this.product_url=product_url;
+        this.photo_url=photo_url;
+        this.price=price;
+        this.categoryId=categoryId;
+    }
+    public Product(int id,String name, String description,float price, String product_url, String photo_url, int categoryId){
+        this.id =id;
         this.name=name;
         this.description=description;
         this.product_url=product_url;
@@ -40,6 +57,22 @@ public class Product {
         return jsonObject;
     }
 
+    public JSONObject getProductID() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", id);
+            jsonObject.put("name", name);
+            jsonObject.put("description", description);
+            jsonObject.put("link", product_url);
+            jsonObject.put("photo", photo_url);
+            jsonObject.put("price", price);
+            jsonObject.put("category", categoryId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
     public JSONObject editProduct() {
         JSONObject jsonObject = new JSONObject();
         try {

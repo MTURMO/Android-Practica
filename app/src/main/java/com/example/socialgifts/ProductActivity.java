@@ -32,6 +32,21 @@ public class ProductActivity extends AppCompatActivity {
         textViewprice = findViewById(R.id.product_price);
         textViewdescription = findViewById(R.id.product_description);
         buttonCreateGift = findViewById(R.id.product_create_gift);
+
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String description = intent.getStringExtra("description");
+        String product_url = intent.getStringExtra("product_url");
+        int category = intent.getIntExtra("category", 0);
+        float price = intent.getFloatExtra("price", 0);
+        int id = intent.getIntExtra("id", 0);
+
+        textViewName.setText(name);
+        textViewcategory.setText(Integer.toString(category));
+        textViewprice.setText(Float.toString(price));
+        textViewdescription.setText(description);
+
         buildDialog(this);
         buttonCreateGift.setOnClickListener(view -> selectWishList.show());
     }
