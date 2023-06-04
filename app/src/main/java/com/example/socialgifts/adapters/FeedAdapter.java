@@ -2,6 +2,7 @@ package com.example.socialgifts.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.socialgifts.Product;
+import com.example.socialgifts.ProductActivity;
 import com.example.socialgifts.R;
 
 import java.util.ArrayList;
@@ -55,6 +57,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.productName.setText(product.getName());
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(String.valueOf(product.getPrice()));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ProductActivity.class);
+            intent.putExtra("id", product.getId());
+            intent.putExtra("name", product.getName());
+            intent.putExtra("description", product.getDescription());
+            intent.putExtra("price", product.getPrice());
+            intent.putExtra("category", product.getCategoryId());
+
+            context.startActivity(intent);
+        });
 
 
     }
