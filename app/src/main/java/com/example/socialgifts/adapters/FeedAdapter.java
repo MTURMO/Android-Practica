@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.ProductActivity;
 import com.example.socialgifts.R;
@@ -44,7 +45,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     @NonNull
-     @Override
+    @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.feed_product_card, parent, false);
@@ -58,6 +59,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(String.valueOf(product.getPrice()));
 
+        Glide.with(context).load(product.getPhoto_url()).error(R.drawable.ic_launcher_foreground).into(holder.productImage);
+
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ProductActivity.class);
             intent.putExtra("id", product.getId());
@@ -65,6 +68,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             intent.putExtra("description", product.getDescription());
             intent.putExtra("price", product.getPrice());
             intent.putExtra("category", product.getCategoryId());
+            intent.putExtra("image", product.getPhoto_url());
 
             context.startActivity(intent);
         });
@@ -81,12 +85,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView productDescription;
         TextView productName;
         TextView productPrice;
+        ImageView productImage;
+
         public ViewHolder(@NonNull View itemView) {
 
             super(itemView);
             productDescription = itemView.findViewById(R.id.feed_product_card_category);
             productName = itemView.findViewById(R.id.feed_product_card_name);
             productPrice = itemView.findViewById(R.id.feed_product_card_price);
+            productImage = itemView.findViewById(R.id.feed_product_card_image);
         }
     }
 
