@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
@@ -46,8 +48,6 @@ public class ApiCalls {
         MainActivity = mainActivity;
 
     }
-
-
     public Object getMainActivity() {
         return MainActivity;
     }
@@ -85,8 +85,8 @@ public class ApiCalls {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                        accessToken = response.get("accessToken").toString();
-                        Log.e("onResponse: ",accessToken);
+                    accessToken = response.get("accessToken").toString();
+                    Log.e("onResponse: ",accessToken);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -200,53 +200,6 @@ public class ApiCalls {
     La funcio retorna
         - Array de users
      */
-    public void getAllUsers(String accessToken,Context context) {
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
-                        List<User> userList = new ArrayList<>();
-
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-
-                                int id= jsonObject.getInt("id");
-                                String name = jsonObject.getString("name");
-                                String last_name = jsonObject.getString("last_name");
-                                String email = jsonObject.getString("email");
-                                String image = jsonObject.getString("image");
-                                User user = new User(id,name, last_name, email, image);
-                                userList.add(user);
-                            }
-
-                            adapter2.setUser(userList);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error:" + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonArrayRequest);
-    }
 
     /*
     Funció per buscar un usuari
@@ -1233,6 +1186,55 @@ public class ApiCalls {
      * TODO CALL PRODUCTE
      */
 
+    public void getAllUsers(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        List<User> userList = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                int id= jsonObject.getInt("id");
+                                String name = jsonObject.getString("name");
+                                String last_name = jsonObject.getString("last_name");
+                                String email = jsonObject.getString("email");
+                                String image = jsonObject.getString("image");
+                                User user = new User(id,name, last_name, email, image);
+                                userList.add(user);
+                            }
+
+                            adapter2.setUser(userList);
+
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
 
     public void getProductList(String accessToken,Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
