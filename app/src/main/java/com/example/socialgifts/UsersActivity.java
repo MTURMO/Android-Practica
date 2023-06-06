@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.socialgifts.activities.MainActivity;
 
 public class UsersActivity extends AppCompatActivity {
 
     private TextView textViewName;
-    private TextView email;
+    public TextView last_name;
+    public ImageView image;
     private Button back;
 
 
@@ -25,17 +28,20 @@ public class UsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        image = findViewById(R.id.user_image);
         textViewName = findViewById(R.id.user_name);
-        email = findViewById(R.id.user_email);
+        last_name = findViewById(R.id.user_last_name);
         back = findViewById(R.id.back);
 
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        String description = intent.getStringExtra("email");
+        String lastname = intent.getStringExtra("last_name");
+        String image = intent.getStringExtra("image");
 
         textViewName.setText(name);
-        email.setText(description);
+        last_name.setText(lastname);
+        Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(this.image);
 
         back.setOnClickListener(view -> goToFeed());
     }

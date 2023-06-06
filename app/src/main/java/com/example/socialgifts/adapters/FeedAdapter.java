@@ -61,6 +61,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         Glide.with(context).load(product.getPhoto_url()).error(R.drawable.ic_launcher_foreground).into(holder.productImage);
 
+
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ProductActivity.class);
             intent.putExtra("id", product.getId());

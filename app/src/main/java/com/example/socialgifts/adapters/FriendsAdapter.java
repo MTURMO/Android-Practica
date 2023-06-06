@@ -65,7 +65,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             Intent intent = new Intent(context, UsersActivity.class);
             intent.putExtra("id", user.getId());
             intent.putExtra("name", user.getName());
-            intent.putExtra("description", user.getEmail());
+            intent.putExtra("last_name", user.getLast_name());
             intent.putExtra("image", user.getImage());
             context.startActivity(intent);
         });
