@@ -16,6 +16,8 @@
         <activity
             android:name=".ProductActivity"
             android:exported="false" />
+        <activity android:name=".UsersActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.CreateProductActivity"
             android:exported="false" />

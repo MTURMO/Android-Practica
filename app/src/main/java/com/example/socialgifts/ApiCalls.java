@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
+import com.example.socialgifts.adapters.FriendsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,12 +31,16 @@ public class ApiCalls {
     private String accessToken;
     private Context context;
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
+    private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
 
     public ApiCalls(Context context, FeedAdapter adapter) {
         this.context = context;
         this.adapter = adapter;
     }
-
+    public ApiCalls(Context context, FriendsAdapter adapter) {
+        this.context = context;
+        this.adapter2 = adapter;
+    }
 
     public ApiCalls(Object mainActivity) {
         MainActivity = mainActivity;
@@ -195,8 +200,8 @@ public class ApiCalls {
     La funcio retorna
         - Array de users
      */
-    public void getAllUsers(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getAllUsers(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -206,7 +211,25 @@ public class ApiCalls {
                     public void onResponse(JSONArray response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        List<User> userList = new ArrayList<>();
 
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                int id= jsonObject.getInt("id");
+                                String name = jsonObject.getString("name");
+                                String last_name = jsonObject.getString("last_name");
+                                String email = jsonObject.getString("email");
+                                String image = jsonObject.getString("image");
+                                User user = new User(id,name, last_name, email, image);
+                                userList.add(user);
+                            }
+
+                            adapter2.setUser(userList);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
