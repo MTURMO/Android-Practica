@@ -20,6 +20,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.socialgifts.R.layout.feed_product_card;
+
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private List<Product> products;

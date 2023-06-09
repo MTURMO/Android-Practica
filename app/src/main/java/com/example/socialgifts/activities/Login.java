@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         ApiCalls apiCalls = new ApiCalls(this);
         apiCalls.loginUser(user,this);
 
-
+        goToMain();
     }
 
     private void goToRegister(){
