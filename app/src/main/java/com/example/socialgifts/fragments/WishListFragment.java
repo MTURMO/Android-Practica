@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class WishListFragment extends Fragment {
 
     private ArrayList<WishList> wishLists;
+    private Button createWishListButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class WishListFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         WishListAdapter adapter = new WishListAdapter(wishLists, getContext());
         recyclerView.setAdapter(adapter);
+        createWishListButton = view.findViewById(R.id.wishlist_create_wishlist);
+        createWishListButton.setOnClickListener(view1 -> {
+            //Navigate to create wishlist activity
+        });
         return view;
     }
 }
