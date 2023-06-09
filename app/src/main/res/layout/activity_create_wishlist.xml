@@ -13,7 +13,16 @@
         android:text="New Wishlist Name"
         android:textSize="18sp"/>
     <EditText
-        android:id="@+id/wishlist_new"
+        android:id="@+id/wishlist_new_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wishlist Description"
+        android:textSize="18sp"/>
+    <EditText
+        android:id="@+id/wishlist_new_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
