@@ -7,18 +7,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     app:cardCornerRadius="8dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:id="@+id/feed_user_card_image"
-            android:scaleType="fitStart"/>
+            android:scaleType="fitStart"
+            android:src="@drawable/icon_friends"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,19 +28,20 @@
             android:padding="10dp"
             android:gravity="start|center_vertical"
             tools:ignore="Suspicious0dp">
-
             <TextView
                 android:id="@+id/feed_user_card_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="User Name"/>
 
             <TextView
                 android:id="@+id/feed_user_card_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:text="User email"/>
         </LinearLayout>
 
     </LinearLayout>
