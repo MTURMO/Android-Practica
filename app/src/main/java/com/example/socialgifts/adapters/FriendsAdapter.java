@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.socialgifts.Product;
-import com.example.socialgifts.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
-import com.example.socialgifts.UsersActivity;
+import com.example.socialgifts.activities.UsersActivity;
 
 import java.util.ArrayList;
 import java.util.List;

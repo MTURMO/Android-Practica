@@ -1,4 +1,4 @@
-package com.example.socialgifts;
+package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.R;
 import com.example.socialgifts.activities.MainActivity;
 
 public class ProductActivity extends AppCompatActivity {

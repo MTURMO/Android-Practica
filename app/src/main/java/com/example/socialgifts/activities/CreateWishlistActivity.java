@@ -1,4 +1,4 @@
-package com.example.socialgifts;
+package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.socialgifts.R;
 
 public class CreateWishlistActivity extends AppCompatActivity {
     private EditText newWishlistEditText;

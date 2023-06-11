@@ -1,7 +1,6 @@
 package com.example.socialgifts.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,18 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 
 import com.example.socialgifts.ApiCalls;
-import com.example.socialgifts.Product;
-import com.example.socialgifts.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
-import com.example.socialgifts.activities.CreateProductActivity;
-import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
 
 import java.util.ArrayList;

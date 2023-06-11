@@ -1,6 +1,5 @@
 package com.example.socialgifts.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,26 +9,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Product;
-import com.example.socialgifts.ProductActivity;
+import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FeedFragment extends Fragment{
 

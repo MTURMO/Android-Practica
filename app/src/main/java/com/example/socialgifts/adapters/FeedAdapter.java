@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.Product;
-import com.example.socialgifts.ProductActivity;
+import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 
 import java.util.ArrayList;
@@ -19,8 +19,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static com.example.socialgifts.R.layout.feed_product_card;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 

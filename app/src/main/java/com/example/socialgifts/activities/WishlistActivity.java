@@ -1,4 +1,4 @@
-package com.example.socialgifts;
+package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.socialgifts.Product;
+import com.example.socialgifts.R;
 import com.example.socialgifts.adapters.FeedAdapter;
 
 import java.util.ArrayList;
