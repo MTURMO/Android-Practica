@@ -8,7 +8,7 @@
     android:paddingTop="70dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    tools:context=".ChatActivity">
+    tools:context=".activities.ChatActivity">
     <TextView
         android:id="@+id/chat_friend_name"
         android:layout_width="match_parent"

@@ -1,8 +1,10 @@
-package com.example.socialgifts;
+package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.socialgifts.R;
 
 public class ChatActivity extends AppCompatActivity {
 

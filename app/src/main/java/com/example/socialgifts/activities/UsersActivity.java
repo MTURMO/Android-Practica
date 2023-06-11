@@ -56,7 +56,8 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void goToChat() {
-
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 
     private void goToFeed() {

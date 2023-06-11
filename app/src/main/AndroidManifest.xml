@@ -12,7 +12,7 @@
         android:theme="@style/Theme.SocialGifts"
         tools:targetApi="31">
         <activity
-            android:name=".ChatActivity"
+            android:name=".activities.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".activities.WishlistActivity"
