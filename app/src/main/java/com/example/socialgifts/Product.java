@@ -5,13 +5,7 @@ import org.json.JSONObject;
 
 public class Product {
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     private int id;
 
@@ -87,6 +81,13 @@ public class Product {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     public String getName() {
         return name;

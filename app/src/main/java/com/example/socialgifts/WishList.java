@@ -17,6 +17,10 @@ public class WishList {
         this.description = description;
         this.end_date = end_date;
     }
+    public WishList(int id,String name ) {
+        this.name = name;
+this.id=id;
+    }
 
     public WishList(int id, String name, String description, int user_id, Gift[] gifts, String creation_date, String end_date) {
         this.id = id;

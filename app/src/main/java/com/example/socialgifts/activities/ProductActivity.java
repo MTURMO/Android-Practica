@@ -7,15 +7,30 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.ApiCalls;
+import com.example.socialgifts.Category;
+import com.example.socialgifts.Gift;
 import com.example.socialgifts.R;
+import com.example.socialgifts.WishList;
 import com.example.socialgifts.activities.MainActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -24,12 +39,17 @@ public class ProductActivity extends AppCompatActivity {
     private TextView textViewprice;
     private TextView textViewdescription;
     public ImageView image;
+    private int idProduct;
 
     private Button buttonCreateGift;
+    private Spinner spinner ;
     private AlertDialog selectWishList;
+    private List<String> wishLists;
+    private int [] idWishlist;
 
 
-    @SuppressLint("MissingInflatedId")
+
+    @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +65,19 @@ public class ProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String description = intent.getStringExtra("description");
-        String product_url = intent.getStringExtra("image");
+        String image_url = intent.getStringExtra("image");
         int category = intent.getIntExtra("category", 0);
         float price = intent.getFloatExtra("price", 0);
-        int id = intent.getIntExtra("id", 0);
+        idProduct = intent.getIntExtra("id", 0);
+        name=name!=null?name:"null";
+        description=description!=null?description:"null";
+        image_url=image_url!=null?image_url:"null";
 
         textViewName.setText(name);
         textViewcategory.setText(Integer.toString(category));
         textViewprice.setText(Float.toString(price));
         textViewdescription.setText(description);
-        Glide.with(this).load(product_url).error(R.drawable.ic_launcher_foreground).into(this.image);
+        Glide.with(this).load(image_url).error(R.drawable.ic_launcher_foreground).into(this.image);
 
 
         buildDialog(this);
@@ -65,15 +88,66 @@ public class ProductActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.category_pop_up, null);
 
+        ApiCalls apiCalls = new ApiCalls(ProductActivity.this);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String accessToken = sharedPreferences.getString("accessToken", "");
+
         builder.setView(view);
         builder.setTitle("Choose a wish list")
                 .setPositiveButton("OK", (dialogInterface, i) -> {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
+                    ApiCalls apiCalls2 = new ApiCalls(ProductActivity.this);
+
+                    int posWhishList = spinner.getSelectedItemPosition();
+                    String url= "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/"+idProduct;
+                    Gift gift = new Gift(idWishlist[posWhishList],url,0);
+
+                    apiCalls2.createGift(accessToken,gift,ProductActivity.this);
+
+                    Intent intent2 = new Intent(context, MainActivity.class);
+                    startActivity(intent2);
                 })
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
 
                 });
+
         selectWishList = builder.create();
+
+
+        String id = sharedPreferences.getString("id", "");
+
+        spinner = view.findViewById(R.id.wish_list_spinner);
+        wishLists = new ArrayList<>();
+
+
+        //ApiCalls apiCalls = new ApiCalls(this);
+        apiCalls.getAllUserWhishlist(accessToken, Integer.parseInt(id),new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                parsear(response);
+            }
+        });
+
     }
-}
+
+    private void parsear(JSONArray response) {
+        idWishlist = new int[response.length()];
+        for (int i = 0; i < response.length(); i++) {
+            try {
+                JSONObject categoryObject = response.getJSONObject(i);
+                int id = categoryObject.getInt("id");
+                String name = categoryObject.getString("name");
+
+                idWishlist[i]=id;
+                WishList wishList = new WishList(id, name);
+                wishLists.add(wishList.getName());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, wishLists);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    }
