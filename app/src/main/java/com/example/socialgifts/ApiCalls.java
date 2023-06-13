@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.socialgifts.activities.MainActivity;
+import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
@@ -34,6 +35,7 @@ public class ApiCalls {
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
     private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
     private WishListAdapter adapter3;
+    private ChatAdapter adapterChat;
 
     public ApiCalls(Context context, FeedAdapter adapter) {
         this.context = context;
@@ -42,6 +44,10 @@ public class ApiCalls {
     public ApiCalls(Context context, FriendsAdapter adapter) {
         this.context = context;
         this.adapter2 = adapter;
+    }
+    public ApiCalls(Context context, ChatAdapter adapter) {
+        this.context = context;
+        this.adapterChat = adapter;
     }
     public ApiCalls(Context context, WishListAdapter adapter) {
         this.context = context;

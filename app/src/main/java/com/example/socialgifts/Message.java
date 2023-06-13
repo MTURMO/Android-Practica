@@ -13,6 +13,10 @@ public class Message {
         this.user_id_send = user_id_send;
         this.user_id_recived = user_id_recived;
     }
+    public Message(String content, int userAux) {
+        this.content = content;
+        this.user_id_send = userAux;
+    }
 
     public String getContent() {
         return content;
