@@ -35,7 +35,6 @@ public class FeedFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -70,12 +69,6 @@ public class FeedFragment extends Fragment{
             Intent intent = new Intent(getContext(), CreateProductActivity.class);
             startActivity(intent);
         });
-        Button tempButton = view.findViewById(R.id.feed_temp);
-        tempButton.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getContext(), ProductActivity.class);
-            startActivity(intent);
-        });
-
 
 
         return view;

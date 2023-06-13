@@ -15,6 +15,13 @@ public class Gift {
         this.product_url = product_url;
         this.priority = priority;
     }
+    public Gift(int id,int wishlist_id, String product_url, int priority,boolean booked) {
+        this.id = id;
+        this.wishlist_id = wishlist_id;
+        this.product_url = product_url;
+        this.priority = priority;
+        this.booked = booked;
+    }
 
     public int getWishlist_id() {
         return wishlist_id;

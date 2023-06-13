@@ -20,8 +20,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="Wishlist name" />
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/wishlist_card_num_gifts"
             android:layout_width="wrap_content"
@@ -29,8 +28,7 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:gravity="center"
-            android:textSize="18sp"
-            android:text="13 gifts"/>
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/wishlist_card_creation_date"
             android:layout_width="wrap_content"
@@ -38,7 +36,14 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:gravity="center"
-            android:textSize="18sp"
-            android:text="01/08/2023"/>
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/wishlist_card_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="18sp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

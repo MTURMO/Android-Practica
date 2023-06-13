@@ -3,12 +3,14 @@ package com.example.socialgifts;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class WishList {
     private int id;
     private String name;
     private String description;
     private int user_id;
-    private Gift[] gifts;
+    private ArrayList<Gift> gifts;
     private String creation_date;
     private String end_date;
 
@@ -19,10 +21,10 @@ public class WishList {
     }
     public WishList(int id,String name ) {
         this.name = name;
-this.id=id;
+    this.id=id;
     }
 
-    public WishList(int id, String name, String description, int user_id, Gift[] gifts, String creation_date, String end_date) {
+    public WishList(int id, String name, String description, int user_id, ArrayList<Gift> gifts, String creation_date, String end_date) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -64,14 +66,14 @@ this.id=id;
         this.user_id = user_id;
     }
 
-    public Gift[] getGifts() {
+
+    public ArrayList<Gift> getGiftsArrayList() {
         return gifts;
     }
 
-    public void setGifts(Gift[] gifts) {
+    public void setGifts(ArrayList<Gift> gifts) {
         this.gifts = gifts;
     }
-
     public String getCreation_date() {
         return creation_date;
     }

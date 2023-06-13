@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -14,10 +13,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
+import com.example.socialgifts.adapters.WishListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +33,7 @@ public class ApiCalls {
     private Context context;
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
     private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
+    private WishListAdapter adapter3;
 
     public ApiCalls(Context context, FeedAdapter adapter) {
         this.context = context;
@@ -42,6 +42,10 @@ public class ApiCalls {
     public ApiCalls(Context context, FriendsAdapter adapter) {
         this.context = context;
         this.adapter2 = adapter;
+    }
+    public ApiCalls(Context context, WishListAdapter adapter) {
+        this.context = context;
+        this.adapter3 = adapter;
     }
 
 
@@ -350,7 +354,76 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
+    public void getAllUserWhishlistFragment(String accessToken, int id, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
 
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        ArrayList<WishList> wishLists = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
+
+                                int id = jsonProduct.getInt("id");
+                                String name = jsonProduct.getString("name");
+                                String description = jsonProduct.getString("description");
+                                int user_id = jsonProduct.getInt("user_id");
+
+                                String creation = jsonProduct.getString("creation_date");
+                                String end = jsonProduct.getString("end_date");
+
+                                JSONArray gift= jsonProduct.getJSONArray("gifts");
+                                ArrayList<Gift> gifts = new ArrayList<>();
+                                try {
+                                    for (int j = 0; j < gift.length(); i++) {
+                                        JSONObject jsonGift = response.getJSONObject(i);
+
+                                        int id_gift = jsonGift.getInt("id");
+                                        int id_wish = jsonGift.getInt("wishlist_id");
+                                        String product_url = jsonGift.getString("product_url");
+                                        int priority = jsonGift.getInt("priority");
+                                        boolean booked = jsonGift.getBoolean("booked");
+
+                                        Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
+                                        gifts.add(gift2);
+                                    }
+                                }catch (JSONException e) {
+
+                                }
+
+                                    WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
+                                wishLists.add(wishList);
+                            }
+
+                            adapter3.setWishLists(wishLists);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
 
     /*
     Funció per editar l'usuari que ha fet login
