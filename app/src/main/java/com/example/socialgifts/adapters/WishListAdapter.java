@@ -60,6 +60,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             intent.putExtra("user_id", wishList.getUser_id());
             intent.putExtra("creation_date", wishList.getCreation_date());
 
+
             context.startActivity(intent);
         });
     }

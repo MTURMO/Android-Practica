@@ -21,6 +21,7 @@ import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
+import com.example.socialgifts.adapters.GiftAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
 import com.example.socialgifts.fragments.ChatFragment;
 
@@ -40,8 +41,13 @@ public class ApiCalls {
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
     private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
     private WishListAdapter adapter3;
+    private GiftAdapter adapterGift;
     private ChatAdapter adapterChatMain, adapterChatFriend;
 
+    public ApiCalls(Context context, GiftAdapter adapter) {
+        this.context = context;
+        this.adapterGift = adapter;
+    }
     public ApiCalls(Context context, FeedAdapter adapter) {
         this.context = context;
         this.adapter = adapter;
@@ -400,7 +406,7 @@ public class ApiCalls {
                                         int id_wish = jsonGift.getInt("wishlist_id");
                                         String product_url = jsonGift.getString("product_url");
                                         int priority = jsonGift.getInt("priority");
-                                        boolean booked = jsonGift.getBoolean("booked");
+                                        String booked = jsonGift.getString("booked");
 
                                         Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
                                         gifts.add(gift2);
@@ -588,8 +594,8 @@ public class ApiCalls {
         - accessToken
         - id
      */
-    public void getGiftById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getGiftById(String accessToken, int id, Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -599,7 +605,18 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: "+ response.toString());
                         //Obtenim tots els usuaris en format json
-
+                        Gift product;
+                        try {
+                            product = new Gift(
+                                    response.getInt("id"),
+                                    response.getInt("wishlist_id"),
+                                    response.getString("product_url"),
+                                    response.getInt("priority"),
+                                    response.getString("booked"));
+                            adapterGift.addGifts(product);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -854,12 +871,12 @@ public class ApiCalls {
         - accessToken
         - int id
      */
-    public void editWishlist(String accessToken, int id, WishList wishList) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void editWishlist(String accessToken, int id, WishList wishList,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PUT, url, wishList. getWishListEdit(), new Response.Listener<JSONObject>() {
+                (Request.Method.PUT, url, wishList. getWishListEdit2(), new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -1373,8 +1390,52 @@ public class ApiCalls {
                                     jsonProduct.getString("link"),
                                     jsonProduct.getString("photo"),
                                     0);
-
                             adapter.addProducts(product);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void getProductByID2(String accessToken, int productId, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject jsonProduct = response;
+                        try {
+                            Log.e("resposta", "La resposta es: " + response.toString());
+                            Product product;
+                            product = new Product(
+                                    jsonProduct.getInt("id"),
+                                    jsonProduct.getString("name"),
+                                    jsonProduct.getString("description"),
+                                    Float.parseFloat(jsonProduct.getString("price")),
+                                    jsonProduct.getString("link"),
+                                    jsonProduct.getString("photo"),
+                                    0);
+
+                            adapterGift.addProducts(product);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
 

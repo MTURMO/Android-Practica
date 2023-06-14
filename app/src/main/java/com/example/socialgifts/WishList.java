@@ -117,4 +117,15 @@ public class WishList {
         }
         return jsonObject;
     }
+    public JSONObject getWishListEdit2() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+            jsonObject.put("description", description);
+            jsonObject.put("end_date", end_date);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 }

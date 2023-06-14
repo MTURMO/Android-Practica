@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
@@ -26,13 +27,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private Context context;
     private final String filter;
 
-    public FeedAdapter(List<Product> products, Context context, String filter){
+    public FeedAdapter(List<Product> products,  Context context, String filter){
         if(products==null){
             this.products=new ArrayList<>();
         } else{
             this.products = products;
-
         }
+
         this.context = context;
         this.filter = filter;
 
@@ -47,6 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         this.products.add(products);
         notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override

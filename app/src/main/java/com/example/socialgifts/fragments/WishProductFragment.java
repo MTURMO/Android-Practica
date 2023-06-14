@@ -20,12 +20,14 @@ import android.widget.Spinner;
 
 import com.android.volley.Response;
 import com.example.socialgifts.ApiCalls;
+import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.WishList;
 import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
+import com.example.socialgifts.adapters.GiftAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,15 +40,14 @@ import java.util.regex.Pattern;
 public class WishProductFragment extends Fragment{
 
     private ArrayList<Product> products;
-    private FeedAdapter adapter;
-    private List<Integer> numberList = new ArrayList<>();
+    private ArrayList<Gift> gifts;
+    private GiftAdapter adapter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         products = new ArrayList<>();
-
 
     }
 
@@ -61,7 +62,7 @@ public class WishProductFragment extends Fragment{
         RecyclerView recyclerView = view.findViewById(R.id.wishlist_activity_recycle);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
-        adapter= new FeedAdapter(products, getContext(), "all");
+        adapter= new GiftAdapter(products,gifts, getContext());
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -99,8 +100,10 @@ public class WishProductFragment extends Fragment{
                 String name = extractNumberFromUrl(url);
 
                 int number = Integer.parseInt(name);
+
                 ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
-                apiCalls.getProductByID(accessToken, number, this.getContext());;
+                apiCalls.getProductByID2(accessToken, number, getContext());;
+                apiCalls.getGiftById(accessToken, giftObject.getInt("id"), getContext());
             }
 
             } catch (Exception e) {
