@@ -680,8 +680,8 @@ public class ApiCalls {
         - accessToken
         - id
      */
-    public void deleteGiftById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void deleteGiftById(String accessToken, int id, Context context,Response.Listener<JSONObject> listener) {
+        RequestQueue queue = Volley.newRequestQueue((context) );
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -691,6 +691,7 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: "+ response.toString());
                         //Obtenim tots els usuaris en format json
+                        listener.onResponse(response);
 
                     }
                 }, new Response.ErrorListener() {

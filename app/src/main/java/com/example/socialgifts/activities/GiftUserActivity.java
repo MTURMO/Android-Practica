@@ -21,6 +21,7 @@ import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Gift;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
+import com.example.socialgifts.fragments.WishProductFragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ public class GiftUserActivity extends AppCompatActivity {
         private int idProduct;
 
         private Button editButton;
+        private Button deleteButton;
 
 
 
@@ -52,7 +54,7 @@ public class GiftUserActivity extends AppCompatActivity {
             textViewprice = findViewById(R.id.product_price2);
             textViewdescription = findViewById(R.id.product_description2);
             editButton = findViewById(R.id.product_edit_gift);
-
+            deleteButton = findViewById(R.id.product_delete_gift);
 
             Intent intent = getIntent();
             String name2 = intent.getStringExtra("name");
@@ -91,6 +93,26 @@ public class GiftUserActivity extends AppCompatActivity {
                     intent2.putExtra("priority", priority);
                     intent2.putExtra("id_gift", id_gift);
                     startActivity(intent2);
+            });
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String accessToken = sharedPreferences.getString("accessToken", "");
+            deleteButton.setOnClickListener(view ->{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Delete gift");
+                builder.setMessage("Are you sure you want to delete this gift?");
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    ApiCalls apiCalls = new ApiCalls(this);
+                    apiCalls.deleteGiftById(accessToken,id_gift ,this, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Intent intent = new Intent(GiftUserActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                });
+                builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+                builder.show();
             });
         }
 

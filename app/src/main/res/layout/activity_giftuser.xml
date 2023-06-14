@@ -66,4 +66,11 @@
         android:layout_gravity="center"
         android:layout_margin="30dp"
         android:text="Edit gift"/>
+    <Button
+        android:id="@+id/product_delete_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:text="Delete gift"/>
 </LinearLayout>
