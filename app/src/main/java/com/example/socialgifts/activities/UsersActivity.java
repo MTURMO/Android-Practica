@@ -46,7 +46,7 @@ public class UsersActivity extends AppCompatActivity {
 
         back.setOnClickListener(view -> goToFeed());
         chat.setOnClickListener(view ->{
-                Intent intent2 = new Intent(this, ChatFragment.class);
+                Intent intent2 = new Intent(this, ChatActivity.class);
                     intent2.putExtra("name", intent.getStringExtra("name"));
                     intent2.putExtra("last_name", intent.getStringExtra("last_name"));
                     intent2.putExtra("image", intent.getStringExtra("image"));

@@ -35,7 +35,7 @@ public class ApiCalls {
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
     private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
     private WishListAdapter adapter3;
-    private ChatAdapter adapterChat;
+    private ChatAdapter adapterChatMain, adapterChatFriend;
 
     public ApiCalls(Context context, FeedAdapter adapter) {
         this.context = context;
@@ -45,9 +45,9 @@ public class ApiCalls {
         this.context = context;
         this.adapter2 = adapter;
     }
-    public ApiCalls(Context context, ChatAdapter adapter) {
+    public ApiCalls(Context context, ChatAdapter adapter){
         this.context = context;
-        this.adapterChat = adapter;
+        this.adapterChatMain = adapter;
     }
     public ApiCalls(Context context, WishListAdapter adapter) {
         this.context = context;
@@ -999,35 +999,7 @@ public class ApiCalls {
         - accessToken
         - int id
      */
-    public void getMessagesById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error: " + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonArrayRequest);
-    }
 
     /******************************
      * CRIDES API MESSAGES
@@ -1323,6 +1295,58 @@ public class ApiCalls {
 
         queue.add(jsonArrayRequest);
     }
+    public void getMessagesById(String accessToken, int id,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context) );
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        ArrayList<Message> productList = new ArrayList<>();
+                        ArrayList<Message> messageFriend = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
+
+                                int id_user = jsonProduct.getInt("user_id_send");
+                                String content = jsonProduct.getString("content");
+                                int friend  = jsonProduct.getInt("user_id_recived");
+                                Message message = new Message(content,id_user,friend);
+
+                                if(id_user != id) {
+                                    productList.add(message);
+                                } else {
+                                    messageFriend.add(message);
+                                }
+                            }
+                            adapterChatMain.setMessagesMain(productList);
+                            adapterChatFriend.setMessagesFriend(messageFriend);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
     public void getProductByID(String accessToken, int productId) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;

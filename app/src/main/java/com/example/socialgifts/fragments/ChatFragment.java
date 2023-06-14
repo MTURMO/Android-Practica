@@ -26,10 +26,12 @@ import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChatFragment extends Fragment {
 
     private ChatAdapter adapterMain;
+    private ChatAdapter adapterFriend;
     private List<Message> messages;
 
 
@@ -47,14 +49,18 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         RecyclerView recyclerViewMain = view.findViewById(R.id.chat_recycle_view_main);
+        RecyclerView recyclerViewFriend = view.findViewById(R.id.chat_recycle_view_friend);
 
         recyclerViewMain.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        adapterMain = new ChatAdapter(messages, getContext());
+        recyclerViewFriend.setLayoutManager(new GridLayoutManager(getContext(), 1));
+
+        Intent intent = requireActivity().getIntent();
+        int id= intent.getIntExtra("id", 0);
+
+        adapterMain = new ChatAdapter(messages, getContext(),id);
+        adapterFriend = new ChatAdapter(messages, getContext(),id);
         recyclerViewMain.setAdapter(adapterMain);
-
-
-
-
+        recyclerViewFriend.setAdapter(adapterFriend);
 
         return view;
     }
@@ -65,15 +71,15 @@ public class ChatFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("accessToken", "");
 
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         int id= intent.getIntExtra("id", 0);
 
         ApiCalls apiCallsMain = new ApiCalls(getContext(), adapterMain);
-        apiCallsMain.getMessagesById(accessToken,id);
+        ApiCalls apiCallsFriend = new ApiCalls(getContext(), adapterFriend);
+        apiCallsMain.getMessagesById(accessToken,id,this.getContext());
+        apiCallsFriend.getMessagesById(accessToken,id,this.getContext());
+
     }
 
-    private Intent getIntent() {
-        Intent intent = getIntent();
-        return intent;
-    }
+
 }

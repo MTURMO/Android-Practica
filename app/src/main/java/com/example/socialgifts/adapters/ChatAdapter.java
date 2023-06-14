@@ -26,55 +26,77 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private List<Message> messages;
+    private List<Message> messagesMain, messagesFriend;
     private Context context;
     private SharedPreferences sharedPreferences;
+    private int id;
+    private static final int TYPE_MAIN = 1;
+    private static final int TYPE_FRIEND = 2;
 
-    public ChatAdapter(List<Message> messages,Context context){
-        if(messages == null){
-            this.messages = new ArrayList<>();
+    public ChatAdapter(List<Message> messages,Context context,int id){
+        if(messagesMain == null){
+            this.messagesMain = new ArrayList<>();
         } else{
-            this.messages = messages;
+            this.messagesMain = messages;
+        }
+        if(messagesFriend == null){
+            this.messagesFriend = new ArrayList<>();
+        } else{
+            this.messagesFriend = messages;
         }
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
+        this.id = id;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        Message message = messagesMain.get(position);
+        if(message.getUser_id_send()==id){
+            return TYPE_MAIN;
+        } else{
+            return TYPE_FRIEND;
+        }
+    }
     @SuppressLint("NotifyDataSetChanged")
-    public void setMessages(List<Message> messages){
-        this.messages = messages; ;
+    public void setMessagesMain(List<Message> messages){
+        this.messagesMain = messages; ;
         notifyDataSetChanged();
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    public void setMessagesFriend(List<Message> messages){
+        this.messagesFriend = messages; ;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
-    public ChatAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.fragment_chat, parent, false);
-        return new ChatAdapter.ViewHolder(view);
+        if(viewType==TYPE_MAIN){
+            View view = inflater.inflate(R.layout.main_user_message, parent, false);
+         return new ViewHolder(view);
+        }
+        else if(viewType==TYPE_FRIEND){
+            View view = inflater.inflate(R.layout.friend_message, parent,false);
+            return new ViewHolder(view);
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
-        Message message = messages.get(position);
-
-
-        int id = sharedPreferences.getInt("id", 0);
-
-        if(message.getUser_id_send()==id){
+        Message message = messagesMain.get(position);
+        int viewType = getItemViewType(position);
+        if(viewType==TYPE_MAIN){
             holder.missatgeMain.setText(message.getContent());
-        }else{
+        } else if(viewType==TYPE_FRIEND){
             holder.missatgeFriend.setText(message.getContent());
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-
-        return messages.size();
+        return messagesMain.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
