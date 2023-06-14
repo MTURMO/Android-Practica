@@ -25,6 +25,7 @@ import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +33,8 @@ public class ChatFragment extends Fragment {
 
     private ChatAdapter adapterMain;
     private ChatAdapter adapterFriend;
-    private List<Message> messages;
+    private List<Message> messagesMain;
+    private List<Message> messagesFriend;
 
 
 
@@ -57,8 +59,9 @@ public class ChatFragment extends Fragment {
         Intent intent = requireActivity().getIntent();
         int id= intent.getIntExtra("id", 0);
 
-        adapterMain = new ChatAdapter(messages, getContext(),id);
-        adapterFriend = new ChatAdapter(messages, getContext(),id);
+        adapterMain = new ChatAdapter(messagesMain, getContext(),id);
+        adapterFriend = new ChatAdapter(messagesFriend, getContext(),id);
+
         recyclerViewMain.setAdapter(adapterMain);
         recyclerViewFriend.setAdapter(adapterFriend);
 
@@ -76,9 +79,23 @@ public class ChatFragment extends Fragment {
 
         ApiCalls apiCallsMain = new ApiCalls(getContext(), adapterMain);
         ApiCalls apiCallsFriend = new ApiCalls(getContext(), adapterFriend);
-        apiCallsMain.getMessagesById(accessToken,id,this.getContext());
-        apiCallsFriend.getMessagesById(accessToken,id,this.getContext());
 
+        apiCallsMain.getMessagesById(accessToken,id,this.getContext(),"main");
+        apiCallsFriend.getMessagesById(accessToken,id,this.getContext(),"friend");
+
+
+    }
+    public void setMessagesMain(List<Message> messages) {
+        messagesMain = messages;
+        if(adapterMain != null)
+            adapterMain.setMessages(messagesMain);
+            adapterMain.notifyDataSetChanged();
+    }
+    public void setMessagesFriend(List<Message> messages) {
+        messagesFriend = messages;
+        if(adapterFriend != null)
+            adapterFriend.setMessages(messagesFriend);
+            adapterFriend.notifyDataSetChanged();
     }
 
 

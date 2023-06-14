@@ -10,13 +10,24 @@
         android:layout_height="wrap_content"
         android:paddingTop="70dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/wish_create"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Create New Wishlist"/>
+                      </LinearLayout>
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@layout/tool_bar">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -27,12 +38,6 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </ScrollView>
-            <ImageButton
-                android:id="@+id/wishlist_create_wishlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_input_add" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

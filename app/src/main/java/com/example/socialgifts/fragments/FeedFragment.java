@@ -33,7 +33,8 @@ public class FeedFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate( savedInstanceState);
+        products = new ArrayList<>();
 
     }
 
@@ -56,7 +57,6 @@ public class FeedFragment extends Fragment{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
             }
 
             @Override

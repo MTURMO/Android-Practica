@@ -39,6 +39,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         } else{
             this.messagesMain = messages;
         }
+
         if(messagesFriend == null){
             this.messagesFriend = new ArrayList<>();
         } else{
@@ -51,52 +52,65 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        Message message = messagesMain.get(position);
-        if(message.getUser_id_send()==id){
-            return TYPE_MAIN;
+        if(!messagesMain.isEmpty() && !messagesFriend.isEmpty()){
+            Message message = messagesMain.get(position);
+            if(message.getUser_id_send()==id){
+                return TYPE_MAIN;
+            } else{
+                return TYPE_FRIEND;
+            }
         } else{
-            return TYPE_FRIEND;
+            return TYPE_MAIN;
         }
     }
-    @SuppressLint("NotifyDataSetChanged")
-    public void setMessagesMain(List<Message> messages){
-        this.messagesMain = messages; ;
+    public void setMessages(List<Message> messages){
+        messagesMain.clear();
+        messagesFriend.clear();
+
+        for(Message message : messages){
+            if(message.getUser_id_send()==id){
+                messagesMain.add(message);
+            } else{
+                messagesFriend.add(message);
+            }
+        }
         notifyDataSetChanged();
     }
-    @SuppressLint("NotifyDataSetChanged")
-    public void setMessagesFriend(List<Message> messages){
-        this.messagesFriend = messages; ;
-        notifyDataSetChanged();
-    }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view;
         if(viewType==TYPE_MAIN){
-            View view = inflater.inflate(R.layout.main_user_message, parent, false);
-         return new ViewHolder(view);
+             view = inflater.inflate(R.layout.main_user_message, parent, false);
         }
-        else if(viewType==TYPE_FRIEND){
-            View view = inflater.inflate(R.layout.friend_message, parent,false);
-            return new ViewHolder(view);
+        else {
+            view = inflater.inflate(R.layout.friend_message, parent,false);
         }
-        return null;
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
-        Message message = messagesMain.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Message message;
         int viewType = getItemViewType(position);
-        if(viewType==TYPE_MAIN){
-            holder.missatgeMain.setText(message.getContent());
-        } else if(viewType==TYPE_FRIEND){
-            holder.missatgeFriend.setText(message.getContent());
+        if(!messagesMain.isEmpty() && !messagesFriend.isEmpty()){
+            if(viewType==TYPE_MAIN){
+                message = messagesMain.get(position);
+                holder.missatgeMain.setText(message.getContent());
+            } else if(viewType==TYPE_FRIEND){
+                message = messagesFriend.get(position-messagesMain.size());
+                holder.missatgeFriend.setText(message.getContent());
+            }
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return messagesMain.size();
+        return messagesMain.size() + messagesFriend.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

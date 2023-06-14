@@ -1,9 +1,13 @@
 package com.example.socialgifts;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -18,6 +22,7 @@ import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
+import com.example.socialgifts.fragments.ChatFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +50,7 @@ public class ApiCalls {
         this.context = context;
         this.adapter2 = adapter;
     }
-    public ApiCalls(Context context, ChatAdapter adapter){
+    public ApiCalls(Context context, ChatAdapter adapter) {
         this.context = context;
         this.adapterChatMain = adapter;
     }
@@ -136,7 +141,7 @@ public class ApiCalls {
             public void onResponse(JSONObject response) {
                 try {
                     accessToken = response.get("accessToken").toString();
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("accessToken", accessToken);
                     editor.apply();
@@ -699,8 +704,8 @@ public class ApiCalls {
         - accessToken
         - new wishlist
      */
-    public void createWishList(String accessToken, WishList wishList) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void createWishList(String accessToken, WishList wishList,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -773,8 +778,8 @@ public class ApiCalls {
         - accessToken
         - int id
      */
-    public void getWishlistById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getWishlistById(String accessToken, int id,Context MainActivity,Response.Listener<JSONObject> listener) {
+        RequestQueue queue = Volley.newRequestQueue( MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -784,6 +789,7 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        listener.onResponse(response);
 
                     }
                 }, new Response.ErrorListener() {
@@ -802,6 +808,7 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
+
 
     /*
     Funció per eliminar una wishlist
@@ -1295,7 +1302,7 @@ public class ApiCalls {
 
         queue.add(jsonArrayRequest);
     }
-    public void getMessagesById(String accessToken, int id,Context context) {
+    public void getMessagesById(String accessToken, int id,Context context,String name) {
         RequestQueue queue = Volley.newRequestQueue((context) );
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
 
@@ -1307,7 +1314,6 @@ public class ApiCalls {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
                         ArrayList<Message> productList = new ArrayList<>();
-                        ArrayList<Message> messageFriend = new ArrayList<>();
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
@@ -1318,14 +1324,13 @@ public class ApiCalls {
                                 int friend  = jsonProduct.getInt("user_id_recived");
                                 Message message = new Message(content,id_user,friend);
 
-                                if(id_user != id) {
-                                    productList.add(message);
-                                } else {
-                                    messageFriend.add(message);
-                                }
+                                productList.add(message);
+
                             }
-                            adapterChatMain.setMessagesMain(productList);
-                            adapterChatFriend.setMessagesFriend(messageFriend);
+                                adapterChatMain.setMessages(productList);
+
+
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -1347,8 +1352,8 @@ public class ApiCalls {
         queue.add(jsonArrayRequest);
     }
 
-    public void getProductByID(String accessToken, int productId) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getProductByID(String accessToken, int productId, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -1356,7 +1361,24 @@ public class ApiCalls {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
+                        JSONObject jsonProduct = response;
+                        try {
+                            Log.e("resposta", "La resposta es: " + response.toString());
+                            Product product;
+                            product = new Product(
+                                    jsonProduct.getInt("id"),
+                                    jsonProduct.getString("name"),
+                                    jsonProduct.getString("description"),
+                                    Float.parseFloat(jsonProduct.getString("price")),
+                                    jsonProduct.getString("link"),
+                                    jsonProduct.getString("photo"),
+                                    0);
+
+                            adapter.addProducts(product);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+
+                        }
 
                     }
                 }, new Response.ErrorListener() {

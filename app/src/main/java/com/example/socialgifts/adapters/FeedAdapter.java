@@ -43,6 +43,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         this.products=products;
         notifyDataSetChanged();
     }
+    public void addProducts(Product products){
+        this.products.add(products);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override

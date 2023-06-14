@@ -25,6 +25,16 @@
         android:id="@+id/wishlist_new_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wishlist End Date"
+        android:textSize="18sp"/>
+
+    <DatePicker
+        android:id="@+id/wishlist_new_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/wishlist_new_create_button"
         android:layout_width="wrap_content"

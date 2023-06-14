@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
-import com.example.socialgifts.activities.ProductActivity;
+import com.example.socialgifts.activities.WishlistActivity;
+import com.example.socialgifts.fragments.FeedFragment;
 
 import java.util.ArrayList;
 
@@ -24,9 +25,9 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
 
     public WishListAdapter(ArrayList<WishList> wishLists, Context context){
         if(wishLists==null){
-            this.wishLists=new ArrayList<>();
+            this.wishLists = new ArrayList<>();
         } else{
-            this.wishLists = wishLists;
+            this.wishLists.addAll(wishLists);
         }
         this.context = context;
     }
@@ -52,7 +53,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
         holder.creationDateTextView.setText(wishList.getCreation_date());
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ProductActivity.class);
+            Intent intent = new Intent(context, WishlistActivity.class);
             intent.putExtra("id", wishList.getId());
             intent.putExtra("name", wishList.getName());
             intent.putExtra("description", wishList.getDescription());

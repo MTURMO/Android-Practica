@@ -21,7 +21,7 @@ public class WishList {
     }
     public WishList(int id,String name ) {
         this.name = name;
-    this.id=id;
+        this.id=id;
     }
 
     public WishList(int id, String name, String description, int user_id, ArrayList<Gift> gifts, String creation_date, String end_date) {

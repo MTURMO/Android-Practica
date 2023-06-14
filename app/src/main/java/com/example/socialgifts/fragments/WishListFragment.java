@@ -1,5 +1,7 @@
 package com.example.socialgifts.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 import com.example.socialgifts.activities.CreateProductActivity;
+import com.example.socialgifts.activities.CreateWishlistActivity;
 import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.FriendsAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
@@ -29,6 +32,7 @@ public class WishListFragment extends Fragment {
 
     private ArrayList<WishList> wishLists;
     private WishListAdapter adapter;
+    private static final int CREATE_WISHLIST_REQUEST_CODE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,10 +51,10 @@ public class WishListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        ImageButton createWishListButton = view.findViewById(R.id.wishlist_create_wishlist);
+        Button createWishListButton = view.findViewById(R.id.wish_create);
         createWishListButton.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getContext(), MainActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(getContext(), CreateWishlistActivity.class);
+            startActivityForResult(intent,CREATE_WISHLIST_REQUEST_CODE);
             //Navigate to create wishlist activity
         });
         return view;
@@ -66,4 +70,16 @@ public class WishListFragment extends Fragment {
         ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
         apiCalls.getAllUserWhishlistFragment(accessToken,id,this.getContext());
     }
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREATE_WISHLIST_REQUEST_CODE && resultCode == RESULT_OK) {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String accessToken = sharedPreferences.getString("accessToken", "");
+            int id = Integer.parseInt(sharedPreferences.getString("id", ""));
+
+            ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
+            apiCalls.getAllUserWhishlistFragment(accessToken,id,this.getContext());
+        }
+    }*/
 }
