@@ -33,13 +33,20 @@ public class WishListFragment extends Fragment {
     private ArrayList<WishList> wishLists;
     private WishListAdapter adapter;
     private static final int CREATE_WISHLIST_REQUEST_CODE = 1;
-
+    private String nameUser;
+    private String lastname;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+    public void setName(String name) {
+        this.nameUser = name;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastname = lastName;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +54,7 @@ public class WishListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.wishlist_recycle_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        adapter = new WishListAdapter(wishLists, getContext());
+        adapter = new WishListAdapter(wishLists, getContext(),nameUser,lastname);
         recyclerView.setAdapter(adapter);
 
 
@@ -70,16 +77,5 @@ public class WishListFragment extends Fragment {
         ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
         apiCalls.getAllUserWhishlistFragment(accessToken,id,this.getContext());
     }
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CREATE_WISHLIST_REQUEST_CODE && resultCode == RESULT_OK) {
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            String accessToken = sharedPreferences.getString("accessToken", "");
-            int id = Integer.parseInt(sharedPreferences.getString("id", ""));
 
-            ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
-            apiCalls.getAllUserWhishlistFragment(accessToken,id,this.getContext());
-        }
-    }*/
 }

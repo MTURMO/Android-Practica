@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 import com.example.socialgifts.activities.WishlistActivityFriend;
-import com.example.socialgifts.activities.WishlistActivityMain;
 
 import java.util.ArrayList;
 
@@ -22,10 +21,12 @@ public class WishListAdapterFriend extends RecyclerView.Adapter<WishListAdapterF
 
     private ArrayList<WishList> wishLists;
     private final Context context;
-
-    public WishListAdapterFriend(ArrayList<WishList> wishLists, Context context){
+    private String nameUser;
+    private String lastname;
+    public WishListAdapterFriend(ArrayList<WishList> wishLists, Context context,String nameUser, String lastname ){
         this.wishLists = wishLists != null ? wishLists : new ArrayList<>();
-
+        this.nameUser = nameUser;
+        this.lastname = lastname;
         this.context = context;
     }
 
@@ -55,12 +56,15 @@ public class WishListAdapterFriend extends RecyclerView.Adapter<WishListAdapterF
         holder.numGiftsTextView.setText(String.valueOf(wishList.getGiftsArrayList().size()));
 
         holder.itemView.setOnClickListener(view -> {
+
             Intent intent = new Intent(context, WishlistActivityFriend.class);
             intent.putExtra("id", wishList.getId());
             intent.putExtra("name", wishList.getName());
             intent.putExtra("description", wishList.getDescription());
             intent.putExtra("user_id", wishList.getUser_id());
-            intent.putExtra("creation_date", wishList.getCreation_date());
+            intent.putExtra("end_date", wishList.getEnd_date());
+            intent.putExtra("nameUser", nameUser);
+            intent.putExtra("lastname", lastname);
 
             context.startActivity(intent);
         });

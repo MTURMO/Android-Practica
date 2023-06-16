@@ -86,12 +86,15 @@ public class Login extends AppCompatActivity {
                 JSONObject categoryObject = response.getJSONObject(i);
                 int id = categoryObject.getInt("id");
                 String emailAux = categoryObject.getString("email");
+                String name = categoryObject.getString("name");
+                String lastname = categoryObject.getString("last_name");
 
                 if (emailAux.equals(email)) {
                     SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-
                     editor.putString("id", String.valueOf(id));
+                    editor.putString("name",name);
+                    editor.putString("lastname",lastname);
                     editor.apply();
 
                 }

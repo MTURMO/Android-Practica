@@ -11,57 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="50sp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:textSize="30sp"/>
+
         <TextView
             android:id="@+id/wishlist_activity_user_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            android:gravity="start"
+            android:textSize="15sp"
+            android:paddingTop="20sp"/>
         <TextView
-            android:id="@+id/wishlist_activity_num_gifts"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/wishlist_activity_end_main"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20sp"/>
-    </LinearLayout>
+            android:gravity="start"
+            android:textSize="15sp"/>
     <TextView
         android:id="@+id/wishlist_activity_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:textSize="20sp"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Editar" />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_container">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/wishlist_activity_recycle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/edit_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:text="Editar" />
-            </LinearLayout>
-        </ScrollView>
+
     </FrameLayout>
+
 </LinearLayout>

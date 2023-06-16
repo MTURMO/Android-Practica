@@ -56,6 +56,7 @@ public class UsersActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container_user, userWishlistFragment)
                 .commit();
 
+
         back.setOnClickListener(view -> goToFeed());
         chat.setOnClickListener(view ->{
                 Intent intent2 = new Intent(this, ChatActivity.class);

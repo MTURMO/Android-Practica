@@ -562,6 +562,7 @@ public class ApiCalls {
 
                                 int id = jsonProduct.getInt("id");
                                 String name = jsonProduct.getString("name");
+
                                 String description = jsonProduct.getString("description");
                                 int user_id = jsonProduct.getInt("user_id");
 

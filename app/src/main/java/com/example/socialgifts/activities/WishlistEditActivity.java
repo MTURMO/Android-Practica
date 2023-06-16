@@ -35,7 +35,7 @@ public class WishlistEditActivity extends AppCompatActivity  {
             int id = intent.getIntExtra("id",0);
             String name = intent.getStringExtra("name");
             String description = intent.getStringExtra("description");
-            String data = intent.getStringExtra("data");
+            String data = intent.getStringExtra("end_date");
 
             newWishlistEditText.setText(name);
             newWishlistDescriptionEditText.setText(description);

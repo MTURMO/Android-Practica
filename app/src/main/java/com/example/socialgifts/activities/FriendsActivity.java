@@ -62,6 +62,9 @@ public class FriendsActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container_user, userWishlistFragment)
                     .commit();
 
+            userWishlistFragment.setName(name);
+            userWishlistFragment.setLastName(lastname);
+
             back.setOnClickListener(view -> goToFeed());
             chat.setOnClickListener(view ->{
                 Intent intent2 = new Intent(this, ChatActivity.class);

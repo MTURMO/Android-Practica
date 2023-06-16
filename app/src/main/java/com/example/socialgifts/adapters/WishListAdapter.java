@@ -21,10 +21,12 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
 
     private ArrayList<WishList> wishLists;
     private final Context context;
-
-    public WishListAdapter(ArrayList<WishList> wishLists, Context context){
+    private String nameUser;
+    private String lastname;
+    public WishListAdapter(ArrayList<WishList> wishLists, Context context,String nameUser, String lastname){
         this.wishLists = wishLists != null ? wishLists : new ArrayList<>();
-
+        this.nameUser = nameUser;
+        this.lastname = lastname;
         this.context = context;
     }
 
@@ -52,7 +54,6 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
 
         holder.nameTextView.setText(wishList.getName());
         holder.numGiftsTextView.setText(String.valueOf(wishList.getGiftsArrayList().size()));
-        holder.creationDateTextView.setText(wishList.getCreation_date());
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, WishlistActivityMain.class);
@@ -60,8 +61,9 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             intent.putExtra("name", wishList.getName());
             intent.putExtra("description", wishList.getDescription());
             intent.putExtra("user_id", wishList.getUser_id());
-            intent.putExtra("creation_date", wishList.getCreation_date());
-
+            intent.putExtra("end_date", wishList.getEnd_date());
+            intent.putExtra("nameUser", nameUser);
+            intent.putExtra("lastname", lastname);
             context.startActivity(intent);
         });
     }
@@ -74,15 +76,13 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nameTextView;
         TextView numGiftsTextView;
-        TextView creationDateTextView;
-        TextView endDateTextView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.wishlist_card_name);
             numGiftsTextView = itemView.findViewById(R.id.wishlist_card_num_gifts);
-            creationDateTextView = itemView.findViewById(R.id.wishlist_card_creation_date);
-            endDateTextView = itemView.findViewById(R.id.wishlist_card_end_date);
+
         }
     }
 }
