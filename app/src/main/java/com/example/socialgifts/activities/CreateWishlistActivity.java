@@ -2,6 +2,7 @@ package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,19 +17,22 @@ import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 
+import java.util.Date;
+
 public class CreateWishlistActivity extends AppCompatActivity {
     private EditText newWishlistEditText;
     private Button createWishlistButton;
     private EditText newWishlistDescriptionEditText;
-    private DatePicker datePicker;
+    private EditText endDate;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_wishlist);
         newWishlistEditText = findViewById(R.id.wishlist_new_name);
         newWishlistDescriptionEditText = findViewById(R.id.wishlist_new_description);
-        datePicker = findViewById(R.id.wishlist_new_end_date);
+        endDate = findViewById(R.id.editTextDate);
 
         createWishlistButton = findViewById(R.id.wishlist_new_create_button);
         createWishlistButton.setOnClickListener(view -> {
@@ -49,7 +53,7 @@ public class CreateWishlistActivity extends AppCompatActivity {
 
         String name = newWishlistEditText.getText().toString();
         String description = newWishlistDescriptionEditText.getText().toString();
-        String data = datePicker.toString();
+        String data = endDate.getText().toString();
 
         WishList product = new WishList(name, description,data);
 
@@ -59,7 +63,7 @@ public class CreateWishlistActivity extends AppCompatActivity {
     private boolean productCorrect(){
         String name = newWishlistEditText.getText().toString();
         String description = newWishlistDescriptionEditText.getText().toString();
-        String data = datePicker.toString();
+        String data = endDate.getText().toString();
         return !name.isEmpty() && !description.isEmpty() && !data.isEmpty();
     }
 }
