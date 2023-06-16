@@ -1508,10 +1508,23 @@ public class ApiCalls {
                                 String productDescription = jsonProduct.getString("description");
                                 String photo = jsonProduct.getString("photo");
                                 String link = jsonProduct.getString("link");
-                                int categoria = jsonProduct.optInt("category", 0);
+                                int[] categoriaArray = new int[0];
+
+                                if(jsonProduct.getJSONArray("categoryIds")==null){
+                                    categoriaArray = new int[0];
+                                    categoriaArray[0]=(0);
+                                }else{
+                                    JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
+                                    categoriaArray = new int[categoria.length()];
+                                    for (int j = 0; j < categoria.length(); j++) {
+                                        categoriaArray[j] = categoria.getInt(j);
+                                    }
+                                }
+
+
                                 float productPrice = Float.parseFloat(jsonProduct.getString("price"));
 
-                                Product product = new Product(id,productName, productDescription, productPrice, photo, link, categoria);
+                                Product product = new Product(id,productName, productDescription, productPrice, photo, link, categoriaArray);
                                 productList.add(product);
                             }
 
@@ -1613,6 +1626,18 @@ public class ApiCalls {
                         try {
                             Log.e("resposta", "La resposta es: " + response.toString());
                             Product product;
+                            int[] categoriaArray = new int[0];
+
+                            if(jsonProduct.getJSONArray("categoryIds")==null){
+                                categoriaArray = new int[0];
+                                categoriaArray[0]=(0);
+                            }else{
+                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
+                                categoriaArray = new int[categoria.length()];
+                                for (int j = 0; j < categoria.length(); j++) {
+                                    categoriaArray[j] = categoria.getInt(j);
+                                }
+                            }
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),
@@ -1620,7 +1645,7 @@ public class ApiCalls {
                                     Float.parseFloat(jsonProduct.getString("price")),
                                     jsonProduct.getString("link"),
                                     jsonProduct.getString("photo"),
-                                    0);
+                                    categoriaArray);
                             adapter.addProducts(product);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -1655,8 +1680,19 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         JSONObject jsonProduct = response;
                         try {
-                            Log.e("resposta", "La resposta es: " + response.toString());
                             Product product;
+                            int[] categoriaArray = new int[0];
+
+                            if(jsonProduct.getJSONArray("categoryIds")==null){
+                                categoriaArray = new int[0];
+                                categoriaArray[0]=(0);
+                            }else{
+                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
+                                categoriaArray = new int[categoria.length()];
+                                for (int j = 0; j < categoria.length(); j++) {
+                                    categoriaArray[j] = categoria.getInt(j);
+                                }
+                            }
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),
@@ -1664,7 +1700,7 @@ public class ApiCalls {
                                     Float.parseFloat(jsonProduct.getString("price")),
                                     jsonProduct.getString("link"),
                                     jsonProduct.getString("photo"),
-                                    0);
+                                    categoriaArray);
 
                             adapterGift.addProducts(product);
 
@@ -1701,8 +1737,19 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         JSONObject jsonProduct = response;
                         try {
-                            Log.e("resposta", "La resposta es: " + response.toString());
                             Product product;
+                            int[] categoriaArray = new int[0];
+
+                            if(jsonProduct.getJSONArray("categoryIds")==null){
+                                categoriaArray = new int[0];
+                                categoriaArray[0]=(0);
+                            }else{
+                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
+                                categoriaArray = new int[categoria.length()];
+                                for (int j = 0; j < categoria.length(); j++) {
+                                    categoriaArray[j] = categoria.getInt(j);
+                                }
+                            }
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),
@@ -1710,7 +1757,7 @@ public class ApiCalls {
                                     Float.parseFloat(jsonProduct.getString("price")),
                                     jsonProduct.getString("link"),
                                     jsonProduct.getString("photo"),
-                                    0);
+                                    categoriaArray);
 
                             adapterGiftFriend.addProducts(product);
 

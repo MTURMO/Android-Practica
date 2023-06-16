@@ -19,6 +19,7 @@ import com.example.socialgifts.R;
 import com.example.socialgifts.activities.GiftMainActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> {
@@ -92,7 +93,7 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
                     intent.putExtra("description", product.getDescription());
                     intent.putExtra("product_url", product.getProduct_url());
                     intent.putExtra("price", product.getPrice());
-                    intent.putExtra("category", product.getCategoryId());
+                    intent.putExtra("category", Arrays.toString(product.getCategoryId()));
                     intent.putExtra("image", product.getPhoto_url());
 
                     intent.putExtra("id_gift", gift.getId());

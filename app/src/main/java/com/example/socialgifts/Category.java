@@ -58,6 +58,11 @@ public class Category {
         this.description = description;
         this.photo = photo;
     }
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
+
+    }
 
     public JSONObject getCategory() {
         JSONObject jsonObject = new JSONObject();

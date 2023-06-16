@@ -12,14 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Product;
-import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
