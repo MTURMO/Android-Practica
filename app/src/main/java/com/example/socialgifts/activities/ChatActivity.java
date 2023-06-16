@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Message;
@@ -33,6 +34,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter adapterMain ;
     private List<Message> messagesMain = new ArrayList<>();
     private RecyclerView recyclerViewMain;
+    private TextView name;
     private EditText chatInput;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id= intent.getIntExtra("id", 0);
+        String nameUser = intent.getStringExtra("name");
 
         recyclerViewMain = findViewById(R.id.chat_recycle_view_main);
         recyclerViewMain.setLayoutManager(new GridLayoutManager(this, 1));
@@ -53,8 +56,11 @@ public class ChatActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_chat, chatFragment).commit();*/
 
+        name = findViewById(R.id.chat_friend_name);
         sendButton = findViewById(R.id.send_button);
         chatInput = findViewById(R.id.chat_input);
+
+        name.setText(nameUser);
 
         sendButton.setOnClickListener(view-> {
                     onSendMessages(chatInput.getText().toString());
