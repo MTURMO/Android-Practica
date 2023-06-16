@@ -15,6 +15,7 @@
         android:text="@string/login_user_name"/>
     <EditText
         android:id="@+id/login_user_name"
+        android:text="albert@gmail.com"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"/>
     <EditText
         android:id="@+id/login_password"
+        android:text="a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button

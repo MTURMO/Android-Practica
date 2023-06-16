@@ -50,20 +50,6 @@ public class FeedFragment extends Fragment{
         adapter= new FeedAdapter(products, getContext(), "all");
         recyclerView.setAdapter(adapter);
 
-        Spinner spinner = view.findViewById(R.id.feed_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.filters, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         Button createButton = view.findViewById(R.id.feed_create);
         createButton.setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), CreateProductActivity.class);

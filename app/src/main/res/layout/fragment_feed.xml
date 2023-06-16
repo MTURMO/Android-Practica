@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="70dp">
+        android:paddingTop="70dp"
+        android:paddingBottom="70dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,21 +18,14 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Spinner
-                    android:id="@+id/feed_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
                 <Button
                     android:id="@+id/feed_create"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Create"/>
+                    android:text="Create new Product" />
             </LinearLayout>
             <ScrollView
                 android:layout_width="match_parent"
