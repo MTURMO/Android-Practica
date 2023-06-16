@@ -90,6 +90,10 @@ public class ApiCalls {
         MainActivity = mainActivity;
 
     }
+    public interface MessageCallback {
+        void onSuccess(Message message);
+        void onFailure(String error);
+    }
     public Object getMainActivity() {
         return MainActivity;
     }
@@ -1119,8 +1123,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void newMessage(String accessToken, Message message) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void newMessage(String accessToken, Message message,Context context,final MessageCallback callback) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -1129,6 +1133,7 @@ public class ApiCalls {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
+                        callback.onSuccess(message);
                         //Obtenim tots els usuaris en format json
 
                     }
@@ -1136,6 +1141,7 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        callback.onFailure("Error al crear el missatge");
                     }
                 }
                 ) {

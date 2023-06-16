@@ -50,12 +50,11 @@
                         android:id="@+id/chat_input"
                         android:layout_width="250sp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/enter_your_message"
                         android:layout_marginTop="20dp"
-                        android:autofillHints=""
                         tools:ignore="Suspicious0dp" />
                     <Button
                         android:id="@+id/send_button"
+                        android:enabled="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"

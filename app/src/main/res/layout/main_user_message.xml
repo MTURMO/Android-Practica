@@ -30,7 +30,8 @@
                     android:text="Fecha"
                     android:textSize="15sp"
                     android:gravity="end"
-                    android:paddingStart="20sp"/>
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"/>
             </LinearLayout>
     <TextView
             android:id="@+id/chat_main_user_message"
