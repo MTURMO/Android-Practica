@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
+import com.example.socialgifts.activities.FriendsActivity;
 import com.example.socialgifts.activities.UsersActivity;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         Glide.with(context).load(user.getImage()).error(R.drawable.ic_launcher_foreground).into(holder.userImage);
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, UsersActivity.class);
+            Intent intent = new Intent(context, FriendsActivity.class);
             intent.putExtra("id", user.getId());
             intent.putExtra("name", user.getName());
             intent.putExtra("last_name", user.getLast_name());

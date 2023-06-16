@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
-import com.example.socialgifts.activities.WishlistActivity;
-import com.example.socialgifts.fragments.FeedFragment;
+import com.example.socialgifts.activities.WishlistActivityMain;
 
 import java.util.ArrayList;
 
@@ -24,42 +23,44 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
     private final Context context;
 
     public WishListAdapter(ArrayList<WishList> wishLists, Context context){
-        if(wishLists==null){
-            this.wishLists = new ArrayList<>();
-        } else{
-            this.wishLists.addAll(wishLists);
-        }
+        this.wishLists = wishLists != null ? wishLists : new ArrayList<>();
+
         this.context = context;
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void setWishLists(ArrayList<WishList> wishLists){
-        this.wishLists=wishLists;
+        this.wishLists = wishLists != null ? wishLists : new ArrayList<>();
         notifyDataSetChanged();
     }
+    public void addWishList(WishList wishList){
+        this.wishLists.add(wishList);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.wishlist_card, parent, false);
+        View view = inflater.inflate(R.layout.wishlist_card_basic, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WishList wishList = wishLists.get(position);
+
         holder.nameTextView.setText(wishList.getName());
         holder.numGiftsTextView.setText(String.valueOf(wishList.getGiftsArrayList().size()));
         holder.creationDateTextView.setText(wishList.getCreation_date());
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, WishlistActivity.class);
+            Intent intent = new Intent(context, WishlistActivityMain.class);
             intent.putExtra("id", wishList.getId());
             intent.putExtra("name", wishList.getName());
             intent.putExtra("description", wishList.getDescription());
             intent.putExtra("user_id", wishList.getUser_id());
             intent.putExtra("creation_date", wishList.getCreation_date());
-
 
             context.startActivity(intent);
         });

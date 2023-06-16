@@ -16,21 +16,19 @@ import com.bumptech.glide.Glide;
 import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
-import com.example.socialgifts.activities.GiftUserActivity;
-import com.example.socialgifts.activities.ProductActivity;
+import com.example.socialgifts.activities.GiftMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.ViewHolder> {
+public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> {
 
     private Context context;
     private List<Product> products;
     private List<Gift> gifts;
-    private List<Gift> parsedGifts;
 
 
-    public GiftAdapter(List<Product> products, List<Gift> gifts, Context context){
+    public GiftAdapterMain(List<Product> products, List<Gift> gifts, Context context){
             if(products==null){
                 this.products=new ArrayList<>();
             } else{
@@ -41,7 +39,6 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.ViewHolder> {
             } else{
                 this.gifts = gifts;
             }
-
 
             this.context = context;
 
@@ -70,7 +67,7 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.ViewHolder> {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.feed_product_card, parent, false);
+            View view = inflater.inflate(R.layout.product_view_from_feed, parent, false);
             return new ViewHolder(view);
         }
 
@@ -89,7 +86,7 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.ViewHolder> {
 
 
         holder.itemView.setOnClickListener(view -> {
-                    Intent intent = new Intent(context, GiftUserActivity.class);
+                    Intent intent = new Intent(context, GiftMainActivity.class);
                     intent.putExtra("id", product.getId());
                     intent.putExtra("name", product.getName());
                     intent.putExtra("description", product.getDescription());

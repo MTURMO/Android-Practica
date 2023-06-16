@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,11 +18,9 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.ApiCalls;
-import com.example.socialgifts.Category;
 import com.example.socialgifts.Gift;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
-import com.example.socialgifts.activities.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -53,7 +49,7 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
+        setContentView(R.layout.product_view_2);
         image = findViewById(R.id.product_image);
         textViewName = findViewById(R.id.product_name);
         textViewcategory = findViewById(R.id.product_category);
@@ -120,7 +116,7 @@ public class ProductActivity extends AppCompatActivity {
 
 
         //ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.getAllUserWhishlist(accessToken, Integer.parseInt(id),new Response.Listener<JSONArray>() {
+        apiCalls.getAllUserWhishlistSpinnerProduct(accessToken, Integer.parseInt(id),new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 parsear(response);

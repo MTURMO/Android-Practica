@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,18 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.ApiCalls;
-import com.example.socialgifts.Gift;
 import com.example.socialgifts.R;
-import com.example.socialgifts.WishList;
-import com.example.socialgifts.fragments.WishProductFragment;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class GiftUserActivity extends AppCompatActivity {
+public class GiftMainActivity extends AppCompatActivity {
 
         private TextView textViewName;
         private TextView textViewcategory;
@@ -47,7 +37,7 @@ public class GiftUserActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_giftuser);
+            setContentView(R.layout.gift_view_main_user);
             image = findViewById(R.id.product_image2);
             textViewName = findViewById(R.id.product_name2);
             textViewcategory = findViewById(R.id.product_category2);
@@ -106,7 +96,7 @@ public class GiftUserActivity extends AppCompatActivity {
                     apiCalls.deleteGiftById(accessToken,id_gift ,this, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Intent intent = new Intent(GiftUserActivity.this, MainActivity.class);
+                            Intent intent = new Intent(GiftMainActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                     });

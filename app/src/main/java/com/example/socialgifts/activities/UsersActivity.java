@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.R;
 import com.example.socialgifts.fragments.ChatFragment;
+import com.example.socialgifts.fragments.UserWishlistFragment;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -27,7 +29,8 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.user_perfil);
+
         image = findViewById(R.id.user_image);
         textViewName = findViewById(R.id.user_name);
         last_name = findViewById(R.id.user_last_name);
@@ -39,10 +42,19 @@ public class UsersActivity extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         String lastname = intent.getStringExtra("last_name");
         String image = intent.getStringExtra("image");
+        int id = intent.getIntExtra("id",0);
 
         textViewName.setText(name);
         last_name.setText(lastname);
+
         Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(this.image);
+
+
+        UserWishlistFragment userWishlistFragment = new UserWishlistFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_user, userWishlistFragment)
+                .commit();
 
         back.setOnClickListener(view -> goToFeed());
         chat.setOnClickListener(view ->{

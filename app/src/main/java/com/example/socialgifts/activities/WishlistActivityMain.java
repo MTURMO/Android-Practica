@@ -2,31 +2,20 @@ package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
-import com.example.socialgifts.WishList;
-import com.example.socialgifts.adapters.FeedAdapter;
-import com.example.socialgifts.fragments.WishProductFragment;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.socialgifts.fragments.WishProductFragmentMain;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class WishlistActivity extends AppCompatActivity {
+public class WishlistActivityMain extends AppCompatActivity {
     private TextView wishlistNameTextView;
     private TextView wishlistUserNameTextView;
     private TextView wishlistNumGiftsTextView;
@@ -39,7 +28,7 @@ public class WishlistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wishlist);
+        setContentView(R.layout.activity_wishlist_main);
 
         wishlistNameTextView = findViewById(R.id.wishlist_activity_name);
         wishlistUserNameTextView = findViewById(R.id.wishlist_activity_user_name);
@@ -61,9 +50,9 @@ public class WishlistActivity extends AppCompatActivity {
         wishlistNumGiftsTextView.setText("Created on: " + creation_date);
         wishlistDescriptionTextView.setText(description);
 
-        WishProductFragment wishProductFragment = new WishProductFragment();
+        WishProductFragmentMain wishProductFragmentMain = new WishProductFragmentMain();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, wishProductFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, wishProductFragmentMain).commit();
 
         button.setOnClickListener(view -> {
             Intent intent1 = new Intent(this, WishlistEditActivity.class);

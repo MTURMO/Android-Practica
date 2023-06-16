@@ -2,12 +2,13 @@ package com.example.socialgifts;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
-
-import androidx.fragment.app.Fragment;
+import android.widget.Button;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,9 +22,11 @@ import com.example.socialgifts.activities.MainActivity;
 import com.example.socialgifts.adapters.ChatAdapter;
 import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
-import com.example.socialgifts.adapters.GiftAdapter;
+import com.example.socialgifts.adapters.GiftAdapterFriend;
+import com.example.socialgifts.adapters.GiftAdapterMain;
 import com.example.socialgifts.adapters.WishListAdapter;
-import com.example.socialgifts.fragments.ChatFragment;
+import com.example.socialgifts.adapters.WishListAdapterFriend;
+import com.example.socialgifts.adapters.WishListAdapterUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,10 +44,27 @@ public class ApiCalls {
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
     private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
     private WishListAdapter adapter3;
-    private GiftAdapter adapterGift;
+    private GiftAdapterMain adapterGift;
     private ChatAdapter adapterChatMain, adapterChatFriend;
+    private WishListAdapterUser adapterWishListUser;
+    private GiftAdapterFriend adapterGiftFriend;
+    private WishListAdapterFriend adapterWishListFriend;
 
-    public ApiCalls(Context context, GiftAdapter adapter) {
+    public ApiCalls(Context context, WishListAdapterFriend adapter) {
+        this.context = context;
+        this.adapterWishListFriend = adapter;
+    }
+
+    public ApiCalls(Context context, GiftAdapterFriend adapter) {
+        this.context = context;
+        this.adapterGiftFriend = adapter;
+    }
+
+    public ApiCalls(Context context, WishListAdapterUser adapter) {
+        this.context = context;
+        this.adapterWishListUser = adapter;
+    }
+    public ApiCalls(Context context, GiftAdapterMain adapter) {
         this.context = context;
         this.adapterGift = adapter;
     }
@@ -341,7 +361,7 @@ public class ApiCalls {
     La funcio retorna
         - Array de wishlists
      */
-    public void getAllUserWhishlist(String accessToken, int id,Response.Listener<JSONArray> listener) {
+    public void getAllUserWhishlistSpinnerProduct(String accessToken, int id,Response.Listener<JSONArray> listener) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
 
@@ -380,7 +400,7 @@ public class ApiCalls {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
+                        Log.e("respostaCorrecta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
                         ArrayList<WishList> wishLists = new ArrayList<>();
 
@@ -399,8 +419,8 @@ public class ApiCalls {
                                 JSONArray gift= jsonProduct.getJSONArray("gifts");
                                 ArrayList<Gift> gifts = new ArrayList<>();
                                 try {
-                                    for (int j = 0; j < gift.length(); i++) {
-                                        JSONObject jsonGift = response.getJSONObject(i);
+                                    for (int j = 0; j < gift.length(); j++) {
+                                        JSONObject jsonGift = response.getJSONObject(j);
 
                                         int id_gift = jsonGift.getInt("id");
                                         int id_wish = jsonGift.getInt("wishlist_id");
@@ -416,7 +436,7 @@ public class ApiCalls {
                                 }
 
                                     WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
-                                wishLists.add(wishList);
+                                    wishLists.add(wishList);
                             }
 
                             adapter3.setWishLists(wishLists);
@@ -441,7 +461,147 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
+    public void getAllUserWhishlistPerfilUser(String accessToken, int id, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
 
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("respostaCorrecta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        ArrayList<WishList> wishLists = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
+
+                                int id = jsonProduct.getInt("id");
+                                String name = jsonProduct.getString("name");
+                                String description = jsonProduct.getString("description");
+                                int user_id = jsonProduct.getInt("user_id");
+
+                                String creation = jsonProduct.getString("creation_date");
+                                String end = jsonProduct.getString("end_date");
+
+                                JSONArray gift= jsonProduct.getJSONArray("gifts");
+                                ArrayList<Gift> gifts = new ArrayList<>();
+                                try {
+                                    for (int j = 0; j < gift.length(); j++) {
+                                        JSONObject jsonGift = response.getJSONObject(j);
+
+                                        int id_gift = jsonGift.getInt("id");
+                                        int id_wish = jsonGift.getInt("wishlist_id");
+                                        String product_url = jsonGift.getString("product_url");
+                                        int priority = jsonGift.getInt("priority");
+                                        String booked = jsonGift.getString("booked");
+
+                                        Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
+                                        gifts.add(gift2);
+                                    }
+                                }catch (JSONException e) {
+
+                                }
+
+                                WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
+                                wishLists.add(wishList);
+                            }
+
+                            adapterWishListUser.setWishLists(wishLists);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+
+    public void getAllUserWhishlistPerfilFriend(String accessToken, int id, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("respostaCorrecta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        ArrayList<WishList> wishLists = new ArrayList<>();
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
+
+                                int id = jsonProduct.getInt("id");
+                                String name = jsonProduct.getString("name");
+                                String description = jsonProduct.getString("description");
+                                int user_id = jsonProduct.getInt("user_id");
+
+                                String creation = jsonProduct.getString("creation_date");
+                                String end = jsonProduct.getString("end_date");
+
+                                JSONArray gift= jsonProduct.getJSONArray("gifts");
+                                ArrayList<Gift> gifts = new ArrayList<>();
+                                try {
+                                    for (int j = 0; j < gift.length(); j++) {
+                                        JSONObject jsonGift = response.getJSONObject(j);
+
+                                        int id_gift = jsonGift.getInt("id");
+                                        int id_wish = jsonGift.getInt("wishlist_id");
+                                        String product_url = jsonGift.getString("product_url");
+                                        int priority = jsonGift.getInt("priority");
+                                        String booked = jsonGift.getString("booked");
+
+                                        Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
+                                        gifts.add(gift2);
+                                    }
+                                }catch (JSONException e) {
+
+                                }
+
+                                WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
+                                wishLists.add(wishList);
+                            }
+
+                            adapterWishListFriend.setWishLists(wishLists);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
     /*
     Funció per editar l'usuari que ha fet login
     Cal haver fet LogIn per obtenir el accessToken
@@ -594,6 +754,46 @@ public class ApiCalls {
         - accessToken
         - id
      */
+    public void getGiftByIdForFriend(String accessToken, int id, Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+                        Gift product;
+                        try {
+                            product = new Gift(
+                                    response.getInt("id"),
+                                    response.getInt("wishlist_id"),
+                                    response.getString("product_url"),
+                                    response.getInt("priority"),
+                                    response.getString("booked"));
+                            adapterGiftFriend.addGifts(product);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
     public void getGiftById(String accessToken, int id, Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
@@ -634,7 +834,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
     /*
     Funció per editar Gift en funció del seu ID
     Cal haver fet LogIn per obtenir el accessToken
@@ -1111,8 +1310,10 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void createFriendRequest(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void createFriendRequest(String accessToken, int id, Button followButton,Context context) {
+        Resources resources = context.getResources();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -1122,6 +1323,9 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        followButton.setText("Solicitado");
+                        followButton.setBackgroundColor(resources.getColor(android.R.color.darker_gray));
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -1437,6 +1641,7 @@ public class ApiCalls {
                                     0);
 
                             adapterGift.addProducts(product);
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
 
@@ -1459,7 +1664,52 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
+    public void getProductByIDForFriend(String accessToken, int productId, Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + productId;
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject jsonProduct = response;
+                        try {
+                            Log.e("resposta", "La resposta es: " + response.toString());
+                            Product product;
+                            product = new Product(
+                                    jsonProduct.getInt("id"),
+                                    jsonProduct.getString("name"),
+                                    jsonProduct.getString("description"),
+                                    Float.parseFloat(jsonProduct.getString("price")),
+                                    jsonProduct.getString("link"),
+                                    jsonProduct.getString("photo"),
+                                    0);
+
+                            adapterGiftFriend.addProducts(product);
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
     public void createProduct(String accessToken, Product product,Context context) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";

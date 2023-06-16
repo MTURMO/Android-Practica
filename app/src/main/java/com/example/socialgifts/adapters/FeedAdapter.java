@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
@@ -54,7 +53,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.feed_product_card, parent, false);
+        View view = inflater.inflate(R.layout.product_view_from_feed, parent, false);
         return new ViewHolder(view);
     }
 

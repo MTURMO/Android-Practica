@@ -16,28 +16,18 @@
             android:name=".activities.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.WishlistActivity"
+            android:name=".activities.CreateProductActivity"
             android:exported="false" />
         <activity
             android:name=".activities.CreateWishlistActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.ProductActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.UsersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.CreateProductActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.Register"
-            android:exported="false" />
-        <activity android:name=".activities.WishlistEditActivity"
-            android:exported="false" />
-        <activity android:name=".activities.GiftUserActivity"
-            android:exported="false" />
         <activity android:name=".activities.EditGiftActivity"
+            android:exported="false" />
+        <activity android:name=".activities.GiftActivity"
+            android:exported="false" />
+        <activity android:name=".activities.GiftMainActivity"
+            android:exported="false" />
+        <activity android:name=".activities.GiftFriendActivity"
             android:exported="false" />
         <activity
             android:name=".activities.Login"
@@ -48,10 +38,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+            <activity
+                android:name=".activities.Register"
+                android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="false" >
         </activity>
+        <activity
+            android:name=".activities.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.WishlistActivityMain"
+            android:exported="false" />
+        <activity android:name=".activities.WishlistEditActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.WishlistActivityFriend"
+            android:exported="false" />
+        <activity android:name=".activities.FriendsActivity"
+            android:exported="false" />
+
+
+
+
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 

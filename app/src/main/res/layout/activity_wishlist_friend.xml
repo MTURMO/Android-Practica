@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".activities.WishlistActivity">
+    tools:context=".activities.WishlistActivityFriend">
     <TextView
-        android:id="@+id/wishlist_activity_name"
+        android:id="@+id/wishlist_activity_name_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -17,14 +17,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/wishlist_activity_user_name"
+            android:id="@+id/wishlist_activity_user_name_friend"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"/>
         <TextView
-            android:id="@+id/wishlist_activity_num_gifts"
+            android:id="@+id/wishlist_activity_num_gifts_friend"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -32,17 +32,17 @@
             android:textSize="20sp"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/wishlist_activity_description"
+        android:id="@+id/wishlist_activity_description_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20sp"
+
         android:layout_marginTop="20dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_container">
+        android:id="@+id/fragment_container_friend">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -51,16 +51,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/wishlist_activity_recycle"
+                    android:id="@+id/wishlist_activity_recycle_friend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/edit_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:text="Editar" />
             </LinearLayout>
         </ScrollView>
     </FrameLayout>
