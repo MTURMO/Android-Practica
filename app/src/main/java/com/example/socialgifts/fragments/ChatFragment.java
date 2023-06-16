@@ -32,9 +32,7 @@ import java.util.Objects;
 public class ChatFragment extends Fragment {
 
     private ChatAdapter adapterMain;
-    private ChatAdapter adapterFriend;
     private List<Message> messagesMain;
-    private List<Message> messagesFriend;
 
 
 
@@ -51,19 +49,15 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         RecyclerView recyclerViewMain = view.findViewById(R.id.chat_recycle_view_main);
-        RecyclerView recyclerViewFriend = view.findViewById(R.id.chat_recycle_view_friend);
 
         recyclerViewMain.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        recyclerViewFriend.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         Intent intent = requireActivity().getIntent();
         int id= intent.getIntExtra("id", 0);
 
         adapterMain = new ChatAdapter(messagesMain, getContext(),id);
-        adapterFriend = new ChatAdapter(messagesFriend, getContext(),id);
 
         recyclerViewMain.setAdapter(adapterMain);
-        recyclerViewFriend.setAdapter(adapterFriend);
 
         return view;
     }
@@ -78,25 +72,9 @@ public class ChatFragment extends Fragment {
         int id= intent.getIntExtra("id", 0);
 
         ApiCalls apiCallsMain = new ApiCalls(getContext(), adapterMain);
-        ApiCalls apiCallsFriend = new ApiCalls(getContext(), adapterFriend);
 
-        apiCallsMain.getMessagesById(accessToken,id,this.getContext(),"main");
-        apiCallsFriend.getMessagesById(accessToken,id,this.getContext(),"friend");
+        apiCallsMain.getMessagesById(accessToken,id,this.getContext());
 
 
     }
-    public void setMessagesMain(List<Message> messages) {
-        messagesMain = messages;
-        if(adapterMain != null)
-            adapterMain.setMessages(messagesMain);
-            adapterMain.notifyDataSetChanged();
-    }
-    public void setMessagesFriend(List<Message> messages) {
-        messagesFriend = messages;
-        if(adapterFriend != null)
-            adapterFriend.setMessages(messagesFriend);
-            adapterFriend.notifyDataSetChanged();
-    }
-
-
 }

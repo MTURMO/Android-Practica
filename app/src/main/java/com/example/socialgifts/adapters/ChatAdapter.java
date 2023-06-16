@@ -12,10 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Message;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
@@ -26,12 +29,10 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private List<Message> messagesMain, messagesFriend;
+    private List<Message> messagesMain;
     private Context context;
     private SharedPreferences sharedPreferences;
     private int id;
-    private static final int TYPE_MAIN = 1;
-    private static final int TYPE_FRIEND = 2;
 
     public ChatAdapter(List<Message> messages,Context context,int id){
         if(messagesMain == null){
@@ -40,40 +41,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             this.messagesMain = messages;
         }
 
-        if(messagesFriend == null){
-            this.messagesFriend = new ArrayList<>();
-        } else{
-            this.messagesFriend = messages;
-        }
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         this.id = id;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if(!messagesMain.isEmpty() && !messagesFriend.isEmpty()){
-            Message message = messagesMain.get(position);
-            if(message.getUser_id_send()==id){
-                return TYPE_MAIN;
-            } else{
-                return TYPE_FRIEND;
-            }
-        } else{
-            return TYPE_MAIN;
-        }
-    }
-    public void setMessages(List<Message> messages){
-        messagesMain.clear();
-        messagesFriend.clear();
 
-        for(Message message : messages){
-            if(message.getUser_id_send()==id){
-                messagesMain.add(message);
-            } else{
-                messagesFriend.add(message);
-            }
-        }
+    public void setMessages(List<Message> messages){
+        this.messagesMain = messages;
         notifyDataSetChanged();
     }
 
@@ -82,27 +57,39 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view;
-        if(viewType==TYPE_MAIN){
-             view = inflater.inflate(R.layout.main_user_message, parent, false);
-        }
-        else {
-            view = inflater.inflate(R.layout.friend_message, parent,false);
-        }
+        View view= inflater.inflate(R.layout.main_user_message, parent, false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message message;
-        int viewType = getItemViewType(position);
-        if(!messagesMain.isEmpty() && !messagesFriend.isEmpty()){
-            if(viewType==TYPE_MAIN){
-                message = messagesMain.get(position);
-                holder.missatgeMain.setText(message.getContent());
-            } else if(viewType==TYPE_FRIEND){
-                message = messagesFriend.get(position-messagesMain.size());
-                holder.missatgeFriend.setText(message.getContent());
+        Message message = messagesMain.get(position);
+
+        holder.nameTextView.setText(message.getUser_name_send());
+        holder.dateTextView.setText(message.getDate());
+        holder.messageTextView.setText(message.getContent());
+
+        int color = fondoMensaje(message.getUser_id_send());
+
+        holder.cardView.setCardBackgroundColor((color));
+
+    }
+    private int fondoMensaje(int color){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString("id", "0");
+        if(color== Integer.parseInt(id)){
+            return ContextCompat.getColor(context, R.color.miMensaje);
+        } else{
+            return ContextCompat.getColor(context, R.color.suMensaje);
+        }
+    }
+    public void setUserNameForMessage(int id, String name){
+        for (int i = 0; i < messagesMain.size(); i++) {
+            Message message = messagesMain.get(i);
+            if (message.getUser_id_send() == id) {
+                message.setUser_name_send(name);
+                notifyItemChanged(i);
             }
         }
 
@@ -110,18 +97,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return messagesMain.size() + messagesFriend.size();
+        return messagesMain.size() ;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView missatgeMain;
-        TextView missatgeFriend;
+        CardView cardView;
+        TextView nameTextView;
+        TextView dateTextView;
+        TextView messageTextView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            missatgeMain = itemView.findViewById(R.id.chat_main_user_message);
-            missatgeFriend = itemView.findViewById(R.id.chat_friend_message);
+            cardView = itemView.findViewById(R.id.chat_main_user_message_card);
+            nameTextView = itemView.findViewById(R.id.chat_main_user_message_name);
+            dateTextView = itemView.findViewById(R.id.chat_main_user_message_date);
+            messageTextView = itemView.findViewById(R.id.chat_main_user_message);
 
         }
     }

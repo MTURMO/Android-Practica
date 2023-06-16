@@ -206,8 +206,8 @@ public class ApiCalls {
     La funcio retorna
         - User
      */
-    public void getUserById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getUserById(String accessToken, int id,Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -217,6 +217,13 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        String name = null;
+                        try {
+                            name = response.getString("name");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        adapterChatMain.setUserNameForMessage(id,name);
 
                     }
                 }, new Response.ErrorListener() {
@@ -1524,7 +1531,7 @@ public class ApiCalls {
 
         queue.add(jsonArrayRequest);
     }
-    public void getMessagesById(String accessToken, int id,Context context,String name) {
+    public void getMessagesById(String accessToken, int id,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context) );
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
 
@@ -1536,6 +1543,7 @@ public class ApiCalls {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
                         ArrayList<Message> productList = new ArrayList<>();
+                        List<Integer> userIds = new ArrayList<>();
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
@@ -1544,12 +1552,16 @@ public class ApiCalls {
                                 int id_user = jsonProduct.getInt("user_id_send");
                                 String content = jsonProduct.getString("content");
                                 int friend  = jsonProduct.getInt("user_id_recived");
-                                Message message = new Message(content,id_user,friend);
+                                String date = jsonProduct.getString("timeStamp");
+
+                                Message message = new Message(content,id_user,friend,date);
 
                                 productList.add(message);
+                                userIds.add(id_user);
 
                             }
                                 adapterChatMain.setMessages(productList);
+                                getUserNamesForMessage(accessToken,userIds,context);
 
 
 
@@ -1572,6 +1584,13 @@ public class ApiCalls {
             }
         };
         queue.add(jsonArrayRequest);
+    }
+    private void getUserNamesForMessage(String accessToken, List<Integer> ids,Context context){
+        ApiCalls apiCalls = new ApiCalls(context,adapterChatMain);
+        for(int id: ids){
+            apiCalls.getUserById(accessToken,id,context);
+        }
+
     }
 
     public void getProductByID(String accessToken, int productId, Context context) {
