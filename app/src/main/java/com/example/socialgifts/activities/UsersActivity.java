@@ -2,9 +2,7 @@ package com.example.socialgifts.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -73,18 +71,6 @@ public class UsersActivity extends AppCompatActivity {
 
 
 
-    private void goToChat() {
-        Intent intent = new Intent(this, ChatFragment.class);
-        intent.putExtra("name", textViewName.getText().toString());
-        intent.putExtra("last_name", last_name.getText().toString());
-        intent.putExtra("image", image.toString());
-        intent.putExtra("id", 0);
-        startActivity(intent);
-    }
 
-    private void goToFeed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 
 }

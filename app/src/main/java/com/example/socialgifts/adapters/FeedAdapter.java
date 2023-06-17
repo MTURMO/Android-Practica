@@ -15,6 +15,7 @@ import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         } else{
             this.products = products;
         }
-
         this.context = context;
         this.filter = filter;
 
@@ -74,7 +74,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             intent.putExtra("description", product.getDescription());
             intent.putExtra("product_url", product.getProduct_url());
             intent.putExtra("price", product.getPrice());
-            intent.putExtra("category", product.getCategoryId());
+            intent.putExtra("category", Arrays.toString(product.getCategoryId()));
             intent.putExtra("image", product.getPhoto_url());
 
             context.startActivity(intent);

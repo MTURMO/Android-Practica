@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
 import com.example.socialgifts.activities.FriendsActivity;
-import com.example.socialgifts.activities.UsersActivity;
 
 import java.util.ArrayList;
 import java.util.List;

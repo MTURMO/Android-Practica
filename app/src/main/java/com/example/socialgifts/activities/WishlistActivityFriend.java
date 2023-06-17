@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class WishlistActivityFriend extends AppCompatActivity {
     private TextView wishlistNameTextView;
     private TextView wishlistUserNameTextView;
-    private TextView wishlistNumGiftsTextView;
     private TextView wishlistDescriptionTextView;
+    private TextView wishlistEndDateTextView;
 
     private ArrayList<Product> products;
 
@@ -30,21 +30,25 @@ public class WishlistActivityFriend extends AppCompatActivity {
 
         wishlistNameTextView = findViewById(R.id.wishlist_activity_name_friend);
         wishlistUserNameTextView = findViewById(R.id.wishlist_activity_user_name_friend);
-        wishlistNumGiftsTextView = findViewById(R.id.wishlist_activity_num_gifts_friend);
         wishlistDescriptionTextView = findViewById(R.id.wishlist_activity_description_friend);
-
+        wishlistEndDateTextView = findViewById(R.id.wishlist_activity_end);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         int id = intent.getIntExtra("id",0);
         int user_id = intent.getIntExtra("user_id",0);
-        String creation_date = intent.getStringExtra("creation_date");
+        String end_date = intent.getStringExtra("end_date");
         String description = intent.getStringExtra("description");
 
+
+
+        String nameUser = intent.getStringExtra("nameUser");
+        String last_nameUser = intent.getStringExtra("lastname");
+
         wishlistNameTextView.setText(name);
-        wishlistUserNameTextView.setText("Created by: " + user_id);
-        wishlistNumGiftsTextView.setText("Created on: " + creation_date);
+        wishlistUserNameTextView.setText("Created by: " + nameUser + " "+ last_nameUser);
         wishlistDescriptionTextView.setText(description);
+        wishlistEndDateTextView.setText("End date: " + end_date);
 
         WishProductFragmentFriend wishProductFragmentFriend = new WishProductFragmentFriend();
         FragmentManager fragmentManager = getSupportFragmentManager();

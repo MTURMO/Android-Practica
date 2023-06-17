@@ -12,14 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Product;
-import com.example.socialgifts.activities.ProductActivity;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.adapters.FeedAdapter;
@@ -50,20 +46,6 @@ public class FeedFragment extends Fragment{
         adapter= new FeedAdapter(products, getContext(), "all");
         recyclerView.setAdapter(adapter);
 
-        Spinner spinner = view.findViewById(R.id.feed_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.filters, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         Button createButton = view.findViewById(R.id.feed_create);
         createButton.setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), CreateProductActivity.class);

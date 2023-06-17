@@ -58,6 +58,7 @@ public class Login extends AppCompatActivity {
         apiCalls.loginUser(user,this);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
         String accessToken = sharedPreferences.getString("accessToken", "");
 
         apiCalls.searchUser(accessToken,userName, new Response.Listener<JSONArray>() {

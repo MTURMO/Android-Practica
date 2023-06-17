@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class FriendWishlistFragment extends Fragment {
     private ArrayList<WishList> wishLists;
     private WishListAdapterFriend adapter;
+    private String nameUser;
+    private String lastname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,13 @@ public class FriendWishlistFragment extends Fragment {
 
     }
 
+    public void setName(String name) {
+        this.nameUser = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastname = lastName;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,7 +49,7 @@ public class FriendWishlistFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.user_list_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
-        adapter = new WishListAdapterFriend(wishLists, getContext());
+        adapter = new WishListAdapterFriend(wishLists, getContext(),nameUser,lastname);
         recyclerView.setAdapter(adapter);
 
 

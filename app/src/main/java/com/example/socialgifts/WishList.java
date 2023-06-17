@@ -93,7 +93,7 @@ public class WishList {
     public JSONObject getWishListPost() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("name", id);
+            jsonObject.put("name", name);
             jsonObject.put("description", description);
             jsonObject.put("end_date", end_date);
         } catch (JSONException e) {
@@ -128,4 +128,6 @@ public class WishList {
         }
         return jsonObject;
     }
+
+
 }

@@ -22,15 +22,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre"
-                    android:textSize="15sp"/>
+                    android:textSize="10sp"/>
                 <TextView
                     android:id="@+id/chat_main_user_message_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fecha"
-                    android:textSize="15sp"
+                    android:textSize="10sp"
                     android:gravity="end"
-                    android:paddingStart="20sp"/>
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"/>
             </LinearLayout>
     <TextView
             android:id="@+id/chat_main_user_message"
@@ -39,7 +40,7 @@
             android:text="Mi mensaje"
             android:textSize="20sp"
             android:padding="5dp"
-            android:textAlignment="textEnd"/>
+            android:textAlignment="textStart"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

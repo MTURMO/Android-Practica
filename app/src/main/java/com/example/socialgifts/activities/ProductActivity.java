@@ -62,15 +62,16 @@ public class ProductActivity extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         String description = intent.getStringExtra("description");
         String image_url = intent.getStringExtra("image");
-        int category = intent.getIntExtra("category", 0);
+        String category = intent.getStringExtra("category");
         float price = intent.getFloatExtra("price", 0);
         idProduct = intent.getIntExtra("id", 0);
+
         name=name!=null?name:"null";
         description=description!=null?description:"null";
         image_url=image_url!=null?image_url:"null";
 
         textViewName.setText(name);
-        textViewcategory.setText(Integer.toString(category));
+        textViewcategory.setText((category));
         textViewprice.setText(Float.toString(price));
         textViewdescription.setText(description);
         Glide.with(this).load(image_url).error(R.drawable.ic_launcher_foreground).into(this.image);

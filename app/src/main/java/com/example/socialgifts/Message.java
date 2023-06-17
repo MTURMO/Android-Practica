@@ -18,6 +18,11 @@ public class Message {
         this.user_name_send="";
         this.date = date;
     }
+    public Message(String content, int user_id_send, int user_id_recived) {
+        this.content = content;
+        this.user_id_send = user_id_send;
+        this.user_id_recived = user_id_recived;
+    }
 
     public String getDate() {
         return date;

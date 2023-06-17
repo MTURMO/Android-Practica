@@ -59,18 +59,33 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textAlignment="center"/>
-    <Button
-        android:id="@+id/product_edit_gift"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:text="Edit gift"/>
-    <Button
-        android:id="@+id/product_delete_gift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:text="Delete gift"/>
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/product_edit_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit gift"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/product_delete_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Delete gift"/>
+    </LinearLayout>
+
 </LinearLayout>

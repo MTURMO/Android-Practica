@@ -59,7 +59,7 @@ public class WishListAdapterUser extends RecyclerView.Adapter<WishListAdapterUse
             intent.putExtra("name", wishList.getName());
             intent.putExtra("description", wishList.getDescription());
             intent.putExtra("user_id", wishList.getUser_id());
-            intent.putExtra("creation_date", wishList.getCreation_date());
+            intent.putExtra("end_date", wishList.getEnd_date());
 
             context.startActivity(intent);
         });

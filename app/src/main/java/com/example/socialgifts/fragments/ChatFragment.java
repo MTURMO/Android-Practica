@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,17 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment  {
 
-    private ChatAdapter adapterMain;
+    private ChatAdapter adapterMain ;
     private List<Message> messagesMain;
-
+    private RecyclerView recyclerViewMain;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +50,14 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        RecyclerView recyclerViewMain = view.findViewById(R.id.chat_recycle_view_main);
+        recyclerViewMain = view.findViewById(R.id.chat_recycle_view_main);
 
         recyclerViewMain.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         Intent intent = requireActivity().getIntent();
         int id= intent.getIntExtra("id", 0);
 
-        adapterMain = new ChatAdapter(messagesMain, getContext(),id);
+        adapterMain = new ChatAdapter(messagesMain, getContext(), id);
 
         recyclerViewMain.setAdapter(adapterMain);
 
@@ -72,9 +74,11 @@ public class ChatFragment extends Fragment {
         int id= intent.getIntExtra("id", 0);
 
         ApiCalls apiCallsMain = new ApiCalls(getContext(), adapterMain);
-
         apiCallsMain.getMessagesById(accessToken,id,this.getContext());
-
-
     }
+
+
+
+
+
 }

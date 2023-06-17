@@ -2,26 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!-- Aquí puedes agregar cualquier otro elemento que necesites en el fragmento -->
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/user_list_view"
+                android:id="@+id/wishlist_activity_recycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

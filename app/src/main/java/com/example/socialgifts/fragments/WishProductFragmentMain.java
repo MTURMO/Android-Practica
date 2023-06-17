@@ -46,7 +46,7 @@ public class WishProductFragmentMain extends Fragment{
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_wishlist_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_wish_main, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.wishlist_activity_recycle);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));

@@ -48,7 +48,7 @@ public class GiftFriendActivity extends AppCompatActivity {
             String name2 = intent.getStringExtra("name");
             String description2 = intent.getStringExtra("description");
             String image_url2 = intent.getStringExtra("image");
-            int category = intent.getIntExtra("category", 0);
+            String category = intent.getStringExtra("category");
             float price = intent.getFloatExtra("price", 0);
 
 
@@ -58,7 +58,7 @@ public class GiftFriendActivity extends AppCompatActivity {
             image_url2=image_url2!=null?image_url2:"null";
 
             textViewName.setText(name2);
-            textViewcategory.setText(Integer.toString(category));
+            textViewcategory.setText((category));
             textViewprice.setText(Float.toString(price));
             textViewdescription.setText(description2);
             Glide.with(this).load(image_url2).error(R.drawable.ic_launcher_foreground).into(this.image);
