@@ -31,5 +31,14 @@
             android:layout_marginEnd="50dp"
             android:clickable="true"
             android:onClick="mensajes"/>
+        <ImageView
+            android:id="@+id/Solicitudes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_of_blank_message_dialogue_box_free_vector"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="100dp"
+            android:clickable="true"
+            android:onClick="Solicitudes"/>
     </RelativeLayout>
 </RelativeLayout>

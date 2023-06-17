@@ -24,6 +24,7 @@ import com.example.socialgifts.adapters.FeedAdapter;
 import com.example.socialgifts.adapters.FriendsAdapter;
 import com.example.socialgifts.adapters.GiftAdapterFriend;
 import com.example.socialgifts.adapters.GiftAdapterMain;
+import com.example.socialgifts.adapters.SolicitudesAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
 import com.example.socialgifts.adapters.WishListAdapterFriend;
 import com.example.socialgifts.adapters.WishListAdapterUser;
@@ -51,6 +52,12 @@ public class ApiCalls {
     private GiftAdapterFriend adapterGiftFriend;
     private WishListAdapterFriend adapterWishListFriend;
     private XatsAdapter adapterXats;
+    private SolicitudesAdapter solicitudesAdapter;
+
+    public ApiCalls(Context context, SolicitudesAdapter solicitudesAdapter) {
+        this.context = context;
+        this.solicitudesAdapter = solicitudesAdapter;
+    }
 
     public ApiCalls(Context context, WishListAdapterFriend adapter) {
         this.context = context;
@@ -1122,8 +1129,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void getFriendsRequest(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getFriendsRequest(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/requests";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -1133,7 +1140,28 @@ public class ApiCalls {
                     public void onResponse(JSONArray response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        List<User> userList = new ArrayList<>();
+                        List<Integer> idList = new ArrayList<>();
 
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                int id = 0;
+                                id = jsonObject.getInt("id");
+                                String name = jsonObject.getString("name");
+                                String last_name = jsonObject.getString("last_name");
+                                String email = jsonObject.getString("email");
+                                String image = jsonObject.getString("image");
+                                User user = new User(id, name, last_name, email, image);
+                                userList.add(user);
+                                idList.add(id);
+                            }
+                            solicitudesAdapter.setUser(userList);
+                            solicitudesAdapter.setId(idList);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -1201,8 +1229,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void acceptFriendRequest(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void acceptFriendRequest(String accessToken, int id,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -1238,8 +1266,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void rejectFriendRequest(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void rejectFriendRequest(String accessToken, int id,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context) );
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

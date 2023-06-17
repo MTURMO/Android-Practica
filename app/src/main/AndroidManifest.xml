@@ -35,6 +35,10 @@
             tools:ignore="LockedOrientationActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
+        <activity android:name=".activities.ListSolicitudes"
+            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
         <activity android:name=".activities.GiftFriendActivity"
             tools:ignore="LockedOrientationActivity"
             android:screenOrientation="portrait"

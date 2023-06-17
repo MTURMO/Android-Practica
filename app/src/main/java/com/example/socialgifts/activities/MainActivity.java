@@ -61,4 +61,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListMensajes.class);
         startActivity(intent);
     }
+    public void Solicitudes(View view){
+        Intent intent = new Intent(this, ListSolicitudes.class);
+        startActivity(intent);
+    }
 }
