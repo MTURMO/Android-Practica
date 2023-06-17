@@ -13,8 +13,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.android.volley.Response;
 import com.example.socialgifts.ApiCalls;
@@ -31,6 +34,9 @@ public class FriendsFragment extends Fragment {
     private ArrayList<User> users;
     private FriendsAdapter adapter;
     private String string="all";
+    private String[] filtro = {"all", "friends"};
+    private Spinner spinner;
+    private int selected=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class FriendsFragment extends Fragment {
         adapter= new FriendsAdapter(users, getContext(), string);
         recyclerView.setAdapter(adapter);
 
+        spinner = view.findViewById(R.id.filter_spinner);
         return view;
     }
 
@@ -64,6 +71,8 @@ public class FriendsFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 string=s;
+
+                spinner.setSelection(0);
                 apiCalls.searchUserBuscador(accessToken, getContext(), string, new Response.Listener<List<User>>() {
                     @Override
                     public void onResponse(List<User> response) {
@@ -78,6 +87,8 @@ public class FriendsFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 string=newText;
+                spinner.setSelection(0);
+
                 if(newText.isEmpty()){
                     apiCalls.getAllUsers(accessToken,getContext());
                 }else{
@@ -92,6 +103,25 @@ public class FriendsFragment extends Fragment {
                 }
 
                 return true;
+            }
+        });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, filtro);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = filtro[position];
+                if(selected.equals("all")){
+                    apiCalls.getAllUsers(accessToken,getContext());
+            } else if(selected.equals("friends")){
+                    apiCalls.getFriends(accessToken,getContext());
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

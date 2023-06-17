@@ -43,8 +43,8 @@ public class ApiCalls {
     private String accessToken;
     private Context context;
     private FeedAdapter adapter; // Asegúrate de declarar el objeto adapter aquí
-    private FriendsAdapter adapter2; // Asegúrate de declarar el objeto adapter aquí
-    private WishListAdapter adapter3;
+    private FriendsAdapter friendsAdapter; // Asegúrate de declarar el objeto adapter aquí
+    private WishListAdapter wishListAdapter;
     private GiftAdapterMain adapterGift;
     private ChatAdapter adapterChatMain, adapterChatFriend;
     private WishListAdapterUser adapterWishListUser;
@@ -80,7 +80,7 @@ public class ApiCalls {
     }
     public ApiCalls(Context context, FriendsAdapter adapter) {
         this.context = context;
-        this.adapter2 = adapter;
+        this.friendsAdapter = adapter;
     }
     public ApiCalls(Context context, ChatAdapter adapter) {
         this.context = context;
@@ -88,7 +88,7 @@ public class ApiCalls {
     }
     public ApiCalls(Context context, WishListAdapter adapter) {
         this.context = context;
-        this.adapter3 = adapter;
+        this.wishListAdapter = adapter;
     }
 
 
@@ -422,7 +422,7 @@ public class ApiCalls {
                                     wishLists.add(wishList);
                             }
 
-                            adapter3.setWishLists(wishLists);
+                            wishListAdapter.setWishLists(wishLists);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1067,8 +1067,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void getFriends(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getFriends(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context) );
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -1078,7 +1078,25 @@ public class ApiCalls {
                     public void onResponse(JSONArray response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        List<User> userList = new ArrayList<>();
 
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                int id = 0;
+                                id = jsonObject.getInt("id");
+                                String name = jsonObject.getString("name");
+                                String last_name = jsonObject.getString("last_name");
+                                String email = jsonObject.getString("email");
+                                String image = jsonObject.getString("image");
+                                User user = new User(id, name, last_name, email, image);
+                                userList.add(user);
+                            }
+                            friendsAdapter.setUser(userList);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -1277,7 +1295,7 @@ public class ApiCalls {
                                 userList.add(user);
                             }
 
-                            adapter2.setUser(userList);
+                            friendsAdapter.setUser(userList);
 
 
                         } catch (JSONException e) {
