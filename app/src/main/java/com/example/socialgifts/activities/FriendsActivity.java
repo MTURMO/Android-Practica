@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
-import com.example.socialgifts.fragments.ChatFragment;
 import com.example.socialgifts.fragments.FriendWishlistFragment;
 import com.example.socialgifts.fragments.UserWishlistFragment;
 
@@ -98,14 +97,7 @@ public class FriendsActivity extends AppCompatActivity {
             apiCalls.createFriendRequest(accesToken, getIntent().getIntExtra("id", 0),follow,this);
         }
 
-        private void goToChat() {
-            Intent intent = new Intent(this, ChatFragment.class);
-            intent.putExtra("name", textViewName.getText().toString());
-            intent.putExtra("last_name", last_name.getText().toString());
-            intent.putExtra("image", image.toString());
-            intent.putExtra("id", 0);
-            startActivity(intent);
-        }
+
 
         private void goToFeed() {
             Intent intent = new Intent(this, MainActivity.class);

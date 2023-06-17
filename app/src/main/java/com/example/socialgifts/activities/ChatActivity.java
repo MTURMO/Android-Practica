@@ -10,20 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Message;
 import com.example.socialgifts.R;
 import com.example.socialgifts.adapters.ChatAdapter;
-import com.example.socialgifts.fragments.ChatFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +44,8 @@ public class ChatActivity extends AppCompatActivity {
         recyclerViewMain = findViewById(R.id.chat_recycle_view_main);
         recyclerViewMain.setLayoutManager(new GridLayoutManager(this, 1));
         adapterMain = new ChatAdapter(messagesMain, this, id);
-
         recyclerViewMain.setAdapter(adapterMain);
 
-        /*chatFragment = new ChatFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_chat, chatFragment).commit();*/
 
         name = findViewById(R.id.chat_friend_name);
         sendButton = findViewById(R.id.send_button);
@@ -78,11 +69,9 @@ public class ChatActivity extends AppCompatActivity {
 
     public void onSendMessages(String content) {
         // Obtén el mensaje a enviar
-        Log.e("ChatActivity", "faf");
         String contentMess = content.trim();
 
         if (!contentMess.isEmpty()) {
-            Log.e("dentro",contentMess);
 
             // Obtiene el token de acceso y el id del usuario
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);

@@ -1,6 +1,5 @@
 package com.example.socialgifts.adapters;
 
-import static android.app.PendingIntent.getActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;

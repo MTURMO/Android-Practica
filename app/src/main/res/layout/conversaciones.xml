@@ -4,7 +4,7 @@
     android:id="@+id/fragment_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ChatFragment"
+    tools:context=".activities.ListMensajes"
     tools:ignore="MissingDefaultResource">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,10 +19,9 @@
             android:paddingRight="20dp"
             tools:ignore="UselessParent">
             <TextView
-                android:id="@+id/chat_friend_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/friend_name"
+                android:text="Conversaciones"
                 android:gravity="center"
                 android:textSize="30sp"/>
             <ScrollView
@@ -31,29 +30,26 @@
                 android:layout_marginTop="20dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/chat_recycle_view_friend"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/chat_recycle_view_main"
+                        android:id="@+id/conv_recycle_view_main"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                 </LinearLayout>
             </ScrollView>
-            <EditText
-                android:id="@+id/chat_input"
-                android:layout_width="match_parent"
+
+            <Button
+                android:id="@+id/back_button_convers"
+                android:enabled="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/enter_your_message"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:autofillHints=""
-                tools:ignore="TextFields"
-                />
+                android:text="Back">
+            </Button>
         </LinearLayout>
     </RelativeLayout>
 

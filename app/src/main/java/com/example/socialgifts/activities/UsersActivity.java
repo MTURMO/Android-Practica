@@ -14,8 +14,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.R;
-import com.example.socialgifts.fragments.ChatFragment;
-import com.example.socialgifts.fragments.UserWishlistFragment;
 
 public class UsersActivity extends AppCompatActivity {
 

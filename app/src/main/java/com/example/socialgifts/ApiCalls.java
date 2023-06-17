@@ -27,6 +27,7 @@ import com.example.socialgifts.adapters.GiftAdapterMain;
 import com.example.socialgifts.adapters.WishListAdapter;
 import com.example.socialgifts.adapters.WishListAdapterFriend;
 import com.example.socialgifts.adapters.WishListAdapterUser;
+import com.example.socialgifts.adapters.XatsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,10 +50,15 @@ public class ApiCalls {
     private WishListAdapterUser adapterWishListUser;
     private GiftAdapterFriend adapterGiftFriend;
     private WishListAdapterFriend adapterWishListFriend;
+    private XatsAdapter adapterXats;
 
     public ApiCalls(Context context, WishListAdapterFriend adapter) {
         this.context = context;
         this.adapterWishListFriend = adapter;
+    }
+    public ApiCalls (Context context, XatsAdapter adapter){
+        this.context = context;
+        this.adapterXats = adapter;
     }
 
     public ApiCalls(Context context, GiftAdapterFriend adapter) {
@@ -1214,8 +1220,8 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void getUsersMessaged(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void getUsersMessaged(String accessToken,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/users";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -1225,7 +1231,27 @@ public class ApiCalls {
                     public void onResponse(JSONArray response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        ArrayList<User> user = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonProduct = response.getJSONObject(i);
 
+                                int id_user = jsonProduct.getInt("id");
+                                String name = jsonProduct.getString("name");
+                                String last_name = jsonProduct.getString("last_name");
+                                String email = jsonProduct.getString("email");
+                                String image = jsonProduct.getString("image");
+
+                                User user1 = new User(id_user,name,last_name,email,image);
+
+                                user.add(user1);
+
+                            }
+                            adapterXats.setUsersMain(user);
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
