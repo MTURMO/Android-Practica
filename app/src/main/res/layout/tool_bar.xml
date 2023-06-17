@@ -20,6 +20,7 @@
             android:layout_height="40dp"
             android:src="@drawable/icon_settings"
             android:layout_alignParentEnd="true"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:onClick="User"/>
     </RelativeLayout>
 </RelativeLayout>

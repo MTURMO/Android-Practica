@@ -170,6 +170,7 @@ public class ApiCalls {
                     SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("accessToken", accessToken);
+                    editor.putString("password", user.getPassword());
                     editor.apply();
 
 
@@ -616,10 +617,10 @@ public class ApiCalls {
         - accessToken
         - new User
      */
-    public void editUser(String accessToken, User user) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void editUser(String accessToken, User user,Context context) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
-
+        Log.e("resposta", "La resposta es: " + user.getUsuariTotal().toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.PUT, url, user.getUsuariTotal(), new Response.Listener<JSONObject>() {
 
@@ -627,7 +628,21 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                        editor.putString("password", user.getPassword());
+                        editor.apply();
+
+                        editor.putString("name", user.getName());
+                        editor.putString("last_name", user.getLast_name());
+                        editor.putString("image", user.getImage());
+                        editor.putString("email", user.getEmail());
+                        editor.putString("id", String.valueOf(user.getId()));
+                        editor.apply();
+
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
                     @Override

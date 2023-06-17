@@ -2,7 +2,9 @@ package com.example.socialgifts.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,56 +21,57 @@ import com.example.socialgifts.fragments.UserWishlistFragment;
 public class UsersActivity extends AppCompatActivity {
 
     private TextView textViewName;
-    public TextView last_name;
+    public TextView last_name,email;
     public ImageView image;
-    private ImageButton back;
-    private ImageButton chat;
-    private Button follow;
+    private Button logout;
+    private Button edit;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_perfil);
+        setContentView(R.layout.main_user_perfil);
 
-        image = findViewById(R.id.user_image);
-        textViewName = findViewById(R.id.user_name);
-        last_name = findViewById(R.id.user_last_name);
-        back = findViewById(R.id.back);
-        chat = findViewById(R.id.user_activity_chat);
-        follow = findViewById(R.id.user_activity_follow);
+        image = findViewById(R.id.main_user_image);
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String lastname = intent.getStringExtra("last_name");
-        String image = intent.getStringExtra("image");
-        int id = intent.getIntExtra("id",0);
+        textViewName = findViewById(R.id.main_user_name);
+        last_name = findViewById(R.id.main_user_last_name);
+        email = findViewById(R.id.main_user_email);
+        logout = findViewById(R.id.logout_button);
+        edit = findViewById(R.id.user_edit);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String lastname = sharedPreferences.getString("last_name", "");
+        String email2 = sharedPreferences.getString("email", "");
+        String image = sharedPreferences.getString("image","" );
+        String id = sharedPreferences.getString("id", "");
+        String pas = sharedPreferences.getString("password", "");
 
         textViewName.setText(name);
         last_name.setText(lastname);
+        email.setText(email2);
 
         Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(this.image);
 
 
-        UserWishlistFragment userWishlistFragment = new UserWishlistFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_user, userWishlistFragment)
-                .commit();
 
-        back.setOnClickListener(view -> goToFeed());
-        chat.setOnClickListener(view ->{
-                Intent intent2 = new Intent(this, ChatActivity.class);
-                    intent2.putExtra("name", intent.getStringExtra("name"));
-                    intent2.putExtra("last_name", intent.getStringExtra("last_name"));
-                    intent2.putExtra("image", intent.getStringExtra("image"));
-                    intent2.putExtra("id", intent.getIntExtra("id", 0));
+        logout.setOnClickListener(view -> {
+            Intent intent1 = new Intent(this, Login.class);
+            startActivity(intent1);
+        });
+        edit.setOnClickListener(view ->{
+                Intent intent2 = new Intent(this, EditUserActivity.class);
+                    intent2.putExtra("name", name);
+                    intent2.putExtra("last_name", lastname);
+                    intent2.putExtra("email", email2);
+                    intent2.putExtra("image", image);
+                    intent2.putExtra("password", pas);
+                    intent2.putExtra("id", id);
                 startActivity(intent2);});
-        follow.setOnClickListener(view -> requestPost());
     }
 
-    private void requestPost() {
-    }
+
 
     private void goToChat() {
         Intent intent = new Intent(this, ChatFragment.class);

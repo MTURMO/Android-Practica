@@ -61,6 +61,8 @@
             android:exported="false" />
         <activity android:name=".activities.FriendsActivity"
             android:exported="false" />
+        <activity android:name=".activities.EditUserActivity"
+            android:exported="false" />
 
 
 

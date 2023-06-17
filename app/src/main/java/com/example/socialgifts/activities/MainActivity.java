@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.socialgifts.R;
 import com.example.socialgifts.fragments.FeedFragment;
@@ -50,5 +51,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_fragment_container, fragment);
         transaction.commit();
+    }
+
+    public void User(View view){
+        Intent intent = new Intent(this, UsersActivity.class);
+        startActivity(intent);
     }
 }

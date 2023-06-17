@@ -58,7 +58,6 @@ public class Login extends AppCompatActivity {
         apiCalls.loginUser(user,this);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
         String accessToken = sharedPreferences.getString("accessToken", "");
 
         apiCalls.searchUser(accessToken,userName, new Response.Listener<JSONArray>() {
@@ -67,7 +66,6 @@ public class Login extends AppCompatActivity {
                 getUserId(response,userName);}
         });
 
-        goToMain();
     }
 
     private void goToRegister(){
@@ -75,10 +73,7 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+
 
     private void getUserId(JSONArray response, String email){
         for (int i = 0; i < response.length(); i++) {
@@ -86,11 +81,18 @@ public class Login extends AppCompatActivity {
                 JSONObject categoryObject = response.getJSONObject(i);
                 int id = categoryObject.getInt("id");
                 String emailAux = categoryObject.getString("email");
+                String name = categoryObject.getString("name");
+                String last_name = categoryObject.getString("last_name");
+                String image = categoryObject.getString("image");
 
                 if (emailAux.equals(email)) {
                     SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                    editor.putString("name", name);
+                    editor.putString("last_name", last_name);
+                    editor.putString("image", image);
+                    editor.putString("email", email);
                     editor.putString("id", String.valueOf(id));
                     editor.apply();
 
