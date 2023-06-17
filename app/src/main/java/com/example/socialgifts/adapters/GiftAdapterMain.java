@@ -24,7 +24,7 @@ import java.util.List;
 
 public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Product> products;
     private List<Gift> gifts;
 

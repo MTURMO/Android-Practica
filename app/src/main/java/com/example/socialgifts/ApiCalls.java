@@ -100,13 +100,7 @@ public class ApiCalls {
         void onSuccess(Message message);
         void onFailure(String error);
     }
-    public Object getMainActivity() {
-        return MainActivity;
-    }
 
-    public void setMainActivity(Object mainActivity) {
-        MainActivity = mainActivity;
-    }
 
     public String getAccessToken() {
         return accessToken;
@@ -117,19 +111,6 @@ public class ApiCalls {
         this.accessToken = accessToken;
     }
 
-    /******************************
-     * CRIDES API USER
-     ******************************/
-
-    /*
-        Funció per a registrar el usuari
-        Se li passa un usuari amb:
-            - name
-            - last_name
-            - email
-            - password
-            - image
-        */
     public void registerUser(User user) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -161,14 +142,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
-    /*
-    Funció per fer LogIn
-    Se li passa un usuari amb:
-        - email
-        - password
-    S'obté el accessToken
-     */
     public void  loginUser(User user,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -206,17 +179,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
-
-    /*
-    Funció per obtenir un usuari en funcio del id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-    La funcio retorna
-        - User
-     */
     public void getUserById(String accessToken, int id,Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
@@ -253,16 +215,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
-    /*
-    Funció per buscar un usuari
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - String per a la cerca
-    La funcio retorna
-        - Array de users
-     */
     public void searchUser(String accessToken, String search,Response.Listener<JSONArray> listener) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/search?s=" + search;
@@ -291,16 +243,48 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
+    public void searchUserBuscador(String accessToken,Context context, String search,Response.Listener<List<User>> listener) {
+        RequestQueue queue = Volley.newRequestQueue((context));
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/search?s=" + search;
 
-    /*
-    Funció per obtenir els friends d'un usuari en funcio del seu id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-    La funcio retorna
-        - Array de users
-     */
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        List<User> users = new ArrayList<>();
+                        try{
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject user = response.getJSONObject(i);
+                                users.add(new User(
+                                        user.getInt("id"),
+                                        user.getString("name"),
+                                        user.getString("last_name"),
+                                        user.getString("email"),
+                                        user.getString("image")));
+                            }
+                            listener.onResponse(users);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
     public void getUserFriends(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/friends";
@@ -330,16 +314,6 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
-
-    /*
-    Funció per obtenir els regals que un usuari ha reservat en funcio del id de l'usuari
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-    La funcio retorna
-        - Array de gifts
-     */
     public void getGiftReserved(String accessToken, int id) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/gifts/reserved";
@@ -370,15 +344,6 @@ public class ApiCalls {
         queue.add(jsonArrayRequest);
     }
 
-    /*
-    Funció per obtenir tota la wishlist en funcio del id de l'usuari en questio
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-    La funcio retorna
-        - Array de wishlists
-     */
     public void getAllUserWhishlistSpinnerProduct(String accessToken, int id,Response.Listener<JSONArray> listener) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
@@ -549,7 +514,6 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
-
     public void getAllUserWhishlistPerfilFriend(String accessToken, int id, Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id + "/wishlists";
@@ -621,13 +585,6 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
-    /*
-    Funció per editar l'usuari que ha fet login
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - new User
-     */
     public void editUser(String accessToken, User user,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
@@ -672,11 +629,6 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-
-    /******************************
-     * CRIDES API GIFTS
-     ******************************/
-
     public void createGift(String accessToken, Gift gift, Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
@@ -706,87 +658,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
-    /*
-    Funció per obtenir tots els regals
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-     */
-    public void getAllGifts(String accessToken) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error:" + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonArrayRequest);
-    }
-
-    /*
-    Funció per obtenir l'usuari en funcio del id d'un gift
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-     */
-    public void getUserByGiftId(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id + "/user";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error:" + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonObjectRequest);
-    }
-
-    /*
-    Funció per obtenir un Gift en funció del seu id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-     */
     public void getGiftByIdForFriend(String accessToken, int id, Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
@@ -867,6 +738,7 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
+
     /*
     Funció per editar Gift en funció del seu ID
     Cal haver fet LogIn per obtenir el accessToken
@@ -904,14 +776,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
-    /*
-    Funció per eliminar un Gift en funció del seu id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - id
-     */
     public void deleteGiftById(String accessToken, int id, Context context,Response.Listener<JSONObject> listener) {
         RequestQueue queue = Volley.newRequestQueue((context) );
         String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id;
@@ -943,17 +807,7 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    /******************************
-     * CRIDES API WISHLISTS
-     ******************************/
 
-    /*
-    Funció per crear una wishlist
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - new wishlist
-     */
     public void createWishList(String accessToken, WishList wishList,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
@@ -984,50 +838,6 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    /*
-    Funció per obtenir totes les wishlists
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-     */
-    public void getAllWishList(String accessToken,Response.Listener<JSONArray> listener) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
-                        listener.onResponse(response);
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error: " + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonArrayRequest);
-    }
-
-    /*
-    Funció per obtenir una wishlist en funcio del seu id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - int id
-     */
     public void getWishlistById(String accessToken, int id,Context MainActivity,Response.Listener<JSONObject> listener) {
         RequestQueue queue = Volley.newRequestQueue( MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
@@ -1058,7 +868,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-
 
     /*
     Funció per eliminar una wishlist
@@ -1097,13 +906,7 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    /*
-    Funció per editar una wishlist
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - int id
-     */
+
     public void editWishlist(String accessToken, int id, WishList wishList,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
@@ -1134,17 +937,6 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    /******************************
-     * CRIDES API MESSAGES
-     ******************************/
-
-    /*
-    Funció per crear un missatge
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - new Message
-     */
     public void newMessage(String accessToken, Message message,Context context,final MessageCallback callback) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages";
@@ -1213,13 +1005,6 @@ public class ApiCalls {
         queue.add(jsonArrayRequest);
     }
 
-    /*
-    Funció per obtenir tots els usuaris als que s'ha enviat un missatge
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - new Message
-     */
     public void getUsersMessaged(String accessToken,Context context) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/users";
@@ -1270,19 +1055,10 @@ public class ApiCalls {
         queue.add(jsonArrayRequest);
     }
 
-    /*
-    Funció per obtenir els missatges que s'han intercanviat amb un altre usuari en
-    funcio del seu id
-    Cal haver fet LogIn per obtenir el accessToken
-    A la funcio se li passa:
-        - accessToken
-        - int id
-     */
 
 
-    /******************************
-     * CRIDES API MESSAGES
-     ******************************/
+
+
 
     /*
     Funció per crear un missatge
@@ -1474,9 +1250,6 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-    /**
-     * TODO CALL PRODUCTE
-     */
 
     public void getAllUsers(String accessToken,Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -1855,95 +1628,6 @@ public class ApiCalls {
         };
         queue.add(jsonObjectRequest);
     }
-    public void editProduct(String accessToken, Product product) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PUT, url,  product.editProduct(), new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: "+ response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error:" + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonObjectRequest);
-    }
-    public void deleteProductById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products"+ id;
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error: " + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonObjectRequest);
-    }
-
-    public void searchProduct(String accessToken, String search) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
-        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/search?s=" + search;
-
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("resposta", "La resposta es: " + response.toString());
-                        //Obtenim tots els usuaris en format json
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error:" + error);
-                    }
-                }
-                ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + accessToken);
-                return headers;
-            }
-        };
-        queue.add(jsonArrayRequest);
-    }
 
     public void getCategoryList(String accessToken, Response.Listener<JSONArray> listener) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
@@ -1972,7 +1656,7 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
-
+/*
     public void getCategoryById(String accessToken, int category) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/categories/" + category;
@@ -2002,12 +1686,199 @@ public class ApiCalls {
         queue.add(jsonObjectRequest);
     }
 
-   /* /*
-    Funció per eliminar l'usuari que ha fet login
+
+   public void editProduct(String accessToken, Product product) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.PUT, url,  product.editProduct(), new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+
+    Funció per obtenir tots els regals
     Cal haver fet LogIn per obtenir el accessToken
     A la funcio se li passa:
         - accessToken
 
+   public void getAllGifts(String accessToken) {
+       RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+       String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+
+       JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+               (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                   @Override
+                   public void onResponse(JSONArray response) {
+                       Log.e("resposta", "La resposta es: "+ response.toString());
+                       //Obtenim tots els usuaris en format json
+
+                   }
+               }, new Response.ErrorListener() {
+                   @Override
+                   public void onErrorResponse(VolleyError error) {
+                       Log.e("resposta", "Hi ha hagut un error:" + error);
+                   }
+               }
+               ) {
+           @Override
+           public Map<String, String> getHeaders() throws AuthFailureError {
+               Map<String, String> headers = new HashMap<>();
+               headers.put("Authorization", "Bearer " + accessToken);
+               return headers;
+           }
+       };
+       queue.add(jsonArrayRequest);
+   }
+
+
+    Funció per obtenir l'usuari en funcio del id d'un gift
+    Cal haver fet LogIn per obtenir el accessToken
+    A la funcio se li passa:
+        - accessToken
+        - id
+
+    public void getUserByGiftId(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url ="https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/" + id + "/user";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: "+ response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+      public void deleteProductById(String accessToken, int id) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products"+ id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
+     public void searchProduct(String accessToken, String search) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/search?s=" + search;
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error:" + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+    public void getAllWishList(String accessToken,Response.Listener<JSONArray> listener) {
+        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        listener.onResponse(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
    public void deleteUser(String accessToken) {
        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";

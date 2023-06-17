@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +26,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     private List<User> users;
     private final Context context;
-    private final String searchUserName;
+    private  String searchUserName;
 
     public FriendsAdapter(List<User> users, Context context, String searchUserName){
         if(users==null){
@@ -43,21 +44,37 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         this.users=user;
         notifyDataSetChanged();
     }
-
+    public void setString(String string) {
+        this.searchUserName = string;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.feed_user_card, parent, false);
-        return new ViewHolder(view);    }
+        return new ViewHolder(view);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = users.get(position);
+
+        boolean match = searchUserName.equals("all") || user.getName().toLowerCase().contains(searchUserName.toLowerCase())
+                || user.getLast_name().toLowerCase().contains(searchUserName.toLowerCase())
+                || user.getEmail().toLowerCase().contains(searchUserName.toLowerCase());
+
+        if(match){
+                holder.itemView.setVisibility(View.VISIBLE);
+                holder.userName.setText(user.getName());
+                holder.email.setText(user.getEmail());
+                Glide.with(context).load(user.getImage()).error(R.drawable.ic_launcher_foreground).into(holder.userImage);
+        }else{
+            holder.itemView.setVisibility(View.GONE);
+        }
         holder.userName.setText(user.getName());
         holder.email.setText(user.getEmail());
 
-        Glide.with(context).load(user.getImage()).error(R.drawable.ic_launcher_foreground).into(holder.userImage);
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, FriendsActivity.class);

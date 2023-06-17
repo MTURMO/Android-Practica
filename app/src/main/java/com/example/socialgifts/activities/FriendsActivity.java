@@ -27,7 +27,7 @@ public class FriendsActivity extends AppCompatActivity {
         private ImageButton back;
         private ImageButton chat;
         private Button follow;
-        private boolean isFollowed = false;
+        private final boolean isFollowed = false;
         private SharedPreferences sharedPreferences;
 
         @SuppressLint("MissingInflatedId")

@@ -24,10 +24,10 @@ import java.util.List;
 public class XatsAdapter extends RecyclerView.Adapter<XatsAdapter.ViewHolder>{
 
     private List<User> usersMain;
-    private Context context;
-    private SharedPreferences sharedPreferences;
+    private final Context context;
+    private final SharedPreferences sharedPreferences;
     private int id;
-    private ApiCalls apiCallsMain;
+    private final ApiCalls apiCallsMain;
 
 
     public XatsAdapter(List<User> users, Context context){

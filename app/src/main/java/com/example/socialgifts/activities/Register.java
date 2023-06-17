@@ -48,11 +48,7 @@ public class Register extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String userLastName = userLastNameEditText.getText().toString();
 
-        if(!userName.isEmpty() /*&& email.matches(emailRegex)*/ && !password.isEmpty() && !email.isEmpty() && !userLastName.isEmpty()){
-            return true;
-        } else {
-            return false;
-        }
+        return !userName.isEmpty() /*&& email.matches(emailRegex)*/ && !password.isEmpty() && !email.isEmpty() && !userLastName.isEmpty();
 
     }
     private void makePost(){

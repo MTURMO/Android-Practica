@@ -23,10 +23,10 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private List<Message> messagesMain;
-    private Context context;
-    private SharedPreferences sharedPreferences;
-    private int id;
-    private ApiCalls apiCallsMain;
+    private final Context context;
+    private final SharedPreferences sharedPreferences;
+    private final int id;
+    private final ApiCalls apiCallsMain;
 
 
     public ChatAdapter(List<Message> messages,Context context,int id){

@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private List<Product> products;
-    private Context context;
+    private final Context context;
     private final String filter;
 
     public FeedAdapter(List<Product> products,  Context context, String filter){

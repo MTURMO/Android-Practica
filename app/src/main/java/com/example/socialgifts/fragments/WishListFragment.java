@@ -15,15 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
-import com.example.socialgifts.activities.CreateProductActivity;
 import com.example.socialgifts.activities.CreateWishlistActivity;
-import com.example.socialgifts.activities.MainActivity;
-import com.example.socialgifts.adapters.FriendsAdapter;
 import com.example.socialgifts.adapters.WishListAdapter;
 
 import java.util.ArrayList;

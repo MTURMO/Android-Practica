@@ -21,8 +21,8 @@ public class WishListAdapterFriend extends RecyclerView.Adapter<WishListAdapterF
 
     private ArrayList<WishList> wishLists;
     private final Context context;
-    private String nameUser;
-    private String lastname;
+    private final String nameUser;
+    private final String lastname;
     public WishListAdapterFriend(ArrayList<WishList> wishLists, Context context,String nameUser, String lastname ){
         this.wishLists = wishLists != null ? wishLists : new ArrayList<>();
         this.nameUser = nameUser;

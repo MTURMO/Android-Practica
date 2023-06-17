@@ -17,9 +17,9 @@ import com.example.socialgifts.fragments.WishListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private FeedFragment feedFragment = new FeedFragment();
-    private FriendsFragment friendsFragment = new FriendsFragment();
-    private WishListFragment wishListFragment = new WishListFragment();
+    private final FeedFragment feedFragment = new FeedFragment();
+    private final FriendsFragment friendsFragment = new FriendsFragment();
+    private final WishListFragment wishListFragment = new WishListFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

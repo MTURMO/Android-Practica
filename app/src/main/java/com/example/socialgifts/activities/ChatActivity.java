@@ -27,7 +27,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button sendButton;
     private ChatAdapter adapterMain ;
-    private List<Message> messagesMain = new ArrayList<>();
+    private final List<Message> messagesMain = new ArrayList<>();
     private RecyclerView recyclerViewMain;
     private TextView name;
     private EditText chatInput;

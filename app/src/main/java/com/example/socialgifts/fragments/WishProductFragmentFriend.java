@@ -93,7 +93,7 @@ public class WishProductFragmentFriend extends Fragment{
                 int number = Integer.parseInt(name);
 
                 ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
-                apiCalls.getProductByIDForFriend(accessToken, number, getContext());;
+                apiCalls.getProductByIDForFriend(accessToken, number, getContext());
                 apiCalls.getGiftByIdForFriend(accessToken, giftObject.getInt("id"), getContext());
             }
 

@@ -24,7 +24,7 @@ public class ListMensajes extends AppCompatActivity {
     private Button back;
     private XatsAdapter xatsAdapter;
 
-    private List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
     private RecyclerView recyclerView;
 
 
