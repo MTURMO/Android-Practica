@@ -9,10 +9,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CreateWishlistActivity extends BaseAcivity {
     private EditText newWishlistEditText;
@@ -20,7 +25,7 @@ public class CreateWishlistActivity extends BaseAcivity {
     private ImageButton backButton;
 
     private EditText newWishlistDescriptionEditText;
-    private EditText endDate;
+    private EditText endDateYear, endDateMonth, endDateDay, endDate;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -29,14 +34,17 @@ public class CreateWishlistActivity extends BaseAcivity {
         setContentView(R.layout.activity_create_wishlist);
         newWishlistEditText = findViewById(R.id.wishlist_new_name);
         newWishlistDescriptionEditText = findViewById(R.id.wishlist_new_description);
-        endDate = findViewById(R.id.editTextDate);
+        endDateYear = findViewById(R.id.editTextDateYear);
+        endDateMonth = findViewById(R.id.editTextDateMonth);
+        endDateDay = findViewById(R.id.editTextDateDay);
         backButton = findViewById(R.id.create_wish_back_button);
         createWishlistButton = findViewById(R.id.wishlist_new_create_button);
         createWishlistButton.setOnClickListener(view -> {
                 if(productCorrect()) {
                     makePost();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+
+                } else{
+                    Toast.makeText(this, "Complete los campos correctamente.", Toast.LENGTH_SHORT).show();
                 }
         });
         backButton.setOnClickListener(view -> {
@@ -50,17 +58,65 @@ public class CreateWishlistActivity extends BaseAcivity {
 
         String name = newWishlistEditText.getText().toString();
         String description = newWishlistDescriptionEditText.getText().toString();
-        String data = endDate.getText().toString();
+        String year = endDateYear.getText().toString();
+        String month = endDateMonth.getText().toString();
+        String day = endDateDay.getText().toString();
 
-        WishList product = new WishList(name, description,data);
+        if(dataCorrecta(year,month,day)){
+            String data = year+"-"+month+"-"+day+"T00:00:00.000Z";
 
-        ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.createWishList(accessToken,product,this);
+            WishList product = new WishList(name, description,data);
+
+            ApiCalls apiCalls = new ApiCalls(this);
+            apiCalls.createWishList(accessToken,product,this);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else{
+            Toast.makeText(this, "Formato de fecha incorrecto(yyyy-MM-dd) o fecha pasada", Toast.LENGTH_SHORT).show();
+        }
+
     }
     private boolean productCorrect(){
         String name = newWishlistEditText.getText().toString();
         String description = newWishlistDescriptionEditText.getText().toString();
-        String data = endDate.getText().toString();
+        String year = endDateYear.getText().toString();
+        String month = endDateMonth.getText().toString();
+        String day = endDateDay.getText().toString();
+
+        String data = year+"-"+month+"-"+day+"T00:00:00.000Z";
+
         return !name.isEmpty() && !description.isEmpty() && !data.isEmpty();
     }
+    private boolean dataCorrecta(String year, String month, String day){
+        String yearPattern = "\\d{4}";
+        String monthPattern = "\\d{2}";
+        String dayPattern = "\\d{2}";
+
+        if(!year.matches(yearPattern) || !month.matches(monthPattern) || !day.matches(dayPattern)){
+            return false;
+        }
+
+        int yearInt = Integer.parseInt(year);
+        int monthInt = Integer.parseInt(month);
+        int dayInt = Integer.parseInt(day);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setLenient(false);
+        calendar.set(Calendar.YEAR, yearInt);
+        calendar.set(Calendar.MONTH, monthInt-1);
+        calendar.set(Calendar.DAY_OF_MONTH, dayInt);
+        try{
+            Date input =  calendar.getTime();
+            Date actual = new Date();
+            if(input.before(actual)){
+                return false;
+            } else{
+
+            }
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -45,7 +45,8 @@
         <EditText
             android:id="@+id/wishlist_new_end_date2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="date"/>
         <Button
             android:id="@+id/wishlist_edit_button"
             android:layout_width="wrap_content"

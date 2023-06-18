@@ -39,11 +39,35 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wishlist End Date"
+            android:text="Wishlist End Date Year"
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/editTextDateYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wishlist End Date Month"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/editTextDateMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wishlist End Date Year Day"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/editTextDateDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
