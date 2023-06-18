@@ -64,12 +64,12 @@ public class CreateProductActivity extends AppCompatActivity {
         categoriesName = new ArrayList<>();
         ApiCalls apiCalls = new ApiCalls(this);
 
-        apiCalls.getCategoryList(accessToken, new Response.Listener<JSONArray>() {
+        /*apiCalls.getCategoryList(accessToken, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 parsear(response);
             }
-        });
+        });*/
 
     }
 
