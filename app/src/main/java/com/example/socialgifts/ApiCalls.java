@@ -10,10 +10,12 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,6 +34,9 @@ import com.example.socialgifts.adapters.WishListAdapter;
 import com.example.socialgifts.adapters.WishListAdapterFriend;
 import com.example.socialgifts.adapters.WishListAdapterUser;
 import com.example.socialgifts.adapters.XatsAdapter;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,7 +128,7 @@ public class ApiCalls {
         this.accessToken = accessToken;
     }
 
-    public void registerUser(User user) {
+    public void registerUser(User user, Context context) {
         RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users", user.getUsuariTotal(), new Response.Listener<JSONObject>() {
@@ -142,6 +147,23 @@ public class ApiCalls {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null && networkResponse.data != null){
+                    String responseBody = new String(networkResponse.data);
+                    Gson gson = new Gson();
+                    JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                    String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                    if(responseBody.contains("missingFields")) {
+                        JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                        ArrayList<String> missingFields = new ArrayList<>();
+                        for (int i = 0; i < missingFields.size(); i++) {
+                            missingFields.add(jsonElements.get(i).getAsString());
+                        }
+                        Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }) {
             @Override
@@ -180,6 +202,23 @@ public class ApiCalls {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null && networkResponse.data != null){
+                    String responseBody = new String(networkResponse.data);
+                    Gson gson = new Gson();
+                    JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                    String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                    if(responseBody.contains("missingFields")) {
+                        JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                        ArrayList<String> missingFields = new ArrayList<>();
+                        for (int i = 0; i < missingFields.size(); i++) {
+                            missingFields.add(jsonElements.get(i).getAsString());
+                        }
+                        Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }) {
             @Override
@@ -215,6 +254,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -243,6 +299,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -285,6 +358,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -374,6 +464,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -447,6 +554,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -531,6 +655,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -606,6 +747,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -649,6 +807,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -679,6 +854,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -719,6 +911,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -759,6 +968,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -827,6 +1053,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -858,6 +1101,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -889,6 +1149,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -928,6 +1205,23 @@ public class ApiCalls {
                     public void onErrorResponse(VolleyError error) {
                         listener.onErrorResponse(error);
                         Log.e("resposta", "Hi ha hagut un error: " + error + id);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -959,6 +1253,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -991,6 +1302,23 @@ public class ApiCalls {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
                         callback.onFailure("Error al crear el missatge");
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1077,6 +1405,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1132,6 +1477,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1162,6 +1524,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1220,6 +1599,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1293,6 +1689,23 @@ public class ApiCalls {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
                         errorListener.onErrorResponse(error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1327,6 +1740,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1364,6 +1794,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1401,6 +1848,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1452,6 +1916,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error:" + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1516,6 +1997,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Aquí puedes manejar el error de la solicitud
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
         ) {
@@ -1571,6 +2069,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1692,6 +2207,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1749,6 +2281,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
@@ -1780,6 +2329,23 @@ public class ApiCalls {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("resposta", "Hi ha hagut un error: " + error.networkResponse.statusCode);
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null){
+                            String responseBody = new String(networkResponse.data);
+                            Gson gson = new Gson();
+                            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+                            String message = jsonObject.getAsJsonObject("error").get("message").getAsString();
+                            if(responseBody.contains("missingFields")) {
+                                JsonArray jsonElements = jsonObject.getAsJsonObject("error").getAsJsonArray("missingFields");
+                                ArrayList<String> missingFields = new ArrayList<>();
+                                for (int i = 0; i < missingFields.size(); i++) {
+                                    missingFields.add(jsonElements.get(i).getAsString());
+                                }
+                                Toast.makeText(context, "" + message + ": " + missingFields, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
                 ) {
