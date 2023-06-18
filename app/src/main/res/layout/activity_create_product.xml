@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,57 +7,55 @@
     android:gravity="center"
     android:padding="30dp"
     tools:context=".activities.CreateProductActivity">
-
-    <TextView
+    <ImageButton
+        android:id="@+id/toolbar_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
-        android:text="NEW PRODUCT"
-        android:textSize="40dp"
-        android:textColor="@color/design_default_color_error"/>
-    <EditText
-        android:id="@+id/create_product_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"/>
-    <EditText
-        android:id="@+id/create_product_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"/>
-    <EditText
-        android:id="@+id/create_product_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Price"/>
-    <EditText
-        android:id="@+id/create_product_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="URL"
-        android:inputType="textUri"/>
-    <Spinner
-        android:id="@+id/create_product_spinner"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content" />
-
+        android:src="?attr/actionModeCloseDrawable"
+        android:background="@color/black"
+        android:onClick="goBack"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="NEW PRODUCT"
+            android:textSize="40dp"
+            android:textColor="@color/design_default_color_error"/>
+        <EditText
+            android:id="@+id/create_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"/>
+        <EditText
+            android:id="@+id/create_product_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"/>
+        <EditText
+            android:id="@+id/create_product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price"/>
+        <EditText
+            android:id="@+id/create_product_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL"
+            android:inputType="textUri"/>
+        <Spinner
+            android:id="@+id/create_product_spinner"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/create_product_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Product"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:id="@+id/back_create_product"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </LinearLayout>
