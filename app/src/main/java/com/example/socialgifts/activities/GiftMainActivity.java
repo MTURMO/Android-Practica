@@ -32,7 +32,6 @@ public class GiftMainActivity extends BaseAcivity  {
         private TextView textViewprice;
         private TextView textViewdescription;
         public ImageView image;
-
         private Button  backButton;
         private Button deleteButton;
 
