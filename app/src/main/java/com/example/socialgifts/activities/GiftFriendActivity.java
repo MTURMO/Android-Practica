@@ -70,7 +70,7 @@ public class GiftFriendActivity extends AppCompatActivity {
             textViewcategory.setText((category));
             textViewprice.setText(Float.toString(price));
             textViewdescription.setText(description2);
-            Glide.with(this).load(image_url2).error(R.drawable.ic_launcher_foreground).into(this.image);
+            Glide.with(this).load(image_url2).error(R.drawable.imagemissing_92832).into(this.image);
 
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String accessToken = sharedPreferences.getString("accessToken", "");

@@ -77,7 +77,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 holder.itemView.setVisibility(View.VISIBLE);
                 holder.userName.setText(user.getName());
                 holder.email.setText(user.getEmail());
-                Glide.with(context).load(user.getImage()).error(R.drawable.ic_launcher_foreground).into(holder.userImage);
+                Glide.with(context).load(user.getImage()).error(R.drawable.imagemissing_92832).into(holder.userImage);
         }else{
             holder.itemView.setVisibility(View.GONE);
         }

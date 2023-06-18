@@ -74,7 +74,7 @@ public class GiftMainActivity extends AppCompatActivity  {
             textViewcategory.setText(category.toString());
             textViewprice.setText(Float.toString(price));
             textViewdescription.setText(description2);
-            Glide.with(this).load(image_url2).error(R.drawable.ic_launcher_foreground).into(this.image);
+            Glide.with(this).load(image_url2).error(R.drawable.imagemissing_92832).into(this.image);
 
             String finalName = name2;
             String finalDescription = description2;

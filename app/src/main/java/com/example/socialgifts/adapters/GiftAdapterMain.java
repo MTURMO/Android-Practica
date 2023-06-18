@@ -95,7 +95,7 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
             holder.productDescription.setText(product.getDescription());
             holder.productPrice.setText(String.valueOf(product.getPrice()));
 
-            Glide.with(context).load(product.getPhoto_url()).error(R.drawable.ic_launcher_foreground).into(holder.productImage);
+            Glide.with(context).load(product.getPhoto_url()).error(R.drawable.imagemissing_92832).into(holder.productImage);
 
 
             holder.itemView.setOnClickListener(view -> {

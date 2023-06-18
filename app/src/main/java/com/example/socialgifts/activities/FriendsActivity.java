@@ -69,7 +69,7 @@ public class FriendsActivity extends AppCompatActivity {
             textViewName.setText(name);
             last_name.setText(lastname);
 
-            Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(this.image);
+            Glide.with(this).load(image).error(R.drawable.imagemissing_92832).into(this.image);
 
 
             FriendWishlistFragment userWishlistFragment = new FriendWishlistFragment();

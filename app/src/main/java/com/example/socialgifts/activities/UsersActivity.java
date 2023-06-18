@@ -50,7 +50,7 @@ public class UsersActivity extends AppCompatActivity {
         last_name.setText(lastname);
         email.setText(email2);
 
-        Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(this.image);
+        Glide.with(this).load(image).error(R.drawable.imagemissing_92832).into(this.image);
 
 
 
