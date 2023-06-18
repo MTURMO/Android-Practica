@@ -91,9 +91,10 @@ public class ChatActivity extends BaseAcivity {
                 @Override
                 public void onSuccess(Message message) {
                     // Llama al método updateChatAdapter() del fragmento para mostrar el mensaje enviado
-                    /*runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         updateChatAdapter(message);
-                    });*/
+
+                    });
                 }
 
                 @Override
@@ -110,6 +111,7 @@ public class ChatActivity extends BaseAcivity {
             messagesMain.add(message);
             adapterMain.notifyItemInserted(messagesMain.size() - 1);
             recyclerViewMain.scrollToPosition(messagesMain.size() - 1);
+            adapterMain.notifyDataSetChanged();
         });
     }
 
