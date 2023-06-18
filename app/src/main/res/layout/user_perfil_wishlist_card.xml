@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wishlist_card"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="8dp">
+    android:layout_height="100sp"
+    android:layout_margin="10sp"
+    app:cardCornerRadius="8sp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="100sp"
         android:orientation="horizontal"
         android:gravity="center">
         <TextView
             android:id="@+id/wishlist_card_name_user"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="100sp"
             android:layout_weight="1"
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="18sp"
             android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100sp"
+        android:orientation="horizontal"
+        android:layout_marginEnd="50sp"
+        android:gravity="end">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="100sp"
+            android:textAlignment="center"
+            android:text="Gifts: "
+            android:gravity="center"
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/wishlist_card_num_gifts_user"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="100sp"
             android:layout_weight="1"
-            android:textAlignment="center"
+            android:text="0"
+            android:textAlignment="viewStart"
             android:gravity="center"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -94,7 +94,7 @@ public class GiftAdapterFriend extends RecyclerView.Adapter<GiftAdapterFriend.Vi
                     intent.putExtra("description", product.getDescription());
                     intent.putExtra("product_url", product.getProduct_url());
                     intent.putExtra("price", product.getPrice());
-                    intent.putExtra("category", Arrays.toString(product.getCategoryId()));
+                    intent.putExtra("category", (product.getCategoryId().toString()));
                     intent.putExtra("image", product.getPhoto_url());
 
                     intent.putExtra("id_gift", gift.getId());

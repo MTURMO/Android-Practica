@@ -95,7 +95,7 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
                 intent.putExtra("description", product.getDescription());
                 intent.putExtra("product_url", product.getProduct_url());
                 intent.putExtra("price", product.getPrice());
-                intent.putExtra("category", (product.getCategoryId()));
+                intent.putExtra("category", (product.getCategoryId().toString()));
                 intent.putExtra("image", product.getPhoto_url());
 
                 intent.putExtra("id_gift", gift.getId());

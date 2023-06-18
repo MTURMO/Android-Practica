@@ -1,5 +1,8 @@
 package com.example.socialgifts;
 
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,15 +12,14 @@ public class Product {
 
     private int id;
 
-
     private final String name;
     private final String description;
     private final String product_url, photo_url;
     private final float price;
 
-    private final int[]categoryId;
+    private final JSONArray categoryId;
 
-    public Product(String name, String description,float price, String product_url, String photo_url, int[] categoryId){
+    public Product(String name, String description,float price, String product_url, String photo_url, JSONArray categoryId){
         this.name=name;
         this.description=description;
         this.product_url=product_url;
@@ -25,7 +27,7 @@ public class Product {
         this.price=price;
         this.categoryId=categoryId;
     }
-    public Product(int id,String name, String description,float price, String product_url, String photo_url, int  []categoryId){
+    public Product(int id, String name, String description, float price, String product_url, String photo_url, JSONArray categoryId){
         this.id =id;
         this.name=name;
         this.description=description;
@@ -37,13 +39,17 @@ public class Product {
 
     public JSONObject getProduct() {
         JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         try {
+            for (int i=0; i<categoryId.length(); i++) {
+                jsonArray.put(categoryId.get(i));
+            }
             jsonObject.put("name", name);
             jsonObject.put("description", description);
             jsonObject.put("link", product_url);
             jsonObject.put("photo", photo_url);
             jsonObject.put("price", price);
-            jsonObject.put("categoryIds", categoryId);
+            jsonObject.put("categoryIds", jsonArray);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -109,7 +115,7 @@ public class Product {
         return price;
     }
 
-    public int[] getCategoryId() {
+    public JSONArray getCategoryId() {
         return categoryId;
     }
 

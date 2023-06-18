@@ -46,10 +46,10 @@ public class WishProductFragmentFriend extends Fragment{
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_wishlist_friend, container, false);
+        View view = inflater.inflate(R.layout.activity_wishlist_product_friend, container, false);
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        RecyclerView recyclerView = view.findViewById(R.id.wishlist_activity_recycle_friend);
+        RecyclerView recyclerView = view.findViewById(R.id.wishlist_activity_recycle_friend_product);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         adapter= new GiftAdapterFriend(products,gifts, getContext());

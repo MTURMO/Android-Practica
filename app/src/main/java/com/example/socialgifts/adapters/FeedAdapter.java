@@ -74,7 +74,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             intent.putExtra("description", product.getDescription());
             intent.putExtra("product_url", product.getProduct_url());
             intent.putExtra("price", product.getPrice());
-            intent.putExtra("category", Arrays.toString(product.getCategoryId()));
+            intent.putExtra("category", (product.getCategoryId().toString()));
             intent.putExtra("image", product.getPhoto_url());
 
             context.startActivity(intent);

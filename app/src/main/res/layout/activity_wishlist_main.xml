@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="20sp"
     tools:context=".activities.WishlistActivityMain">
     <ImageButton
         android:id="@+id/wish_main_back_button"
@@ -13,7 +13,7 @@
         android:src="?attr/actionModeCloseDrawable"
         android:background="@null"
         android:onClick="goBack"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10sp"/>
     <TextView
         android:id="@+id/wishlist_activity_name"
         android:layout_width="match_parent"
@@ -40,12 +40,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="20sp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20sp"/>
 
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="0sp"
             android:layout_weight="1"
             android:id="@+id/fragment_container">
         </FrameLayout>
@@ -59,13 +59,13 @@
 
             <Button
                 android:id="@+id/edit_button"
-                android:layout_width="0dp"
+                android:layout_width="0sp"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Editar" />
             <Space
-                android:layout_width="20dp"
+                android:layout_width="20sp"
                 android:layout_height="match_parent"/>
             <Button
                 android:id="@+id/delete_button"

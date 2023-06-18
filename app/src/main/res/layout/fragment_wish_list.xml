@@ -8,9 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="70dp"
+        android:paddingTop="70sp"
 
-        android:paddingBottom="70dp">
+        android:paddingBottom="70sp">
 
            <LinearLayout
                android:layout_width="match_parent"

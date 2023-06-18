@@ -19,6 +19,7 @@ import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.adapters.GiftAdapterMain;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -35,9 +36,6 @@ public class GiftMainActivity extends BaseAcivity  {
 
         private Button editButton, backButton;
         private Button deleteButton;
-        private List<Product> products;
-        private List<Gift> gifts;
-        private GiftAdapterMain adapter;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
         @Override
@@ -57,7 +55,7 @@ public class GiftMainActivity extends BaseAcivity  {
             String name2 = intent.getStringExtra("name");
             String description2 = intent.getStringExtra("description");
             String image_url2 = intent.getStringExtra("image");
-            int[] category = intent.getIntArrayExtra("category");
+            String category = intent.getStringExtra("category");
             float price = intent.getFloatExtra("price", 0);
 
             int priority = intent.getIntExtra("priority", 0);

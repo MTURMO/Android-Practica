@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.example.socialgifts.ApiCalls;
@@ -19,6 +20,7 @@ import com.example.socialgifts.Category;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,12 +69,12 @@ public class CreateProductActivity extends BaseAcivity {
         categoriesName = new ArrayList<>();
         ApiCalls apiCalls = new ApiCalls(this);
 
-        /*apiCalls.getCategoryList(accessToken, new Response.Listener<JSONArray>() {
+        apiCalls.getCategoryList(accessToken, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 parsear(response);
             }
-        });*/
+        });
 
     }
 
@@ -102,18 +104,34 @@ public class CreateProductActivity extends BaseAcivity {
 
         String name = editTextName.getText().toString();
         String description = editTextDescription.getText().toString();
-        float price = Float.parseFloat(editTextProductPrice.getText().toString());
+        String priceText = editTextProductPrice.getText().toString();
         String url = editTextProductUrl.getText().toString();
 
-        int category = spinnerCategory.getSelectedItemPosition();
-        Category category1 = categories.get((category));
-        int [] categoryId = new int[0];
-        categoryId[0] = category1.getId();
+        if(isFloat(priceText)){
+            float price = Float.parseFloat(priceText);
+            int category = spinnerCategory.getSelectedItemPosition();
+            Category category1 = categories.get((category));
 
-        Product product = new Product(name, description, price, url, url,categoryId);
+            JSONArray categoryId = new JSONArray();
+            categoryId.put(category1.getId());
 
-        ApiCalls apiCalls = new ApiCalls(this);
-        apiCalls.createProduct(accessToken,product,this);
+            Product product = new Product(name, description, price, url, url,categoryId);
+
+            ApiCalls apiCalls = new ApiCalls(this);
+            apiCalls.createProduct(accessToken,product,this);
+        } else{
+            Toast.makeText(this, "El precio debe ser un float", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+    private boolean isFloat(String priceText){
+        try{
+            Float.parseFloat(priceText);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
 

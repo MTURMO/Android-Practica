@@ -7,7 +7,7 @@
     tools:context=".activities.Register"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="30dp">
+    android:padding="30sp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

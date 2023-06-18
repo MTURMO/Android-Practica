@@ -6,37 +6,9 @@
     android:orientation="vertical"
     android:padding="20sp"
     tools:context=".activities.WishlistActivityFriend">
-    <ImageButton
-        android:id="@+id/wish_friend_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="?attr/actionModeCloseDrawable"
-        android:background="@null"
-        android:onClick="goBack"
-        android:layout_marginBottom="10sp"/>
-    <TextView
-        android:id="@+id/wishlist_activity_name_friend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="30sp"/>
-
-        <TextView
-            android:id="@+id/wishlist_activity_user_name_friend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:textSize="15sp"
-            android:paddingTop="20sp"/>
 
     <TextView
-        android:id="@+id/wishlist_activity_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textSize="15sp"/>
-    <TextView
-        android:id="@+id/wishlist_activity_description_friend"
+        android:id="@+id/wishlist_activity_description_friend_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -46,7 +18,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:id="@+id/fragment_container_friend"
+            android:id="@+id/fragment_container_friend_product"
             android:layout_weight="1">
             <ScrollView
                 android:layout_width="match_parent"
@@ -56,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/wishlist_activity_recycle_friend"
+                        android:id="@+id/wishlist_activity_recycle_friend_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
