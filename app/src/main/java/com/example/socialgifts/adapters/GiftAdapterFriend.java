@@ -1,6 +1,7 @@
 package com.example.socialgifts.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.GiftFriendActivity;
-import com.example.socialgifts.activities.GiftMainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,10 +99,10 @@ public class GiftAdapterFriend extends RecyclerView.Adapter<GiftAdapterFriend.Vi
 
                     intent.putExtra("id_gift", gift.getId());
                     intent.putExtra("priority", gift.getPriority());
+                    intent.putExtra("booked", gift.getBooked());
 
 
-
-            context.startActivity(intent);
+           context.startActivity(intent);
         });
         }
     }

@@ -3,30 +3,43 @@ package com.example.socialgifts.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Response;
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Gift;
+import com.example.socialgifts.GiftAdapterListener;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.GiftMainActivity;
 
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> {
+public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> implements Serializable {
 
     private final Context context;
+
     private List<Product> products;
     private List<Gift> gifts;
+
+
 
 
     public GiftAdapterMain(List<Product> products, List<Gift> gifts, Context context){
@@ -42,9 +55,8 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
             }
 
             this.context = context;
-
-
         }
+
         @SuppressLint("NotifyDataSetChanged")
         public void setProducts(List<Product> products){
             this.products=products;
@@ -75,34 +87,32 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
-        if(gifts.size()>0&& gifts.size()>position){
-            Gift  gift = gifts.get(position);
+        if(gifts.size()>0&& gifts.size()>position) {
+            Gift gift = gifts.get(position);
 
 
-        holder.productName.setText(product.getName());
-        holder.productDescription.setText(product.getDescription());
-        holder.productPrice.setText(String.valueOf(product.getPrice()));
+            holder.productName.setText(product.getName());
+            holder.productDescription.setText(product.getDescription());
+            holder.productPrice.setText(String.valueOf(product.getPrice()));
 
-        Glide.with(context).load(product.getPhoto_url()).error(R.drawable.ic_launcher_foreground).into(holder.productImage);
-
-
-        holder.itemView.setOnClickListener(view -> {
-                    Intent intent = new Intent(context, GiftMainActivity.class);
-                    intent.putExtra("id", product.getId());
-                    intent.putExtra("name", product.getName());
-                    intent.putExtra("description", product.getDescription());
-                    intent.putExtra("product_url", product.getProduct_url());
-                    intent.putExtra("price", product.getPrice());
-                    intent.putExtra("category", Arrays.toString(product.getCategoryId()));
-                    intent.putExtra("image", product.getPhoto_url());
-
-                    intent.putExtra("id_gift", gift.getId());
-                    intent.putExtra("priority", gift.getPriority());
+            Glide.with(context).load(product.getPhoto_url()).error(R.drawable.ic_launcher_foreground).into(holder.productImage);
 
 
+            holder.itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, GiftMainActivity.class);
+                intent.putExtra("id", product.getId());
+                intent.putExtra("name", product.getName());
+                intent.putExtra("description", product.getDescription());
+                intent.putExtra("product_url", product.getProduct_url());
+                intent.putExtra("price", product.getPrice());
+                intent.putExtra("category", (product.getCategoryId()));
+                intent.putExtra("image", product.getPhoto_url());
 
-            context.startActivity(intent);
-        });
+                intent.putExtra("id_gift", gift.getId());
+                intent.putExtra("priority", gift.getPriority());
+                context.startActivity(intent);
+
+            });
         }
     }
 
@@ -127,5 +137,7 @@ public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHo
                 productImage = itemView.findViewById(R.id.feed_product_card_image);
             }
         }
+
+
 
 }

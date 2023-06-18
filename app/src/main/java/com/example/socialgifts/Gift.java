@@ -8,14 +8,19 @@ public class Gift {
     private int wishlist_id;
     private String product_url;
     private int priority;
-    private String booked;
+    private int booked;
+    private Product product;
 
     public Gift(int wishlist_id, String product_url, int priority) {
         this.wishlist_id = wishlist_id;
         this.product_url = product_url;
         this.priority = priority;
     }
-    public Gift(int id,int wishlist_id, String product_url, int priority,String booked) {
+    public Gift(int id, Product product){
+        this.id = id;
+        this.product = product;
+    };
+    public Gift(int id,int wishlist_id, String product_url, int priority,int booked) {
         this.id = id;
         this.wishlist_id = wishlist_id;
         this.product_url = product_url;
@@ -36,6 +41,10 @@ public class Gift {
 
     public String getProduct_url() {
         return product_url;
+    }
+
+    public int getBooked() {
+        return booked;
     }
 
     public void setProduct_url(String product_url) {

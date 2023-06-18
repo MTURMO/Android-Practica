@@ -22,7 +22,13 @@ import com.example.socialgifts.WishList;
 import com.example.socialgifts.activities.CreateWishlistActivity;
 import com.example.socialgifts.adapters.WishListAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WishListFragment extends Fragment {
 
@@ -71,7 +77,12 @@ public class WishListFragment extends Fragment {
         int id = Integer.parseInt(sharedPreferences.getString("id", ""));
 
         ApiCalls apiCalls = new ApiCalls(getContext(), adapter);
-        apiCalls.getAllUserWhishlistFragment(accessToken,id,this.getContext());
+        apiCalls.getAllUserWhishlistFragment(accessToken, id, this.getContext());
+
     }
+
+
+
+
 
 }

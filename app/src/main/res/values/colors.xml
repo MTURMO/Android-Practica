@@ -10,4 +10,5 @@
     <color name="miMensaje">#58eb34</color>
     <color name="suMensaje">#DF1063</color>
     <color name="backgroundColor">#F5F5F5</color>
+    <color name="gray">#808080</color>
 </resources>

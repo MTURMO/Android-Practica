@@ -32,7 +32,7 @@ public class CreateProductActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private EditText editTextProductPrice;
     private EditText editTextProductUrl;
-    private Button buttonCreate;
+    private Button buttonCreate, backButton;
     private Spinner spinnerCategory;
     private List<Category> categories;
     private List<String> categoriesName;
@@ -49,13 +49,16 @@ public class CreateProductActivity extends AppCompatActivity {
         editTextProductPrice = findViewById(R.id.create_product_price);
         editTextProductUrl = findViewById(R.id.create_product_url);
         buttonCreate = findViewById(R.id.create_product_create);
-
+        backButton = findViewById(R.id.back_create_product);
         buttonCreate.setOnClickListener(view -> {
             if (productCorrect()) {
                 makePost();
             }
         });
 
+        backButton.setOnClickListener(view -> {
+            finish();
+        });
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("accessToken", "");
 

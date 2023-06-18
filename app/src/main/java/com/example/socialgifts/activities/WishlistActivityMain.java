@@ -9,10 +9,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.fragments.WishProductFragmentMain;
+
 
 import java.util.ArrayList;
 
@@ -22,7 +27,7 @@ public class WishlistActivityMain extends AppCompatActivity {
     private TextView wishlistEndDateTextView;
     private TextView wishlistDescriptionTextView;
 
-    private Button button;
+    private Button button,deleteButton,back;
     private ArrayList<Product> products;
 
     @SuppressLint("MissingInflatedId")
@@ -36,9 +41,12 @@ public class WishlistActivityMain extends AppCompatActivity {
         wishlistEndDateTextView = findViewById(R.id.wishlist_activity_end_main);
         wishlistDescriptionTextView = findViewById(R.id.wishlist_activity_description);
         button = findViewById(R.id.edit_button);
+        deleteButton = findViewById(R.id.delete_button);
+        back = findViewById(R.id.back_button_wishlist);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+
         int id = intent.getIntExtra("id",0);
         int user_id = intent.getIntExtra("user_id",0);
         String end_date = intent.getStringExtra("end_date");
@@ -47,6 +55,7 @@ public class WishlistActivityMain extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String nameUser = sharedPreferences.getString("name", "");
         String last_nameUser = sharedPreferences.getString("lastname", "");
+        String accessToken = sharedPreferences.getString("accessToken", "");
 
         wishlistNameTextView.setText(name);
         wishlistUserNameTextView.setText("Created by: " + nameUser + " "+ last_nameUser);
@@ -65,6 +74,18 @@ public class WishlistActivityMain extends AppCompatActivity {
             intent1.putExtra("description", description);
 
             startActivity(intent1);
+        });
+        deleteButton.setOnClickListener(view -> {
+            ApiCalls apiCalls = new ApiCalls(this);
+            apiCalls.deleteWishlistById(accessToken, id, this, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Per poder eliminar-la, ha d'estar buida", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+        back.setOnClickListener(view -> {
+            finish();
         });
     }
 

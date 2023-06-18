@@ -3,6 +3,8 @@ package com.example.socialgifts.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.bumptech.glide.Glide;
+import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
 import com.example.socialgifts.activities.FriendsActivity;
@@ -21,12 +25,17 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>{
 
 
     private List<User> users;
     private final Context context;
     private  String searchUserName;
+    boolean trobat = false;
 
     public FriendsAdapter(List<User> users, Context context, String searchUserName){
         if(users==null){
@@ -77,15 +86,42 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, FriendsActivity.class);
-            intent.putExtra("id", user.getId());
-            intent.putExtra("name", user.getName());
-            intent.putExtra("last_name", user.getLast_name());
-            intent.putExtra("image", user.getImage());
-            context.startActivity(intent);
-        });
+            ApiCalls apiCalls = new ApiCalls(this);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            apiCalls.getFriends2(sharedPreferences.getString("accessToken", ""), context,new Response.Listener<JSONArray>()  {
 
-    }
+                @Override
+                public void onResponse(JSONArray response) {
+                    int[] isFollowed = new int[1];
+                    isFollowed[0] = 0;
+
+                    try {
+                        for(int i = 0; i < response.length(); i++){
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if(jsonObject.getInt("id") == user.getId()){
+                                isFollowed[0] = 1;
+                                break;
+                            }
+                        }
+
+
+
+                                Intent intent = new Intent(context, FriendsActivity.class);
+                                intent.putExtra("id", user.getId());
+                                intent.putExtra("name", user.getName());
+                                intent.putExtra("last_name", user.getLast_name());
+                                intent.putExtra("image", user.getImage());
+                                intent.putExtra("isFollowed", isFollowed[0]);
+                                context.startActivity(intent);
+
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    });
+}
 
     @Override
     public int getItemCount() {

@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Button;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -407,26 +412,29 @@ public class ApiCalls {
                                 String end = jsonProduct.getString("end_date");
 
                                 JSONArray gift= jsonProduct.getJSONArray("gifts");
+
                                 ArrayList<Gift> gifts = new ArrayList<>();
                                 try {
                                     for (int j = 0; j < gift.length(); j++) {
-                                        JSONObject jsonGift = response.getJSONObject(j);
+                                        JSONObject jsonGift = gift.getJSONObject(j);
 
                                         int id_gift = jsonGift.getInt("id");
                                         int id_wish = jsonGift.getInt("wishlist_id");
                                         String product_url = jsonGift.getString("product_url");
                                         int priority = jsonGift.getInt("priority");
-                                        String booked = jsonGift.getString("booked");
+                                        int booked = Integer.parseInt(jsonGift.getString("booked"));
 
                                         Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
+
                                         gifts.add(gift2);
                                     }
                                 }catch (JSONException e) {
 
                                 }
-
                                     WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
-                                    wishLists.add(wishList);
+
+                                wishLists.add(wishList);
+
                             }
 
                             wishListAdapter.setWishLists(wishLists);
@@ -450,6 +458,18 @@ public class ApiCalls {
             }
         };
         queue.add(jsonArrayRequest);
+    }
+    private boolean fechaEndPasada(String endDate){
+        if (endDate == null|| endDate.equalsIgnoreCase("null")) {
+            // Si endDate es null, aceptar en este caso
+            return true;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");;
+            LocalDateTime currentDate = LocalDateTime.now();
+            LocalDateTime endDateDate =LocalDateTime.parse(endDate, formatter);
+            return endDateDate.isBefore(currentDate);
+        }
+        return false;
     }
     public void getAllUserWhishlistPerfilUser(String accessToken, int id, Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -480,13 +500,13 @@ public class ApiCalls {
                                 ArrayList<Gift> gifts = new ArrayList<>();
                                 try {
                                     for (int j = 0; j < gift.length(); j++) {
-                                        JSONObject jsonGift = response.getJSONObject(j);
+                                        JSONObject jsonGift = gift.getJSONObject(j);
 
                                         int id_gift = jsonGift.getInt("id");
                                         int id_wish = jsonGift.getInt("wishlist_id");
                                         String product_url = jsonGift.getString("product_url");
                                         int priority = jsonGift.getInt("priority");
-                                        String booked = jsonGift.getString("booked");
+                                        int booked = Integer.parseInt(jsonGift.getString("booked"));
 
                                         Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
                                         gifts.add(gift2);
@@ -496,8 +516,10 @@ public class ApiCalls {
                                 }
 
                                 WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
-                                wishLists.add(wishList);
-                            }
+                                Log.e("respostaCorrecta", wishList.getGiftsArrayList().toString());
+                                if(!fechaEndPasada(end)){
+                                    wishLists.add(wishList);
+                                }                            }
 
                             adapterWishListUser.setWishLists(wishLists);
 
@@ -551,13 +573,13 @@ public class ApiCalls {
                                 ArrayList<Gift> gifts = new ArrayList<>();
                                 try {
                                     for (int j = 0; j < gift.length(); j++) {
-                                        JSONObject jsonGift = response.getJSONObject(j);
+                                        JSONObject jsonGift = gift.getJSONObject(j);
 
                                         int id_gift = jsonGift.getInt("id");
                                         int id_wish = jsonGift.getInt("wishlist_id");
                                         String product_url = jsonGift.getString("product_url");
                                         int priority = jsonGift.getInt("priority");
-                                        String booked = jsonGift.getString("booked");
+                                        int booked = Integer.parseInt(jsonGift.getString("booked"));
 
                                         Gift gift2= new Gift(id_gift, id_wish, product_url, priority, booked);
                                         gifts.add(gift2);
@@ -567,7 +589,11 @@ public class ApiCalls {
                                 }
 
                                 WishList wishList = new WishList(id, name, description, user_id,gifts, creation, end);
-                                wishLists.add(wishList);
+                                Log.e("respostaCorrecta", wishList.getGiftsArrayList().toString());
+
+                                if(!fechaEndPasada(end)){
+                                    wishLists.add(wishList);
+                                }
                             }
 
                             adapterWishListFriend.setWishLists(wishLists);
@@ -683,7 +709,7 @@ public class ApiCalls {
                                     response.getInt("wishlist_id"),
                                     response.getString("product_url"),
                                     response.getInt("priority"),
-                                    response.getString("booked"));
+                                    Integer.parseInt(response.getString("booked")));
                             adapterGiftFriend.addGifts(product);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -723,7 +749,7 @@ public class ApiCalls {
                                     response.getInt("wishlist_id"),
                                     response.getString("product_url"),
                                     response.getInt("priority"),
-                                    response.getString("booked"));
+                                    Integer.parseInt(response.getString("booked")));
                             adapterGift.addGifts(product);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -883,8 +909,8 @@ public class ApiCalls {
         - accessToken
         - int id
      */
-    public void deleteWishlistById(String accessToken, int id) {
-        RequestQueue queue = Volley.newRequestQueue((Context) MainActivity);
+    public void deleteWishlistById(String accessToken, int id, Context context, Response.ErrorListener listener) {
+        RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -899,7 +925,8 @@ public class ApiCalls {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                        listener.onErrorResponse(error);
+                        Log.e("resposta", "Hi ha hagut un error: " + error + id);
                     }
                 }
                 ) {
@@ -1062,11 +1089,6 @@ public class ApiCalls {
         queue.add(jsonArrayRequest);
     }
 
-
-
-
-
-
     /*
     Funció per crear un missatge
     Cal haver fet LogIn per obtenir el accessToken
@@ -1104,6 +1126,36 @@ public class ApiCalls {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
+    public void getFriends2(String accessToken,Context context,Response.Listener<JSONArray> listener) {
+        RequestQueue queue = Volley.newRequestQueue((context) );
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es : " + response.toString());
+                        listener.onResponse(response);
+                        //Obtenim tots els usuaris en format json
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -1179,6 +1231,36 @@ public class ApiCalls {
         };
         queue.add(jsonArrayRequest);
     }
+    public void getFriendsRequest2(String accessToken,Context context,Response.Listener<JSONArray> listener) {
+        RequestQueue queue = Volley.newRequestQueue((context));
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/requests";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        listener.onResponse(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
+    }
 
     /*
     Funció per crear un missatge
@@ -1187,7 +1269,7 @@ public class ApiCalls {
         - accessToken
         - new Message
      */
-    public void createFriendRequest(String accessToken, int id, Button followButton,Context context) {
+    public void createFriendRequest(String accessToken, int id, Button followButton,Context context,Response.Listener<JSONObject> listener,Response.ErrorListener errorListener) {
         Resources resources = context.getResources();
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -1202,6 +1284,41 @@ public class ApiCalls {
                         //Obtenim tots els usuaris en format json
                         followButton.setText("Solicitado");
                         followButton.setBackgroundColor(resources.getColor(android.R.color.darker_gray));
+
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("resposta", "Hi ha hagut un error: " + error);
+                        errorListener.onErrorResponse(error);
+                    }
+                }
+                ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + accessToken);
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    public void bookGift(String accessToken, int id, Context context,Response.Listener<JSONObject> listener) {
+        Resources resources = context.getResources();
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts/"+id+"/book";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("resposta", "La resposta es: " + response.toString());
+                        //Obtenim tots els usuaris en format json
+                        listener.onResponse(response);
+
 
 
                     }

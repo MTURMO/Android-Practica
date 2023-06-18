@@ -22,6 +22,7 @@ import java.util.List;
 
 public class ListSolicitudes extends AppCompatActivity {
     private Button accept,reject;
+    private Button back;
     private SolicitudesAdapter solicitudesAdapter;
 
     private final List<User> users = new ArrayList<>();
@@ -33,18 +34,14 @@ public class ListSolicitudes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_perfil_fragment_wishlist);
+        setContentView(R.layout.user_solicitudes);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("accessToken", "");
 
         accept = findViewById(R.id.button_accept);
-
-
         reject = findViewById(R.id.button_decline);
 
-
-
-        recyclerView = findViewById(R.id.user_list_view);
+        recyclerView = findViewById(R.id.user_list_view2);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         solicitudesAdapter = new SolicitudesAdapter(users, this,userIds);
         recyclerView.setAdapter(solicitudesAdapter);
@@ -52,5 +49,11 @@ public class ListSolicitudes extends AppCompatActivity {
 
         ApiCalls apiCalls = new ApiCalls(this, solicitudesAdapter);
         apiCalls.getFriendsRequest(accessToken,this);
+
+        back = findViewById(R.id.back2);
+        back.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 }

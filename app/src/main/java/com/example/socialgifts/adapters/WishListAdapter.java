@@ -53,7 +53,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
         WishList wishList = wishLists.get(position);
 
         holder.nameTextView.setText(wishList.getName());
-        holder.numGiftsTextView.setText(String.valueOf(wishList.getGiftsArrayList().size()));
+        holder.numGiftsTextView.setText(String.valueOf(wishList.getNumGifts()));
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, WishlistActivityMain.class);

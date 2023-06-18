@@ -59,12 +59,27 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textAlignment="center"/>
-    <Button
-        android:id="@+id/product_reserva_gift"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:text="Reserva"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <Button
+            android:id="@+id/product_back_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="20dp"
+            android:text="Back"/>
+
+        <Button
+            android:id="@+id/product_reserva_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Reserva"/>
+
+    </LinearLayout>
+
     />
 </LinearLayout>

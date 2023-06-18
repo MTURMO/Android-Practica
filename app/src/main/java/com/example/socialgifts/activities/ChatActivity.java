@@ -25,12 +25,13 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private Button sendButton;
+    private Button sendButton,backButton;
     private ChatAdapter adapterMain ;
     private final List<Message> messagesMain = new ArrayList<>();
     private RecyclerView recyclerViewMain;
     private TextView name;
     private EditText chatInput;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
         name = findViewById(R.id.chat_friend_name);
         sendButton = findViewById(R.id.send_button);
         chatInput = findViewById(R.id.chat_input);
-
+        backButton = findViewById(R.id.back_message_button);
         name.setText(nameUser);
 
         sendButton.setOnClickListener(view-> {
@@ -64,6 +65,9 @@ public class ChatActivity extends AppCompatActivity {
 
         ApiCalls apiCallsMain = new ApiCalls(this, adapterMain);
         apiCallsMain.getMessagesById(accessToken,id,this);
+        backButton.setOnClickListener(view -> {
+            finish();
+        });
     }
 
 
