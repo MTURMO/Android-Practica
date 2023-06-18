@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void goBack(){
+        finish();
+    }
+
     public void User(View view){
         Intent intent = new Intent(this, UsersActivity.class);
         startActivity(intent);
