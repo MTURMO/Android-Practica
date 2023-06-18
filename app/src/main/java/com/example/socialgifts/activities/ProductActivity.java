@@ -1,7 +1,6 @@
 package com.example.socialgifts.activities;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends BaseAcivity {
 
     private TextView textViewName;
     private TextView textViewcategory;
@@ -162,7 +161,7 @@ public class ProductActivity extends AppCompatActivity {
             return true;
         }else
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             LocalDateTime currentDate = LocalDateTime.now();
             LocalDateTime endDateDate =LocalDateTime.parse(endDate, formatter);
             return endDateDate.isBefore(currentDate);

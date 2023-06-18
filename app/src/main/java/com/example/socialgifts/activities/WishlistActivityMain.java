@@ -1,6 +1,5 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
@@ -22,7 +21,7 @@ import com.example.socialgifts.fragments.WishProductFragmentMain;
 
 import java.util.ArrayList;
 
-public class WishlistActivityMain extends AppCompatActivity {
+public class WishlistActivityMain extends BaseAcivity {
     private TextView wishlistNameTextView;
     private TextView wishlistUserNameTextView;
     private TextView wishlistEndDateTextView;

@@ -2,12 +2,11 @@ package com.example.socialgifts.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,12 +14,11 @@ import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
 import com.example.socialgifts.adapters.SolicitudesAdapter;
-import com.example.socialgifts.adapters.XatsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListSolicitudes extends AppCompatActivity {
+public class ListSolicitudes extends BaseAcivity {
     private Button accept,reject;
     private Button back;
     private SolicitudesAdapter solicitudesAdapter;

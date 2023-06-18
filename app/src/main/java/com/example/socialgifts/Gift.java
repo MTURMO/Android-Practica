@@ -19,7 +19,8 @@ public class Gift {
     public Gift(int id, Product product){
         this.id = id;
         this.product = product;
-    };
+    }
+
     public Gift(int id,int wishlist_id, String product_url, int priority,int booked) {
         this.id = id;
         this.wishlist_id = wishlist_id;

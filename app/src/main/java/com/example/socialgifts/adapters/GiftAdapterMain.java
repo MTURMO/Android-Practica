@@ -3,33 +3,23 @@ package com.example.socialgifts.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Response;
 import com.bumptech.glide.Glide;
-import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.Gift;
-import com.example.socialgifts.GiftAdapterListener;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.activities.GiftMainActivity;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GiftAdapterMain extends RecyclerView.Adapter<GiftAdapterMain.ViewHolder> implements Serializable {

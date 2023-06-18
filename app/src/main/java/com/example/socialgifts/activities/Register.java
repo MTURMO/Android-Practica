@@ -1,6 +1,5 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
 
-public class Register extends AppCompatActivity {
+public class Register extends BaseAcivity {
 
     EditText userNameEditText;
     EditText userLastNameEditText;

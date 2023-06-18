@@ -1,26 +1,20 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.socialgifts.ApiCalls;
-import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 
-import java.util.Date;
-
-public class CreateWishlistActivity extends AppCompatActivity {
+public class CreateWishlistActivity extends BaseAcivity {
     private EditText newWishlistEditText;
     private Button createWishlistButton;
     private ImageButton backButton;

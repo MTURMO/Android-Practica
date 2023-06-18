@@ -6,18 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 
-public class WishlistEditActivity extends AppCompatActivity  {
+public class WishlistEditActivity extends BaseAcivity  {
         private EditText newWishlistEditText;
         private Button editarWishlistButton;
         private ImageButton backButton;

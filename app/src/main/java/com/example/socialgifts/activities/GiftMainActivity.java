@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiftMainActivity extends AppCompatActivity  {
+public class GiftMainActivity extends BaseAcivity  {
 
         private TextView textViewName;
         private TextView textViewcategory;

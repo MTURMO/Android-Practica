@@ -464,7 +464,7 @@ public class ApiCalls {
             // Si endDate es null, aceptar en este caso
             return true;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             LocalDateTime currentDate = LocalDateTime.now();
             LocalDateTime endDateDate =LocalDateTime.parse(endDate, formatter);
             return endDateDate.isBefore(currentDate);

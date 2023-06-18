@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.User;
-import com.example.socialgifts.WishList;
 
 import java.nio.Buffer;
 
-public class EditUserActivity extends AppCompatActivity {
+public class EditUserActivity extends BaseAcivity {
 
     private EditText name, last_name, email, photo,password;
     private Button edit;

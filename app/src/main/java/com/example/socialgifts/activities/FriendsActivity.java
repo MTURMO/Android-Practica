@@ -1,7 +1,6 @@
 package com.example.socialgifts.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Response;
@@ -21,13 +19,10 @@ import com.bumptech.glide.Glide;
 import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.fragments.FriendWishlistFragment;
-import com.example.socialgifts.fragments.UserWishlistFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FriendsActivity extends AppCompatActivity {
+public class FriendsActivity extends BaseAcivity {
 
         private TextView textViewName;
         public TextView last_name;
@@ -55,7 +50,6 @@ public class FriendsActivity extends AppCompatActivity {
             String name = intent.getStringExtra("name");
             String lastname = intent.getStringExtra("last_name");
             String image = intent.getStringExtra("image");
-            int id = intent.getIntExtra("id",0);
 
             int isFollowed = intent.getIntExtra("isFollowed",0);
 
@@ -90,10 +84,7 @@ public class FriendsActivity extends AppCompatActivity {
                 intent2.putExtra("id", intent.getIntExtra("id", 0));
                 startActivity(intent2);});
 
-            follow.setOnClickListener(view -> {
-                    requestPost();
-
-            });
+            follow.setOnClickListener(view -> requestPost());
 
         }
         private void updateFollowButton() {
@@ -108,17 +99,9 @@ public class FriendsActivity extends AppCompatActivity {
             String accesToken = sharedPreferences.getString("accessToken", "");
 
             ApiCalls apiCalls = new ApiCalls(this);
-            apiCalls.createFriendRequest(accesToken, getIntent().getIntExtra("id", 0),follow,this, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    updateFollowButton();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if(error.networkResponse.statusCode == 409){
-                        Toast.makeText(FriendsActivity.this, "Ya has enviado una solicitud", Toast.LENGTH_SHORT).show();
-                    }
+            apiCalls.createFriendRequest(accesToken, getIntent().getIntExtra("id", 0),follow,this, response -> updateFollowButton(), error -> {
+                if(error.networkResponse.statusCode == 409){
+                    Toast.makeText(FriendsActivity.this, "Ya has enviado una solicitud", Toast.LENGTH_SHORT).show();
                 }
             });
         }

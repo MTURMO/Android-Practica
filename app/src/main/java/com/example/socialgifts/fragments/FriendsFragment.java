@@ -34,9 +34,9 @@ public class FriendsFragment extends Fragment {
     private ArrayList<User> users;
     private FriendsAdapter adapter;
     private String string="all";
-    private String[] filtro = {"all", "friends"};
+    private final String[] filtro = {"all", "friends"};
     private Spinner spinner;
-    private int selected=0;
+    private final int selected=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

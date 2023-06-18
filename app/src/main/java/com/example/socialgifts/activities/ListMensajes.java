@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +18,7 @@ import com.example.socialgifts.adapters.XatsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListMensajes extends AppCompatActivity {
+public class ListMensajes extends BaseAcivity {
 
     private Button back;
     private XatsAdapter xatsAdapter;

@@ -1,6 +1,5 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -27,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateProductActivity extends AppCompatActivity {
+public class CreateProductActivity extends BaseAcivity {
     private EditText editTextName;
     private EditText editTextDescription;
     private EditText editTextProductPrice;

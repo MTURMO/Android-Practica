@@ -1,7 +1,5 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +21,7 @@ import com.example.socialgifts.adapters.ChatAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseAcivity {
 
     private Button sendButton,backButton;
     private ChatAdapter adapterMain ;

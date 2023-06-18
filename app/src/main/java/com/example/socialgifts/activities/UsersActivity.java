@@ -9,13 +9,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.socialgifts.R;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends BaseAcivity {
 
     private TextView textViewName;
     public TextView last_name,email;

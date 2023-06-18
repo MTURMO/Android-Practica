@@ -1,6 +1,5 @@
 package com.example.socialgifts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,7 @@ import com.example.socialgifts.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Login extends AppCompatActivity {
+public class Login extends BaseAcivity {
 
     EditText userNameEditText;
     EditText passwordEditText;

@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
@@ -20,7 +19,7 @@ import com.example.socialgifts.R;
 
 import org.json.JSONObject;
 
-public class GiftFriendActivity extends AppCompatActivity {
+public class GiftFriendActivity extends BaseAcivity {
 
         private TextView textViewName;
         private TextView textViewcategory;
