@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class GiftFriendActivity extends AppCompatActivity {
         public ImageView image;
         private int idProduct;
 
-        private Button reserva;
+        private Button reserva, bakcButton;
 
 
 
@@ -42,7 +43,9 @@ public class GiftFriendActivity extends AppCompatActivity {
             textViewcategory = findViewById(R.id.product_category_friend);
             textViewprice = findViewById(R.id.product_price_friend);
             textViewdescription = findViewById(R.id.product_description_friend);
+
             reserva = findViewById(R.id.product_reserva_gift);
+            bakcButton = findViewById(R.id.product_back_gift);
 
             Intent intent = getIntent();
             String name2 = intent.getStringExtra("name");
@@ -50,9 +53,15 @@ public class GiftFriendActivity extends AppCompatActivity {
             String image_url2 = intent.getStringExtra("image");
             String category = intent.getStringExtra("category");
             float price = intent.getFloatExtra("price", 0);
+            idProduct = intent.getIntExtra("id_gift", 0);
+            int booked = intent.getIntExtra("booked", 0);
 
+            if(booked==1){
+                reserva.setEnabled(false);
+                reserva.setText("Reservado");
+                reserva.setBackgroundColor(getResources().getColor(R.color.gray));
+            }
 
-            idProduct = intent.getIntExtra("id", 0);
             name2=name2!=null?name2:"null";
             description2=description2!=null?description2:"null";
             image_url2=image_url2!=null?image_url2:"null";
@@ -66,13 +75,20 @@ public class GiftFriendActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String accessToken = sharedPreferences.getString("accessToken", "");
 
-
-
-
             reserva.setOnClickListener(view ->{
-                    Intent intent2 = new Intent(this, MainActivity.class);
-                    startActivity(intent2);
+                ApiCalls apiCalls = new ApiCalls(this);
+                apiCalls.bookGift(accessToken, idProduct,  this, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        reserva.setEnabled(false);
+                        reserva.setText("Reservado");
+                        reserva.setBackgroundColor(getResources().getColor(R.color.gray));
+                    }
+                });
+
             });
+
+            bakcButton.setOnClickListener(view -> finish());
 
 
 

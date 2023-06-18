@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class CreateWishlistActivity extends AppCompatActivity {
     private EditText newWishlistEditText;
-    private Button createWishlistButton;
+    private Button createWishlistButton, back;
     private EditText newWishlistDescriptionEditText;
     private EditText endDate;
 
@@ -33,7 +33,7 @@ public class CreateWishlistActivity extends AppCompatActivity {
         newWishlistEditText = findViewById(R.id.wishlist_new_name);
         newWishlistDescriptionEditText = findViewById(R.id.wishlist_new_description);
         endDate = findViewById(R.id.editTextDate);
-
+        back = findViewById(R.id.back_create_wishlist);
         createWishlistButton = findViewById(R.id.wishlist_new_create_button);
         createWishlistButton.setOnClickListener(view -> {
                 if(productCorrect()) {
@@ -42,11 +42,11 @@ public class CreateWishlistActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
         });
+        back.setOnClickListener(view -> {
+            finish();
+        });
     }
 
-    private void goBack() {
-        finishActivity(R.layout.activity_create_wishlist);
-    }
     private void makePost(){
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("accessToken", "");

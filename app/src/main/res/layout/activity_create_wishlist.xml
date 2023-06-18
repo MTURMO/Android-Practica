@@ -38,10 +38,25 @@
         android:ems="10"
         android:inputType="date" />
 
-    <Button
-        android:id="@+id/wishlist_new_create_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/wishlist_new_create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/back_create_wishlist"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -8,6 +8,7 @@
     android:gravity="center"
     android:padding="30dp"
     tools:context=".activities.CreateProductActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,9 +42,23 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/create_product_create"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Product"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/create_product_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Product"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/back_create_product"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 </LinearLayout>

@@ -74,7 +74,17 @@
             android:layout_margin="30dp"
             android:text="Editar perfil"
             android:backgroundTint="#4ef542"/>
-    </LinearLayout>
 
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/back_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Back"
+
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

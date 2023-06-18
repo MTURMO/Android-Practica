@@ -5,7 +5,14 @@
     android:orientation="vertical">
 
     <!-- Aquí puedes agregar cualquier otro elemento que necesites en el fragmento -->
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Solicitudes de amistad"
+        android:textSize="35sp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/textView"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,13 +25,20 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/user_list_view"
+                android:id="@+id/user_list_view2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/back2"
+        android:layout_gravity="center_horizontal">
 
+    </Button>
 
 </LinearLayout>

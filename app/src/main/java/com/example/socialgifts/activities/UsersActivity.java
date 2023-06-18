@@ -22,6 +22,7 @@ public class UsersActivity extends AppCompatActivity {
     public ImageView image;
     private Button logout;
     private Button edit;
+    private Button back;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,7 +37,7 @@ public class UsersActivity extends AppCompatActivity {
         email = findViewById(R.id.main_user_email);
         logout = findViewById(R.id.logout_button);
         edit = findViewById(R.id.user_edit);
-
+        back = findViewById(R.id.back_user);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "");
         String lastname = sharedPreferences.getString("last_name", "");
@@ -66,6 +67,10 @@ public class UsersActivity extends AppCompatActivity {
                     intent2.putExtra("password", pas);
                     intent2.putExtra("id", id);
                 startActivity(intent2);});
+
+        back.setOnClickListener(view -> {
+          finish();
+        });
     }
 
 

@@ -19,7 +19,6 @@ import com.example.socialgifts.Gift;
 import com.example.socialgifts.Product;
 import com.example.socialgifts.R;
 import com.example.socialgifts.adapters.GiftAdapterFriend;
-import com.example.socialgifts.adapters.GiftAdapterMain;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

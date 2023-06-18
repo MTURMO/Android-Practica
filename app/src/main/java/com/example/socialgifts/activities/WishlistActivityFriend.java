@@ -3,6 +3,7 @@ package com.example.socialgifts.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class WishlistActivityFriend extends AppCompatActivity {
     private TextView wishlistDescriptionTextView;
     private TextView wishlistEndDateTextView;
 
+    private Button back;
     private ArrayList<Product> products;
 
     @SuppressLint("MissingInflatedId")
@@ -32,6 +34,7 @@ public class WishlistActivityFriend extends AppCompatActivity {
         wishlistUserNameTextView = findViewById(R.id.wishlist_activity_user_name_friend);
         wishlistDescriptionTextView = findViewById(R.id.wishlist_activity_description_friend);
         wishlistEndDateTextView = findViewById(R.id.wishlist_activity_end);
+        back = findViewById(R.id.wishlist_activity_back_friend);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -54,6 +57,8 @@ public class WishlistActivityFriend extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container_friend, wishProductFragmentFriend).commit();
 
-
+        back.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

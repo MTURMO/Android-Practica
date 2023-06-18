@@ -72,6 +72,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
         });
+
         holder.accept.setOnClickListener(view-> {
             apiCallsMain.acceptFriendRequest(sharedPreferences.getString("accessToken", ""),id,context);
             Intent intent = new Intent(context, MainActivity.class);

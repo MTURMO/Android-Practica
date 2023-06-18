@@ -66,16 +66,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <Button
-        android:id="@+id/user_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BacK" />
-    <Button
-        android:id="@+id/user_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit" />
+
+        <Button
+            android:id="@+id/user_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BacK" />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/user_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit" />
     </LinearLayout>
 
 </LinearLayout>

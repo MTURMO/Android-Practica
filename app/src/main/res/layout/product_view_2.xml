@@ -57,14 +57,26 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Llegué al club con el combo, rápido la vi lejos, se pintaba los labios, y la copa como espejo, se acercó poco a poco, y yo queriendo que me baile , luego me dijo, Vamos, que te enseño Buenos Aire"
+        android:text="Description"
         android:textSize="20dp"
         android:textAlignment="center"/>
-    <Button
-        android:id="@+id/product_create_gift"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:text="Create gift"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/product_create_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:text="Create gift"/>
+        <Button
+            android:id="@+id/back_create_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:text="Back "/>
+    </LinearLayout>
 </LinearLayout>

@@ -63,29 +63,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="45dp"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/back_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Back"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
         <Button
             android:id="@+id/product_edit_gift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Edit gift"/>
-
+            android:text="Edit"/>
         <View
-            android:id="@+id/divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
 
         <Button
             android:id="@+id/product_delete_gift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Delete gift"/>
+            android:text=" Delete"/>
     </LinearLayout>
 
 </LinearLayout>

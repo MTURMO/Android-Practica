@@ -18,7 +18,7 @@ import com.example.socialgifts.WishList;
 
 public class WishlistEditActivity extends AppCompatActivity  {
         private EditText newWishlistEditText;
-        private Button editarWishlistButton;
+        private Button editarWishlistButton, backWishlistButton;
         private EditText newWishlistDescriptionEditText;
         private EditText datePicker;
 
@@ -27,9 +27,11 @@ public class WishlistEditActivity extends AppCompatActivity  {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_edit_wishlist);
+
             newWishlistEditText = findViewById(R.id.wishlist_new_name2);
             newWishlistDescriptionEditText = findViewById(R.id.wishlist_new_description2);
             datePicker = findViewById(R.id.wishlist_new_end_date2);
+            backWishlistButton = findViewById(R.id.back_edit_wishlist);
 
             Intent intent = getIntent();
             int id = intent.getIntExtra("id",0);
@@ -48,6 +50,9 @@ public class WishlistEditActivity extends AppCompatActivity  {
                     Intent intent2 = new Intent(this, MainActivity.class);
                     startActivity(intent2);
 
+            });
+            backWishlistButton.setOnClickListener(view -> {
+               finish();
             });
         }
 

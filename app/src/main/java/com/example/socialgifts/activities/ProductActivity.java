@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,8 @@ import com.example.socialgifts.WishList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class ProductActivity extends AppCompatActivity {
     public ImageView image;
     private int idProduct;
 
-    private Button buttonCreateGift;
+    private Button buttonCreateGift, back;
     private Spinner spinner ;
     private AlertDialog selectWishList;
     private List<String> wishLists;
@@ -56,7 +59,7 @@ public class ProductActivity extends AppCompatActivity {
         textViewprice = findViewById(R.id.product_price);
         textViewdescription = findViewById(R.id.product_description);
         buttonCreateGift = findViewById(R.id.product_create_gift);
-
+        back = findViewById(R.id.back_create_gift);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -79,6 +82,9 @@ public class ProductActivity extends AppCompatActivity {
 
         buildDialog(this);
         buttonCreateGift.setOnClickListener(view -> selectWishList.show());
+        back.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     private void buildDialog(Context context){
@@ -133,10 +139,14 @@ public class ProductActivity extends AppCompatActivity {
                 JSONObject categoryObject = response.getJSONObject(i);
                 int id = categoryObject.getInt("id");
                 String name = categoryObject.getString("name");
+                String end = categoryObject.getString("end_date");
 
-                idWishlist[i]=id;
-                WishList wishList = new WishList(id, name);
-                wishLists.add(wishList.getName());
+
+                    idWishlist[i]=id;
+                    WishList wishList = new WishList(id, name);
+                    wishLists.add(wishList.getName());
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -146,5 +156,17 @@ public class ProductActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
-
+    private boolean fechaEndPasada(String endDate){
+        if (endDate == null || endDate.equalsIgnoreCase("null")) {
+            // Si endDate es null, aceptar en este caso
+            return true;
+        }else
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");;
+            LocalDateTime currentDate = LocalDateTime.now();
+            LocalDateTime endDateDate =LocalDateTime.parse(endDate, formatter);
+            return endDateDate.isBefore(currentDate);
+        }
+        return false;
+    }
     }

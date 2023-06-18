@@ -16,7 +16,6 @@ import com.example.socialgifts.ApiCalls;
 import com.example.socialgifts.R;
 import com.example.socialgifts.WishList;
 import com.example.socialgifts.adapters.WishListAdapterFriend;
-import com.example.socialgifts.adapters.WishListAdapterUser;
 
 import java.util.ArrayList;
 

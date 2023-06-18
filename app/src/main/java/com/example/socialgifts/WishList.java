@@ -4,13 +4,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WishList {
     private int id;
     private String name;
     private String description;
     private int user_id;
-    private ArrayList<Gift> gifts;
+    private List<Gift> gifts;
     private String creation_date;
     private String end_date;
 
@@ -24,7 +25,7 @@ public class WishList {
         this.id=id;
     }
 
-    public WishList(int id, String name, String description, int user_id, ArrayList<Gift> gifts, String creation_date, String end_date) {
+    public WishList(int id, String name, String description, int user_id, List<Gift> gifts, String creation_date, String end_date) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -67,8 +68,11 @@ public class WishList {
     }
 
 
-    public ArrayList<Gift> getGiftsArrayList() {
+    public List<Gift> getGiftsArrayList() {
         return gifts;
+    }
+    public int getNumGifts() {
+        return gifts.size();
     }
 
     public void setGifts(ArrayList<Gift> gifts) {
