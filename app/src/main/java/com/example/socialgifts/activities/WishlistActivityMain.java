@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,8 @@ public class WishlistActivityMain extends AppCompatActivity {
     private TextView wishlistEndDateTextView;
     private TextView wishlistDescriptionTextView;
 
-    private Button button,deleteButton,back;
+    private Button button,deleteButton;
+    private ImageButton back;
     private ArrayList<Product> products;
 
     @SuppressLint("MissingInflatedId")
@@ -42,7 +44,7 @@ public class WishlistActivityMain extends AppCompatActivity {
         wishlistDescriptionTextView = findViewById(R.id.wishlist_activity_description);
         button = findViewById(R.id.edit_button);
         deleteButton = findViewById(R.id.delete_button);
-        back = findViewById(R.id.back_button_wishlist);
+        back = findViewById(R.id.wish_main_back_button);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");

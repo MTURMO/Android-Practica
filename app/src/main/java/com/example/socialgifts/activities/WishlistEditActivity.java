@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,8 @@ import com.example.socialgifts.WishList;
 
 public class WishlistEditActivity extends AppCompatActivity  {
         private EditText newWishlistEditText;
-        private Button editarWishlistButton, backWishlistButton;
+        private Button editarWishlistButton;
+        private ImageButton backButton;
         private EditText newWishlistDescriptionEditText;
         private EditText datePicker;
 
@@ -31,7 +33,7 @@ public class WishlistEditActivity extends AppCompatActivity  {
             newWishlistEditText = findViewById(R.id.wishlist_new_name2);
             newWishlistDescriptionEditText = findViewById(R.id.wishlist_new_description2);
             datePicker = findViewById(R.id.wishlist_new_end_date2);
-            backWishlistButton = findViewById(R.id.back_edit_wishlist);
+            backButton = findViewById(R.id.edit_wish_back_button);
 
             Intent intent = getIntent();
             int id = intent.getIntExtra("id",0);
@@ -51,7 +53,7 @@ public class WishlistEditActivity extends AppCompatActivity  {
                     startActivity(intent2);
 
             });
-            backWishlistButton.setOnClickListener(view -> {
+            backButton.setOnClickListener(view -> {
                finish();
             });
         }

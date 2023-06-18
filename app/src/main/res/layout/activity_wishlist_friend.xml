@@ -7,7 +7,7 @@
     android:padding="20dp"
     tools:context=".activities.WishlistActivityFriend">
     <ImageButton
-        android:id="@+id/toolbar_back_button"
+        android:id="@+id/wish_friend_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="?attr/actionModeCloseDrawable"
@@ -63,14 +63,7 @@
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/wishlist_activity_back_friend">
 
-        </Button>
 
 
 </LinearLayout>

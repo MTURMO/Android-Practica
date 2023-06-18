@@ -32,7 +32,8 @@ public class CreateProductActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private EditText editTextProductPrice;
     private EditText editTextProductUrl;
-    private Button buttonCreate, backButton;
+    private Button buttonCreate;
+    private ImageButton backButton;
     private Spinner spinnerCategory;
     private List<Category> categories;
     private List<String> categoriesName;
@@ -49,7 +50,7 @@ public class CreateProductActivity extends AppCompatActivity {
         editTextProductPrice = findViewById(R.id.create_product_price);
         editTextProductUrl = findViewById(R.id.create_product_url);
         buttonCreate = findViewById(R.id.create_product_create);
-        backButton = findViewById(R.id.back_create_product);
+        backButton = findViewById(R.id.create_product_back_button);
         buttonCreate.setOnClickListener(view -> {
             if (productCorrect()) {
                 makePost();

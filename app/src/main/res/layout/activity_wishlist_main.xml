@@ -7,7 +7,7 @@
     android:padding="20dp"
     tools:context=".activities.WishlistActivityMain">
     <ImageButton
-        android:id="@+id/toolbar_back_button"
+        android:id="@+id/wish_main_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="?attr/actionModeCloseDrawable"
@@ -56,15 +56,7 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal">
-            <Button
-                android:id="@+id/back_button_wishlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Back" />
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
+
             <Button
                 android:id="@+id/edit_button"
                 android:layout_width="0dp"
