@@ -32,9 +32,8 @@ public class GiftMainActivity extends BaseAcivity  {
         private TextView textViewprice;
         private TextView textViewdescription;
         public ImageView image;
-        private int idProduct;
 
-        private Button editButton, backButton;
+        private Button  backButton;
         private Button deleteButton;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
@@ -47,7 +46,6 @@ public class GiftMainActivity extends BaseAcivity  {
             textViewcategory = findViewById(R.id.product_category2);
             textViewprice = findViewById(R.id.product_price2);
             textViewdescription = findViewById(R.id.product_description2);
-            editButton = findViewById(R.id.product_edit_gift);
             deleteButton = findViewById(R.id.product_delete_gift);
             backButton = findViewById(R.id.back_2);
 
@@ -60,7 +58,6 @@ public class GiftMainActivity extends BaseAcivity  {
 
             int priority = intent.getIntExtra("priority", 0);
             int id_gift = intent.getIntExtra("id_gift", 0);
-            idProduct = intent.getIntExtra("id", 0);
 
 
             name2=name2!=null?name2:"null";
@@ -73,21 +70,6 @@ public class GiftMainActivity extends BaseAcivity  {
             textViewdescription.setText(description2);
             Glide.with(this).load(image_url2).error(R.drawable.imagemissing_92832).into(this.image);
 
-            String finalName = name2;
-            String finalDescription = description2;
-            String finalImage_url = image_url2;
-            editButton.setOnClickListener(view ->{
-                    Intent intent2 = new Intent(this, EditGiftActivity.class);
-                    intent2.putExtra("name", finalName);
-                    intent2.putExtra("description", finalDescription);
-                    intent2.putExtra("image", finalImage_url);
-                    intent2.putExtra("category", category);
-                    intent2.putExtra("price", price);
-                    intent2.putExtra("id", idProduct);
-                    intent2.putExtra("priority", priority);
-                    intent2.putExtra("id_gift", id_gift);
-                    startActivity(intent2);
-            });
 
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String accessToken = sharedPreferences.getString("accessToken", "");

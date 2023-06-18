@@ -90,6 +90,7 @@ public class CreateProductActivity extends BaseAcivity {
                 Category category = new Category(id, name, description, photo);
                 categories.add(category);
                 categoriesName.add(name);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -119,6 +120,7 @@ public class CreateProductActivity extends BaseAcivity {
 
             ApiCalls apiCalls = new ApiCalls(this);
             apiCalls.createProduct(accessToken,product,this);
+
         } else{
             Toast.makeText(this, "El precio debe ser un float", Toast.LENGTH_SHORT).show();
         }

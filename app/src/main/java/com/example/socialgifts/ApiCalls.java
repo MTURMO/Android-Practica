@@ -1966,18 +1966,7 @@ public class ApiCalls {
                                 String photo = jsonProduct.getString("photo");
                                 String link = jsonProduct.getString("link");
                                 JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                                /*int[] categoriaArray = new int[0];
 
-                                if(jsonProduct.getJSONArray("categoryIds")==null){
-                                    categoriaArray = new int[0];
-                                    categoriaArray[0]=(0);
-                                }else{
-                                    JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                                    categoriaArray = new int[categoria.length()];
-                                    for (int j = 0; j < categoria.length(); j++) {
-                                        categoriaArray[j] = categoria.getInt(j);
-                                    }
-                                }*/
 
 
                                 float productPrice = Float.parseFloat(jsonProduct.getString("price"));
@@ -2119,18 +2108,7 @@ public class ApiCalls {
                             Log.e("resposta", "La resposta es: " + response.toString());
                             Product product;
                             JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                            /*int[] categoriaArray = new int[0];
 
-                            if(jsonProduct.getJSONArray("categoryIds")==null){
-                                categoriaArray = new int[0];
-                                categoriaArray[0]=(0);
-                            }else{
-                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                                categoriaArray = new int[categoria.length()];
-                                for (int j = 0; j < categoria.length(); j++) {
-                                    categoriaArray[j] = categoria.getInt(j);
-                                }
-                            }*/
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),
@@ -2176,18 +2154,7 @@ public class ApiCalls {
                             Product product;
                             JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
 
-                            /*int[] categoriaArray = new int[0];
 
-                            if(jsonProduct.getJSONArray("categoryIds")==null){
-                                categoriaArray = new int[0];
-                                categoriaArray[0]=(0);
-                            }else{
-                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                                categoriaArray = new int[categoria.length()];
-                                for (int j = 0; j < categoria.length(); j++) {
-                                    categoriaArray[j] = categoria.getInt(j);
-                                }
-                            }*/
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),
@@ -2252,18 +2219,7 @@ public class ApiCalls {
                             Product product;
                             JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
 
-                           /* int[] categoriaArray = new int[0];
 
-                            if(jsonProduct.getJSONArray("categoryIds")==null){
-                                categoriaArray = new int[0];
-                                categoriaArray[0]=(0);
-                            }else{
-                                JSONArray categoria = jsonProduct.getJSONArray("categoryIds");
-                                categoriaArray = new int[categoria.length()];
-                                for (int j = 0; j < categoria.length(); j++) {
-                                    categoriaArray[j] = categoria.getInt(j);
-                                }
-                            }*/
                             product = new Product(
                                     jsonProduct.getInt("id"),
                                     jsonProduct.getString("name"),

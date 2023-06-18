@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -101,6 +102,8 @@ public class ProductActivity extends BaseAcivity {
 
                     int posWhishList = spinner.getSelectedItemPosition();
                     String url= "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/"+idProduct;
+
+                    Log.e("idWishlist", String.valueOf(idWishlist[posWhishList]));
                     Gift gift = new Gift(idWishlist[posWhishList],url,0);
 
                     apiCalls2.createGift(accessToken,gift,ProductActivity.this);
@@ -133,6 +136,7 @@ public class ProductActivity extends BaseAcivity {
 
     private void parsear(JSONArray response) {
         idWishlist = new int[response.length()];
+        int j=0;
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject categoryObject = response.getJSONObject(i);
@@ -140,11 +144,12 @@ public class ProductActivity extends BaseAcivity {
                 String name = categoryObject.getString("name");
                 String end = categoryObject.getString("end_date");
 
-
-                    idWishlist[i]=id;
+                if(!fechaEndPasada(end)){
+                    idWishlist[j]=id;
                     WishList wishList = new WishList(id, name);
                     wishLists.add(wishList.getName());
-
+                    j++;
+                }
 
 
             } catch (Exception e) {
