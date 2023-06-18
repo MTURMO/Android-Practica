@@ -79,13 +79,21 @@ public class WishlistActivityMain extends AppCompatActivity {
         });
         deleteButton.setOnClickListener(view -> {
             ApiCalls apiCalls = new ApiCalls(this);
-            apiCalls.deleteWishlistById(accessToken, id, this, new Response.ErrorListener() {
+            apiCalls.deleteWishlistById(accessToken, id, this, new Response.Listener() {
+                @Override
+                public void onResponse(Object response) {
+                    Toast.makeText(getApplicationContext(), "Llista eliminada", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getApplicationContext(), "Per poder eliminar-la, ha d'estar buida", Toast.LENGTH_SHORT).show();
                 }
             });
-        });
+        }
+
+        );
         back.setOnClickListener(view -> {
             finish();
         });

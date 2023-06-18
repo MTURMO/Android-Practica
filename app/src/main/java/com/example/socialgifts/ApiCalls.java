@@ -909,7 +909,7 @@ public class ApiCalls {
         - accessToken
         - int id
      */
-    public void deleteWishlistById(String accessToken, int id, Context context, Response.ErrorListener listener) {
+    public void deleteWishlistById(String accessToken, int id, Context context,Response.Listener listener2 ,Response.ErrorListener listener) {
         RequestQueue queue = Volley.newRequestQueue((context));
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + id;
 
@@ -920,6 +920,7 @@ public class ApiCalls {
                     public void onResponse(JSONObject response) {
                         Log.e("resposta", "La resposta es: " + response.toString());
                         //Obtenim tots els usuaris en format json
+                        listener2.onResponse(response);
 
                     }
                 }, new Response.ErrorListener() {
